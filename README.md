@@ -1,1 +1,1 @@
-# hot-dealz
+# Hot Dealz
