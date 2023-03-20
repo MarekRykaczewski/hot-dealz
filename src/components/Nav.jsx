@@ -11,13 +11,13 @@ function Nav() {
         </div>
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
             <div className="text-sm lg:flex-grow">
-            <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">
+            <a className="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">
                 Place1
             </a>
-            <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">
+            <a className="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">
                 Place2
             </a>
-            <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white">
+            <a className="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white">
                 Place3
             </a>
             </div>
