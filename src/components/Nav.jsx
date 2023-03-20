@@ -1,6 +1,7 @@
 import React from 'react'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { AiFillFire } from 'react-icons/ai'
+import { BiUserCircle } from 'react-icons/bi'
 
 function Nav() {
   return (
@@ -21,7 +22,8 @@ function Nav() {
                 Place3
             </a>
             </div>
-            <div>
+            <div className='flex gap-2'>
+                <BiUserCircle className=' cursor-pointer' color='white' fontSize='2em' />
                 <AiOutlinePlusCircle className=' cursor-pointer' color='white' fontSize='2em'/>
             </div>
         </div>
