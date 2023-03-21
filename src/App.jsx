@@ -3,6 +3,7 @@ import Nav from "./components/Nav"
 import Home from "./pages/Home"
 import SignUpModal from './components/SignUpModal'
 import SignInModal  from './components/SignInModal'
+import { AuthContextProvider } from "./context/AuthContext"
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
 
   return (
   <div>
+  <AuthContextProvider>
   <Nav 
     toggleSignInModal={toggleSignInModal}
    />
@@ -39,6 +41,7 @@ function App() {
   toggleSignInModal={toggleSignInModal} 
   />}
   <Home />
+  </AuthContextProvider>
   </div>
   )
 }
