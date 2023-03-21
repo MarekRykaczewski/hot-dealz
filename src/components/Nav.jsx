@@ -3,7 +3,7 @@ import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { AiFillFire } from 'react-icons/ai'
 import { BiUserCircle } from 'react-icons/bi'
 
-function Nav() {
+function Nav({toggleSignInModal}) {
   return (
     <nav className=' flex items-center justify-between flex-wrap bg-slate-700 p-6'>
         <div className="flex items-center flex-shrink-0 text-white mr-6 gap-1">
@@ -23,7 +23,7 @@ function Nav() {
             </a>
             </div>
             <div className='flex gap-2'>
-                <BiUserCircle className=' cursor-pointer' color='white' fontSize='2em' />
+                <BiUserCircle onClick={toggleSignInModal} className=' cursor-pointer' color='white' fontSize='2em' />
                 <AiOutlinePlusCircle className=' cursor-pointer' color='white' fontSize='2em'/>
             </div>
         </div>
