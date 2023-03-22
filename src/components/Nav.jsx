@@ -4,13 +4,14 @@ import { AiFillFire } from 'react-icons/ai'
 import { BiUserCircle } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
+import NavAccountMenu from './NavAccountMenu'
 
-function Nav({toggleSignInModal}) {
+function Nav({toggleSignInModal, openNavAccountMenu, toggleNavAccountMenu}) {
 
   const { user } = UserAuth()
 
   return (
-    <nav className=' flex items-center justify-between flex-wrap bg-slate-700 p-6'>
+    <nav className='flex items-center justify-between flex-wrap bg-slate-700 p-6'>
         <Link to='/' className="flex items-center flex-shrink-0 text-white mr-6 gap-1">
             <AiFillFire fontSize='2em' color='orange'/>
             <span className="font-semibold text-xl tracking-tight">Hot Dealz</span>
@@ -28,7 +29,14 @@ function Nav({toggleSignInModal}) {
             </a>
             </div>
             <div className='flex gap-2'>
-                {user ? <BiUserCircle onClick={toggleSignInModal} className=' cursor-pointer' color='white' fontSize='2.5em' /> : <BiUserCircle onClick={toggleSignInModal} className=' cursor-pointer' color='white' fontSize='2.5em' />}
+                {user 
+                ? 
+                <div className='relative'>
+                    <BiUserCircle onClick={toggleNavAccountMenu} className=' cursor-pointer' color='white' fontSize='2.5em' /> 
+                    {openNavAccountMenu && <NavAccountMenu />}
+                </div>
+                : 
+                <BiUserCircle onClick={toggleSignInModal} className=' cursor-pointer' color='white' fontSize='2.5em' />}
                 <AiOutlinePlusCircle className=' cursor-pointer' color='white' fontSize='2.5em'/>
             </div>
         </div>

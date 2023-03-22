@@ -11,6 +11,7 @@ function App() {
 
   const [openSignIn, setOpenSignIn] = useState(false)
   const [openSignUp, setOpenSignUp] = useState(false)
+  const [openNavAccountMenu, setOpenNavAccountMenu] = useState(false)
   
   const toggleSignInModal = () => {
     setOpenSignIn(!openSignIn)
@@ -26,11 +27,17 @@ function App() {
     }
   }
 
+  const toggleNavAccountMenu = () => {
+    setOpenNavAccountMenu(!openNavAccountMenu)
+  }
+
   return (
   <div>
   <AuthContextProvider>
   <Nav 
     toggleSignInModal={toggleSignInModal}
+    openNavAccountMenu={openNavAccountMenu}
+    toggleNavAccountMenu={toggleNavAccountMenu}
    />
     <Routes> 
       <Route path='/' element={<Home />} />
