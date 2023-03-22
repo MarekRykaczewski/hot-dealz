@@ -4,6 +4,8 @@ import Home from "./pages/Home"
 import SignUpModal from './components/SignUpModal'
 import SignInModal  from './components/SignInModal'
 import { AuthContextProvider } from "./context/AuthContext"
+import { Routes, Route } from "react-router-dom"
+import Account from "./pages/Account"
 
 function App() {
 
@@ -30,6 +32,10 @@ function App() {
   <Nav 
     toggleSignInModal={toggleSignInModal}
    />
+    <Routes> 
+      <Route path='/' element={<Home />} />
+      <Route path='/account' element={<Account />} />
+    </Routes>
   {openSignIn 
   && <SignInModal 
   toggleSignInModal={toggleSignInModal} 
@@ -40,7 +46,6 @@ function App() {
   toggleSignUpModal={toggleSignUpModal} 
   toggleSignInModal={toggleSignInModal} 
   />}
-  <Home />
   </AuthContextProvider>
   </div>
   )
