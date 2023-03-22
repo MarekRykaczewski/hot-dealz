@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
 
 function SignUpModal({toggleSignInModal, toggleSignUpModal}) {
@@ -9,11 +10,14 @@ function SignUpModal({toggleSignInModal, toggleSignUpModal}) {
 
     const { createUser } = UserAuth()
 
+    const navigate = useNavigate()
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError('')
         try {
             await createUser(email, password)
+            navigate('/account')
         } catch (e) {
             setError(e.message)
             console.log(e.message)
