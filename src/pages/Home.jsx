@@ -8,7 +8,7 @@ import FooterNav from '../components/FooterNav'
 function Home() {
 
   return (
-    <div>
+    <div className='bg-slate-400'>
     <CategoryCarousel />
     <div className="flex flex-col w-full gap-3 justify-center items-center">
       <Tabs />
