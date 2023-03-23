@@ -5,7 +5,7 @@ import SignUpModal from './components/SignUpModal'
 import SignInModal  from './components/SignInModal'
 import { AuthContextProvider } from "./context/AuthContext"
 import { Routes, Route } from "react-router-dom"
-import Account from "./pages/Account"
+import Settings from "./pages/Settings"
 
 function App() {
 
@@ -41,7 +41,7 @@ function App() {
    />
     <Routes> 
       <Route path='/' element={<Home />} />
-      <Route path='/account' element={<Account />} />
+      <Route path='/settings' element={<Settings />} />
     </Routes>
   {openSignIn 
   && <SignInModal 
