@@ -1,9 +1,12 @@
+import { setDoc, doc } from 'firebase/firestore'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { db } from '../config/firebase'
 import { UserAuth } from '../context/AuthContext'
 
 function SignUpModal({toggleSignInModal, toggleSignUpModal}) {
 
+    const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
@@ -16,8 +19,11 @@ function SignUpModal({toggleSignInModal, toggleSignUpModal}) {
         e.preventDefault()
         setError('')
         try {
-            await createUser(email, password)
-            navigate('/account')
+            const res = await createUser(email, password)
+            await setDoc(doc(db, "users", res.user.uid), {
+                username: username
+            })
+            toggleSignUpModal()
         } catch (e) {
             setError(e.message)
             console.log(e.message)
@@ -45,6 +51,10 @@ function SignUpModal({toggleSignInModal, toggleSignUpModal}) {
                     <div>
                         <label htmlFor="email" className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Your email</label>
                         <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@email.com" required=""/>
+                    </div>
+                    <div>
+                        <label htmlFor="user" className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Your username</label>
+                        <input onChange={(e) => setUsername(e.target.value)} type="user" name="user" id="user" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="John_Smith" required=""/>
                     </div>
                     <div>
                         <label htmlFor="password" className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">Your password</label>
