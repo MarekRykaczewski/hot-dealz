@@ -37,7 +37,9 @@ function Nav({toggleSignInModal, openNavAccountMenu, toggleNavAccountMenu}) {
                 </div>
                 : 
                 <BiUserCircle onClick={toggleSignInModal} className=' cursor-pointer' color='white' fontSize='2.5em' />}
-                <AiOutlinePlusCircle className=' cursor-pointer' color='white' fontSize='2.5em'/>
+                <Link to='/submission'>
+                    <AiOutlinePlusCircle className=' cursor-pointer' color='white' fontSize='2.5em'/>  
+                </Link>
             </div>
         </div>
     </nav>
