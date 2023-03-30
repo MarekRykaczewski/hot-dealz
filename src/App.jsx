@@ -7,6 +7,7 @@ import { AuthContextProvider } from "./context/AuthContext"
 import { Routes, Route } from "react-router-dom"
 import Settings from "./pages/Settings"
 import Profile from "./pages/Profile"
+import Submission from "./pages/Submission"
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
    />
     <Routes> 
       <Route path='/' element={<Home />} />
+      <Route path='/submission' element={<Submission />}/>
       <Route path='/settings' element={<Settings />}>
         <Route path='/settings/profile' element={<Profile />}/>
       </Route>
