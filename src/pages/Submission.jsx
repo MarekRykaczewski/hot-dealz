@@ -6,7 +6,10 @@ import Tooltip from '../components/Tooltip'
 function Submission() {
 
   const TITLE_CHARACTER_LIMIT = 100
+  const DESCRIPTION_CHARACTER_LIMIT = 500
+
   const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
 
   console.log(title)
 
@@ -53,10 +56,12 @@ function Submission() {
             <input maxLength={TITLE_CHARACTER_LIMIT} onChange={(e) => setTitle(e.target.value)} className='border rounded-md p-1 focus:outline-orange-500 mb-3 w-full' type="text" />
             </Tooltip>
 
-
-            <h3 className='text-sm font-bold text-gray-500 mb-2'> Description </h3>
+            <div className='flex justify-between items-center'>
+              <h3 className='text-sm font-bold text-gray-500 mb-2'> Description </h3>
+              <span className='text-xs text-gray-500'> {DESCRIPTION_CHARACTER_LIMIT - description.length} Characters remaining </span>
+            </div>
             <Tooltip text={"Tell us about your deal"} subtext={"Include details about the product, links to any relevant info/reviews, and why you think it's a deal worth sharing"}>
-            <textarea className='resize-none border rounded-md p-3 focus:outline-orange-500 w-full h-[300px]' type="text" placeholder='Here you can describe the deal in your own words and explain to other users why it is a good deal!' />
+            <textarea maxLength={DESCRIPTION_CHARACTER_LIMIT} onChange={(e) => setDescription(e.target.value)} className='resize-none border rounded-md p-3 focus:outline-orange-500 w-full h-[300px]' type="text" placeholder='Here you can describe the deal in your own words and explain to other users why it is a good deal!' />
             </Tooltip>
             
             <hr className='mb-4 mt-4'></hr>
