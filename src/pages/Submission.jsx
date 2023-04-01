@@ -11,8 +11,6 @@ function Submission() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
 
-  console.log(title)
-
   return (
     <div className='bg-slate-400 w-full h-full'>
         <div className='flex flex-col p-5 bg-white ml-auto mr-auto w-[700px]'>
