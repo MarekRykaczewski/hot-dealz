@@ -29,14 +29,11 @@ function Nav({toggleSignInModal, openNavAccountMenu, toggleNavAccountMenu}) {
             </a>
             </div>
             <div className='flex gap-2'>
-                {user 
-                ? 
                 <div className='relative'>
-                    <BiUserCircle onClick={toggleNavAccountMenu} className=' cursor-pointer' color='white' fontSize='2.5em' /> 
+                    <BiUserCircle onClick={user ? toggleNavAccountMenu : toggleSignInModal} className=' cursor-pointer' color='white' fontSize='2.5em' /> 
                     {openNavAccountMenu && <NavAccountMenu />}
                 </div>
-                : 
-                <BiUserCircle onClick={toggleSignInModal} className=' cursor-pointer' color='white' fontSize='2.5em' />}
+                
                 <Link to='/submission'>
                     <AiOutlinePlusCircle className=' cursor-pointer' color='white' fontSize='2.5em'/>  
                 </Link>
