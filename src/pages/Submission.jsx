@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { AiOutlineLink } from 'react-icons/ai'
+import Tooltip from '../components/Tooltip'
 
 function Submission() {
   return (
@@ -42,10 +43,15 @@ function Submission() {
               <h3 className='text-sm font-bold text-gray-500 mb-2'> Title </h3>
               <span className='text-xs text-gray-500'> Characters remaining 123 </span>
             </div>
-            <input className='border rounded-md p-1 focus:outline-orange-500 mb-3' type="text" />
-           
+            <Tooltip text={"Make your title stand out"} subtext={"Include the Brand, Product type, Color, and Model in your title (e.g. Nike Airforce 1 White)"}> 
+            <input className='border rounded-md p-1 focus:outline-orange-500 mb-3 w-full' type="text" />
+            </Tooltip>
+
+
             <h3 className='text-sm font-bold text-gray-500 mb-2'> Description </h3>
+            <Tooltip text={"Tell us about your deal"} subtext={"Include details about the product, links to any relevant info/reviews, and why you think it's a deal worth sharing"}>
             <textarea className='resize-none border rounded-md p-3 focus:outline-orange-500 w-full h-[300px]' type="text" placeholder='Here you can describe the deal in your own words and explain to other users why it is a good deal!' />
+            </Tooltip>
             
             <hr className='mb-4 mt-4'></hr>
 
@@ -53,15 +59,19 @@ function Submission() {
             
             <div className='flex flex-col gap-3 items-center justify-start'>
               <div className='flex w-full justify-start items-center gap-4'>
-                <div className='flex flex-col '>
-                  <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="price">Price </label>
-                  <input name='price' className='border rounded-md p-1 focus:outline-orange-500' type="text" />
-                </div>
+                <Tooltip text={"Tell us the price"} subtext={"This should be the total price after any discounts"}>
+                  <div className='flex flex-col '>
+                    <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="price">Price </label>
+                    <input name='price' className='border rounded-md p-1 focus:outline-orange-500' type="text" />
+                  </div>
+                </Tooltip>
               
+                <Tooltip text={"Tell us the price"} subtext={"This should be the total price after any discounts"}>
                 <div className='flex flex-col'>
                   <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="nb-price">Next best price</label>
                   <input name='nb-price' className='border rounded-md p-1 focus:outline-orange-500' type="text" />
                 </div>
+                </Tooltip> 
               </div>
 
               <div className='flex w-full justify-start items-center gap-4'>
