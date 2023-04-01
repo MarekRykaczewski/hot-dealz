@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { AiOutlineLink } from 'react-icons/ai'
 import Tooltip from '../components/Tooltip'
 
 function Submission() {
+
+  const TITLE_CHARACTER_LIMIT = 100
+  const [title, setTitle] = useState('')
+
+  console.log(title)
+
   return (
     <div className='bg-slate-400 w-full h-full'>
         <div className='flex flex-col p-5 bg-white ml-auto mr-auto w-[700px]'>
@@ -41,10 +47,10 @@ function Submission() {
             
             <div className='flex justify-between items-center'>
               <h3 className='text-sm font-bold text-gray-500 mb-2'> Title </h3>
-              <span className='text-xs text-gray-500'> Characters remaining 123 </span>
+              <span className='text-xs text-gray-500'> {TITLE_CHARACTER_LIMIT - title.length} Characters remaining </span>
             </div>
             <Tooltip text={"Make your title stand out"} subtext={"Include the Brand, Product type, Color, and Model in your title (e.g. Nike Airforce 1 White)"}> 
-            <input className='border rounded-md p-1 focus:outline-orange-500 mb-3 w-full' type="text" />
+            <input maxLength={TITLE_CHARACTER_LIMIT} onChange={(e) => setTitle(e.target.value)} className='border rounded-md p-1 focus:outline-orange-500 mb-3 w-full' type="text" />
             </Tooltip>
 
 
