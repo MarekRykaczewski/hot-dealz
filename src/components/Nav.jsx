@@ -31,7 +31,7 @@ function Nav({toggleSignInModal, openNavAccountMenu, toggleNavAccountMenu}) {
             <div className='flex gap-2'>
                 <div className='relative'>
                     <BiUserCircle onClick={user ? toggleNavAccountMenu : toggleSignInModal} className=' cursor-pointer' color='white' fontSize='2.5em' /> 
-                    {openNavAccountMenu && <NavAccountMenu />}
+                    {openNavAccountMenu && <NavAccountMenu openNavAccountMenu={openNavAccountMenu} toggleNavAccountMenu={toggleNavAccountMenu} />}
                 </div>
                 
                 <Link to='/submission'>
