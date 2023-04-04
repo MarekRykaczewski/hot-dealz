@@ -8,8 +8,31 @@ function Submission() {
   const TITLE_CHARACTER_LIMIT = 100
   const DESCRIPTION_CHARACTER_LIMIT = 500
 
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+  const formDetailsObj = {
+    dealLink: "",
+    images: [], // Todo
+    title: "",
+    description: "",
+    price: "",
+    nextBestPrice: "",
+    freeShipping: false, // Todo
+    shippingCost: "",
+    voucherCode: "",
+    categories: [], // Todo
+    startDate: "",
+    endDate: ""
+  }
+
+  const [formDetails, setFormDetails] = useState(formDetailsObj)
+
+  const handleInputChange = (e) => {
+
+    setFormDetails({
+      ...formDetails,
+      [e.target.name]: e.target.value
+    })
+
+  }
 
   return (
     <div className='bg-slate-400 w-full h-full'>
@@ -22,7 +45,7 @@ function Submission() {
               <h1 className='text-2xl font-bold mb-4'> Deal Link </h1>
               <AiOutlineLink className='absolute top-14 left-2 text-gray-400'/>
             </div>
-            <input className='border rounded-md p-1 pl-7 focus:outline-orange-500' type="text" />
+            <input name='dealLink' value={formDetails.dealLink} onChange={handleInputChange} className='border rounded-md p-1 pl-7 focus:outline-orange-500' type="text" />
             
             <hr className='mb-4 mt-4'></hr>
             
@@ -48,18 +71,18 @@ function Submission() {
             
             <div className='flex justify-between items-center'>
               <h3 className='text-sm font-bold text-gray-500 mb-2'> Title </h3>
-              <span className='text-xs text-gray-500'> {TITLE_CHARACTER_LIMIT - title.length} Characters remaining </span>
+              <span className='text-xs text-gray-500'> {TITLE_CHARACTER_LIMIT - formDetails.title.length} Characters remaining </span>
             </div>
             <Tooltip text={"Make your title stand out"} subtext={"Include the Brand, Product type, Color, and Model in your title (e.g. Nike Airforce 1 White)"}> 
-            <input maxLength={TITLE_CHARACTER_LIMIT} onChange={(e) => setTitle(e.target.value)} className='border rounded-md p-1 focus:outline-orange-500 mb-3 w-full' type="text" />
+            <input name='title' value={formDetails.title} onChange={handleInputChange} maxLength={TITLE_CHARACTER_LIMIT} className='border rounded-md p-1 focus:outline-orange-500 mb-3 w-full' type="text" />
             </Tooltip>
 
             <div className='flex justify-between items-center'>
               <h3 className='text-sm font-bold text-gray-500 mb-2'> Description </h3>
-              <span className='text-xs text-gray-500'> {DESCRIPTION_CHARACTER_LIMIT - description.length} Characters remaining </span>
+              <span className='text-xs text-gray-500'> {DESCRIPTION_CHARACTER_LIMIT - formDetails.description.length} Characters remaining </span>
             </div>
             <Tooltip text={"Tell us about your deal"} subtext={"Include details about the product, links to any relevant info/reviews, and why you think it's a deal worth sharing"}>
-            <textarea maxLength={DESCRIPTION_CHARACTER_LIMIT} onChange={(e) => setDescription(e.target.value)} className='resize-none border rounded-md p-3 focus:outline-orange-500 w-full h-[300px]' type="text" placeholder='Here you can describe the deal in your own words and explain to other users why it is a good deal!' />
+            <textarea name='description' value={formDetails.description} onChange={handleInputChange} maxLength={DESCRIPTION_CHARACTER_LIMIT} className='resize-none border rounded-md p-3 focus:outline-orange-500 w-full h-[300px]' type="text" placeholder='Here you can describe the deal in your own words and explain to other users why it is a good deal!' />
             </Tooltip>
             
             <hr className='mb-4 mt-4'></hr>
@@ -71,14 +94,14 @@ function Submission() {
                 <Tooltip text={"Tell us the price"} subtext={"This should be the total price after any discounts"}>
                   <div className='flex flex-col '>
                     <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="price">Price </label>
-                    <input name='price' className='border rounded-md p-1 focus:outline-orange-500' type="text" />
+                    <input name='price' value={formDetails.price} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500' type="text" />
                   </div>
                 </Tooltip>
               
                 <Tooltip text={"Tell us the price"} subtext={"This should be the total price after any discounts"}>
                 <div className='flex flex-col'>
-                  <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="nb-price">Next best price</label>
-                  <input name='nb-price' className='border rounded-md p-1 focus:outline-orange-500' type="text" />
+                  <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="nextBestPrice">Next best price</label>
+                  <input name='nextBestPrice' value={formDetails.nextBestPrice} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500' type="text" />
                 </div>
                 </Tooltip> 
               </div>
@@ -86,7 +109,7 @@ function Submission() {
               <div className='flex w-full justify-start items-center gap-4'>
                 <div className='flex flex-col'>
                   <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="">Shipping cost</label>
-                  <input className='border rounded-md p-1 focus:outline-orange-500' type="text" />
+                  <input name='shippingCost' value={formDetails.shippingCost} onChange={handleInputChange}  className='border rounded-md p-1 focus:outline-orange-500' type="text" />
                 </div>
 
                 <div className='flex flex-row-reverse gap-2 items-center mt-7'>
@@ -98,7 +121,7 @@ function Submission() {
               <div className='flex w-full justify-start items-center gap-4'>
                 <div className='flex flex-col'>
                   <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="">Voucher Code </label>
-                  <input className='border rounded-md p-1 focus:outline-orange-500' type="text" />
+                  <input name='voucherCode' value={formDetails.voucherCode} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500' type="text" />
                   </div>
               </div>
             </div>
@@ -119,9 +142,9 @@ function Submission() {
 
             <div className='flex flex-col items-start gap-3'>
               <label className='text-sm font-bold text-gray-500' htmlFor=""> Start Date </label>
-              <input className='border rounded-md p-1 focus:outline-orange-500' type="date" placeholder='DD/MM/YYYY' />
+              <input name='startDate' value={formDetails.startDate} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500' type="date" placeholder='DD/MM/YYYY' />
               <label className='text-sm font-bold text-gray-500' htmlFor=""> End Date </label>
-              <input className='border rounded-md p-1 focus:outline-orange-500' type="date" placeholder='DD/MM/YYYY' />
+              <input name='endDate' value={formDetails.endDate} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500' type="date" placeholder='DD/MM/YYYY' />
             </div>
 
             <div className='flex gap-3 items-center justify-end w-ful'>
