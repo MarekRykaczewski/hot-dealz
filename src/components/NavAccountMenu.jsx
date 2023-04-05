@@ -2,20 +2,16 @@ import React, { useEffect, useRef } from 'react'
 import { UserAuth } from '../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 
-function NavAccountMenu({ openNavAccountMenu, toggleNavAccountMenu }) {
+function NavAccountMenu({ openNavAccountMenu, toggleNavAccountMenu, profileRef }) {
 
   useEffect(() => {    
     document.addEventListener("click", handleOutsideClick, true)
     return () => document.removeEventListener("click", handleOutsideClick, true)
   }, [openNavAccountMenu])
 
-  const docRef = useRef(null)
-
   const handleOutsideClick = (e) => {
-    if(docRef.current.contains(e.target)) {
-      return
-    } else {
-      toggleNavAccountMenu()
+    if(!profileRef.current.contains(e.target)) {
+        toggleNavAccountMenu()
     }
   }
 
@@ -30,7 +26,7 @@ function NavAccountMenu({ openNavAccountMenu, toggleNavAccountMenu }) {
   }
 
   return (
-  <div ref={docRef} id="dropdownInformation" className="z-10 absolute top-12 right-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+  <div id="dropdownInformation" className="z-10 absolute top-12 right-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
       <div className="px-4 py-3 text-sm text-white bg-orange-500 rounded-t-lg">
         <div>{userData.username}</div>
         <div className="font-medium truncate">{user && user.email}</div>

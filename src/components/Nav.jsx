@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { AiFillFire } from 'react-icons/ai'
 import { BiUserCircle } from 'react-icons/bi'
@@ -9,6 +9,8 @@ import NavAccountMenu from './NavAccountMenu'
 function Nav({toggleSignInModal, openNavAccountMenu, toggleNavAccountMenu}) {
 
   const { user } = UserAuth()
+
+  const profileRef = useRef(null)
 
   return (
     <nav className='flex items-center justify-between bg-slate-700 p-6'>
@@ -29,9 +31,9 @@ function Nav({toggleSignInModal, openNavAccountMenu, toggleNavAccountMenu}) {
             </a>
             </div>
             <div className='flex gap-2'>
-                <div className='relative'>
+                <div ref={profileRef} className='relative'>
                     <BiUserCircle onClick={user ? toggleNavAccountMenu : toggleSignInModal} className=' cursor-pointer' color='white' fontSize='2.5em' /> 
-                    {openNavAccountMenu && <NavAccountMenu openNavAccountMenu={openNavAccountMenu} toggleNavAccountMenu={toggleNavAccountMenu} />}
+                    {openNavAccountMenu && <NavAccountMenu profileRef={profileRef} openNavAccountMenu={openNavAccountMenu} toggleNavAccountMenu={toggleNavAccountMenu} />}
                 </div>
                 
                 <Link to='/submission'>
