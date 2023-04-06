@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 
 import { AiOutlineLink } from 'react-icons/ai'
+import CategorySelector from '../components/CategorySelector'
 import ImagesUpload from '../components/ImagesUpload'
 import Tooltip from '../components/Tooltip'
 
@@ -19,7 +20,7 @@ function Submission() {
     freeShipping: false,
     shippingCost: "",
     voucherCode: "",
-    categories: [], // Todo
+    category: "",
     startDate: "",
     endDate: ""
   }
@@ -132,12 +133,7 @@ function Submission() {
             <span className='text-sm font-bold text-gray-500' >Categories</span>
             <span className='text-xs text-gray-500 mb-3'> Which of these categories best describes your deal?</span>
             
-            <div className='flex mb-3 gap-3'>
-              <button className='border rounded-xl py-1 px-5'> Gaming </button>
-              <button className='border rounded-xl py-1 px-5'> Gaming </button>
-              <button className='border rounded-xl py-1 px-5'> Gaming </button>
-              <button className='border rounded-xl py-1 px-5'> Gaming </button>
-            </div>
+            <CategorySelector handleInputChange={handleInputChange}/>
 
             <div className='flex flex-col items-start gap-3'>
               <label className='text-sm font-bold text-gray-500' htmlFor=""> Start Date </label>
