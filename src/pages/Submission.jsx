@@ -91,14 +91,14 @@ function Submission() {
             <div className='flex flex-col gap-3 items-center justify-start'>
               <div className='flex w-full justify-start items-center gap-4'>
                 <Tooltip text={"Tell us the price"} subtext={"This should be the total price after any discounts"}>
-                  <div className='flex flex-col '>
+                  <div className='flex flex-col w-max '>
                     <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="price">Price </label>
                     <input name='price' value={formDetails.price} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500 mb-3' type="text" />
                   </div>
                 </Tooltip>
               
                 <Tooltip text={"Tell us the price"} subtext={"This should be the total price after any discounts"}>
-                <div className='flex flex-col'>
+                <div className='flex flex-col w-max'>
                   <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="nextBestPrice">Next best price</label>
                   <input name='nextBestPrice' value={formDetails.nextBestPrice} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500 mb-3' type="text" />
                 </div>
