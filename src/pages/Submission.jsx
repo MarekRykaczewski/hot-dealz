@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import { AiOutlineLink } from 'react-icons/ai'
 import ImagesUpload from '../components/ImagesUpload'
@@ -16,7 +16,7 @@ function Submission() {
     description: "",
     price: "",
     nextBestPrice: "",
-    freeShipping: false, // Todo
+    freeShipping: false,
     shippingCost: "",
     voucherCode: "",
     categories: [], // Todo
@@ -33,6 +33,13 @@ function Submission() {
       [e.target.name]: e.target.value
     })
 
+  }
+
+  const handleCheckChange = (e) => {
+    setFormDetails({
+      ...formDetails,
+      [e.target.name]: e.target.checked ? true : false
+    })
   }
 
   return (
@@ -106,7 +113,7 @@ function Submission() {
 
                 <div className='flex flex-row-reverse gap-2 items-center mt-7 mb-3'>
                   <label className='text-sm font-bold text-gray-500' htmlFor="">Free shipping?</label>
-                  <input type="checkbox" />
+                  <input onChange={(e) => handleCheckChange(e)} type="checkbox" />
                 </div>
               </div>
 
