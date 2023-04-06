@@ -86,14 +86,14 @@ function Submission() {
                 <Tooltip text={"Tell us the price"} subtext={"This should be the total price after any discounts"}>
                   <div className='flex flex-col '>
                     <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="price">Price </label>
-                    <input name='price' value={formDetails.price} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500' type="text" />
+                    <input name='price' value={formDetails.price} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500 mb-3' type="text" />
                   </div>
                 </Tooltip>
               
                 <Tooltip text={"Tell us the price"} subtext={"This should be the total price after any discounts"}>
                 <div className='flex flex-col'>
                   <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="nextBestPrice">Next best price</label>
-                  <input name='nextBestPrice' value={formDetails.nextBestPrice} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500' type="text" />
+                  <input name='nextBestPrice' value={formDetails.nextBestPrice} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500 mb-3' type="text" />
                 </div>
                 </Tooltip> 
               </div>
@@ -101,10 +101,10 @@ function Submission() {
               <div className='flex w-full justify-start items-center gap-4'>
                 <div className='flex flex-col'>
                   <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="">Shipping cost</label>
-                  <input name='shippingCost' value={formDetails.shippingCost} onChange={handleInputChange}  className='border rounded-md p-1 focus:outline-orange-500' type="text" />
+                  <input name='shippingCost' value={formDetails.shippingCost} onChange={handleInputChange}  className='border rounded-md p-1 focus:outline-orange-500 mb-3' type="text" />
                 </div>
 
-                <div className='flex flex-row-reverse gap-2 items-center mt-7'>
+                <div className='flex flex-row-reverse gap-2 items-center mt-7 mb-3'>
                   <label className='text-sm font-bold text-gray-500' htmlFor="">Free shipping?</label>
                   <input type="checkbox" />
                 </div>
@@ -113,7 +113,7 @@ function Submission() {
               <div className='flex w-full justify-start items-center gap-4'>
                 <div className='flex flex-col'>
                   <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="">Voucher Code </label>
-                  <input name='voucherCode' value={formDetails.voucherCode} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500' type="text" />
+                  <input name='voucherCode' value={formDetails.voucherCode} onChange={handleInputChange} className='border rounded-md p-1 focus:outline-orange-500 mb-3' type="text" />
                   </div>
               </div>
             </div>
