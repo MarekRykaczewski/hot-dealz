@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import { AiOutlineLink } from 'react-icons/ai'
+import ImagesUpload from '../components/ImagesUpload'
 import Tooltip from '../components/Tooltip'
 
 function Submission() {
@@ -10,7 +11,7 @@ function Submission() {
 
   const formDetailsObj = {
     dealLink: "",
-    images: [], // Todo
+    images: [],
     title: "",
     description: "",
     price: "",
@@ -57,16 +58,7 @@ function Submission() {
                 <span> Make your deal stand out with images </span>
                 <p className='text-xs text-gray-500'> Upload up to 3 images to publish your deal.</p>
               </div>
-              <div className='flex justify-center items-center relative w-full'>
-                <button className='absolute bg-orange-500 hover:bg-orange-400 transition-all text-white py-2 px-5 rounded-3xl'>
-                   Upload Images 
-                </button>
-                <div className='flex gap-3'>
-                  <div className='bg-slate-300 w-[100px] h-[100px] rounded-xl'></div>
-                  <div className='bg-slate-300 w-[100px] h-[100px] rounded-xl'></div>
-                  <div className='bg-slate-300 w-[100px] h-[100px] rounded-xl'></div>
-                </div>
-              </div>
+              <ImagesUpload size={3} formDetails={formDetails} setFormDetails={setFormDetails}/>
             </div>  
             
             <div className='flex justify-between items-center'>
