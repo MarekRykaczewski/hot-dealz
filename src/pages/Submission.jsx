@@ -1,11 +1,17 @@
 import React, { useRef, useState } from 'react'
 
+import { UserAuth } from '../context/AuthContext'
 import { AiOutlineLink } from 'react-icons/ai'
 import CategorySelector from '../components/CategorySelector'
 import ImagesUpload from '../components/ImagesUpload'
 import Tooltip from '../components/Tooltip'
+import PreviewDealModal from '../components/PreviewDealModal'
 
 function Submission() {
+
+  const [openDealPreview, setOpenDealPreview] = useState(false)
+
+  const { userData } = UserAuth()
 
   const TITLE_CHARACTER_LIMIT = 100
   const DESCRIPTION_CHARACTER_LIMIT = 500
@@ -43,8 +49,27 @@ function Submission() {
     })
   }
 
+  const toggleOpenDealPreview = () => {
+    setOpenDealPreview(!openDealPreview)
+  }
+
   return (
     <div className='bg-slate-400 w-full h-full'>
+
+    {openDealPreview && 
+      <PreviewDealModal               
+                  title={formDetails.title || "Your Title"}
+                  date={"1/1/2022"} 
+                  time={"1:00"}
+                  owner={userData.username}
+                  price={formDetails.price || 100}
+                  lastBestPrice={formDetails.lastBestPrice || 200}
+                  upvotes={100}
+                  description={formDetails.description || "Your wonderful description appears right here"} 
+                  toggleOpenDealPreview={toggleOpenDealPreview}
+                />}
+
+
         <div className='flex flex-col p-5 bg-white ml-auto mr-auto w-[700px]'>
             
             <h1 className='text-2xl font-bold'> Add a new deal </h1>
@@ -143,7 +168,10 @@ function Submission() {
             </div>
 
             <div className='flex gap-3 items-center justify-end w-ful'>
-              <button className='bg-white hover:bg-gray-200 border transition-all text-gray-500 py-2 px-5 rounded-3xl'> Preview </button>
+              <button 
+              onClick={toggleOpenDealPreview} 
+              className='bg-white hover:bg-gray-200 border transition-all text-gray-500 py-2 px-5 rounded-3xl'> Preview 
+              </button>
               <button className='bg-orange-500 hover:bg-orange-400 transition-all text-white py-2 px-5 rounded-3xl'> Publish </button>
             </div>
 
