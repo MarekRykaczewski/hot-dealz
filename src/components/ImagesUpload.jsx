@@ -8,7 +8,7 @@ const imageUploaderElements = [...Array(size)].map((e, i) =>
 <input onChange={(e) => handleImageUpload(e)} className='hidden' id={`img-${i}`} type="file" />
 {formDetails.images[i] && <img className=' object-scale-down w-full h-full' alt='not found' src={URL.createObjectURL(formDetails.images[i])} />}
 {formDetails.images[i] && 
-<button onClick={() => handleImageRemove(formDetails.images[i])} className='absolute flex items-center justify-center border text-center top-[-10px] right-[-10px] rounded-full text-white hover:bg-orange-400 bg-orange-500 w-6 h-6'>  
+<button onClick={() => handleImageRemove(formDetails.images[i])} className='absolute flex items-center justify-center border text-center top-[-10px] right-[-10px] rounded-full text-white transition hover:bg-orange-400 bg-orange-500 w-6 h-6'>  
 <span>&times;</span>
 </button>}
 </div>
