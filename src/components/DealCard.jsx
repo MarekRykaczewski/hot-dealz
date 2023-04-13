@@ -30,7 +30,7 @@ function DealCard({ title, date, time, owner, price, lastBestPrice, upvotes, des
       <div className='flex gap-3'>
         <p className='text-orange-500 font-bold'> {price}</p>
         <del className=' text-gray-500 font-bold'> {lastBestPrice} </del>
-        <p> -{Math.floor((lastBestPrice - price) / price * 100)}% </p> 
+        <p> -{Math.floor((lastBestPrice - price) / lastBestPrice * 100)}% </p> 
       </div>
       <p className="text-gray-700 text-base">{description}</p>
     </div>
