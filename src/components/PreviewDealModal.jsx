@@ -9,7 +9,7 @@ function PreviewDealModal({ toggleOpenDealPreview, title, date, time, owner, pri
   return (
     <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-50 z-10 '>
         <div className='relative flex flex-col gap-3 bg-white border p-10'>
-            <button onClick={toggleOpenDealPreview} className='absolute top-[-10px] right-[-10px] flex self-end items-center justify-center border text-center rounded-full bg-white w-5 h-5'>  
+            <button onClick={toggleOpenDealPreview} className='absolute top-[-10px] right-[-10px] flex items-center justify-center border text-center rounded-full text-white transition hover:bg-orange-400 bg-orange-500 w-6 h-6'>  
                 &times;
             </button> 
             <div className="max-w-sm w-full lg:max-w-4xl lg:flex justify-center">
