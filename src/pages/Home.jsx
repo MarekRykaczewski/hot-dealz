@@ -14,7 +14,7 @@ function Home() {
         try {
             const querySnapshot = await getDocs(collection(db, "deals"))
             querySnapshot.forEach((doc) => {
-                list.push(doc.data())
+                list.push({ id: doc.id, ...doc.data() })
             });
             setDeals(list)
         } catch (err) {
@@ -30,8 +30,9 @@ const dealElements =
     deals.map(item => {
         return (
           <DealCard
-            key={item}
+            key={item.id}
             title={item.title}
+            dealLink={item.dealLink}
             upvotes={item.upvotes}
             owner={item.owner}
             price={item.price}
