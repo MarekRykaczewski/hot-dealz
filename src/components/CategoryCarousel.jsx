@@ -34,9 +34,9 @@ function CategoryCarousel() {
     const items = 
         categories.map(item => {
             return (
-                <div key={item.title} className='flex flex-none gap-1 h-10 w-[150px] items-center justify-center bg-slate-500 rounded-lg p-2 text-white font-bold '> 
+                <button key={item.title} className='flex flex-none gap-1 h-10 w-[150px] items-center justify-center bg-slate-500 rounded-lg p-2 text-white font-bold hover:bg-slate-400 transition'> 
                 {item.title}
-                </div>
+                </button>
             )
         })
     
