@@ -5,7 +5,7 @@ import { BsBookmark } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
 
-function DealCard({ title, date, time, owner, price, lastBestPrice, upvotes, description }) {
+function DealCard({ title, date, time, owner, price, lastBestPrice, upvotes, description, dealLink }) {
   return (
 <div className="max-w-sm w-full lg:max-w-4xl lg:flex justify-center">
   <div className="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden bg-slate-500">
@@ -44,7 +44,9 @@ function DealCard({ title, date, time, owner, price, lastBestPrice, upvotes, des
       <div className='flex gap-5'>
         <button><BsBookmark /></button>
         <button className='flex items-center justify-center gap-1'><BiCommentDetail /> 175</button>
-        <button className='flex items-center justify-center gap-1'>Go to deal<FiExternalLink /></button>
+        <button className='flex items-center justify-center gap-1'>
+         <a href={dealLink} target='_blank'> Go to deal<FiExternalLink /> </a> 
+        </button>
       </div>
     </div>
   </div>
