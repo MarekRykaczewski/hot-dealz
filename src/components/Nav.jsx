@@ -20,15 +20,6 @@ function Nav({toggleSignInModal, openNavAccountMenu, toggleNavAccountMenu}) {
         </Link>
         <div className="flex items-center justify-between w-full flex-grow lg:flex lg:items-center lg:w-auto">
             <div className="text-sm lg:flex-grow">
-            <a className="block lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">
-                Place1
-            </a>
-            <a className="block lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">
-                Place2
-            </a>
-            <a className="block lg:inline-block lg:mt-0 text-slate-200 hover:text-white">
-                Place3
-            </a>
             </div>
             <div className='flex gap-2'>
                 <div ref={profileRef} className='relative'>
