@@ -5,7 +5,7 @@ import { BsBookmark } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
 
-function DealCard({ title, date, time, owner, price, lastBestPrice, upvotes, description, dealLink }) {
+function DealCard({ title, date, time, owner, price, nextBestPrice, upvotes, description, dealLink }) {
   return (
 <div className="max-w-sm w-full lg:max-w-4xl lg:flex justify-center">
   <div className="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden bg-slate-500">
@@ -29,8 +29,8 @@ function DealCard({ title, date, time, owner, price, lastBestPrice, upvotes, des
       <div className="text-gray-900 font-bold text-xl mb-2">{title}</div>
       <div className='flex gap-3'>
         <p className='text-orange-500 font-bold'> {price}</p>
-        <del className=' text-gray-500 font-bold'> {lastBestPrice} </del>
-        <p> -{Math.floor((lastBestPrice - price) / lastBestPrice * 100)}% </p> 
+        <del className=' text-gray-500 font-bold'> {nextBestPrice} </del>
+        <p> -{Math.floor((nextBestPrice - price) / nextBestPrice * 100)}% </p> 
       </div>
       <p className="text-gray-700 text-base">{description}</p>
     </div>
