@@ -6,6 +6,8 @@ import CategorySelector from '../components/CategorySelector'
 import ImagesUpload from '../components/ImagesUpload'
 import Tooltip from '../components/Tooltip'
 import PreviewDealModal from '../components/PreviewDealModal'
+import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore'
+import { db } from '../config/firebase'
 
 function Submission() {
 
@@ -47,6 +49,22 @@ function Submission() {
       ...formDetails,
       [e.target.name]: e.target.checked ? true : false
     })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const res = await addDoc(collection(db, "deals"), {
+      owner: userData.username,
+      dealLink: formDetails.dealLink,
+      title: formDetails.title,
+      description: formDetails.description,
+      price: formDetails.price,
+      nextBestPrice: formDetails.nextBestPrice,
+      upvotes: 0,
+      posted: serverTimestamp()
+    });
+
+    console.log(res.id)
   }
 
   const toggleOpenDealPreview = () => {
@@ -172,7 +190,7 @@ function Submission() {
               onClick={toggleOpenDealPreview} 
               className='bg-white hover:bg-gray-200 border transition-all text-gray-500 py-2 px-5 rounded-3xl'> Preview 
               </button>
-              <button className='bg-orange-500 hover:bg-orange-400 transition-all text-white py-2 px-5 rounded-3xl'> Publish </button>
+              <button onClick={handleSubmit} className='bg-orange-500 hover:bg-orange-400 transition-all text-white py-2 px-5 rounded-3xl'> Publish </button>
             </div>
 
         </div>
