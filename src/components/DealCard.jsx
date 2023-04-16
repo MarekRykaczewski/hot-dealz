@@ -15,11 +15,11 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
   const likesRef = collection(db, "likes")
   const likesDoc = query(likesRef, where("postId", "==", postId))
 
-  const [likes, setLikes] = useState(null)
+  const [likes, setLikes] = useState([])
 
   const getLikes = async () => {
     const data = await getDocs(likesDoc)
-    setLikes(data.docs.length)
+    setLikes(data.docs.map((doc) => ({ userId: doc.data().userId })))
   }
 
   const addLike = async () => {
@@ -39,7 +39,7 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
       <div className="text-sm text-gray-600 flex items-center justify-between">
         <div className='flex justify-around items-center gap-2 rounded-l-full rounded-r-full border border-black w-32 h-8 p-2 mb-2'>
           <button className='text-blue-500 font-bold text-2xl'>–</button>
-          <span className='font-bold text-lg'> {likes || 0} </span>
+          <span className='font-bold text-lg'> {likes.length || 0} </span>
           <button onClick={addLike} className='text-orange-500 font-bold text-2xl'>+</button>          
         </div>
         <div className='flex gap-2 items-center mb-2'>
