@@ -31,9 +31,9 @@ const dealElements =
         return (
           <DealCard
             key={item.id}
+            postId={item.id}
             title={item.title}
             dealLink={item.dealLink}
-            upvotes={item.upvotes}
             owner={item.owner}
             price={item.price}
             nextBestPrice={item.nextBestPrice}

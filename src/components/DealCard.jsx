@@ -1,11 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { BsBookmark } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
+import { db } from '../config/firebase'
+import { UserAuth } from '../context/AuthContext'
 
-function DealCard({ title, date, time, owner, price, nextBestPrice, upvotes, description, dealLink }) {
+
+function DealCard({ postId, title, date, time, owner, price, nextBestPrice, description, dealLink }) {
+  
+  const { userData } = UserAuth()
+  const likesRef = collection(db, "likes")
+  const likesDoc = query(likesRef, where("postId", "==", postId))
+
+  const [likes, setLikes] = useState(null)
+
+  const getLikes = async () => {
+    const data = await getDocs(likesDoc)
+    setLikes(data.docs.length)
+  }
+
+  const addLike = async () => {
+    await addDoc(likesRef, { userId: userData.username, postId: postId })
+  }
+
+  useEffect(() => {
+    getLikes()
+  }, [])
+  
   return (
 <div className="max-w-sm w-full lg:max-w-4xl lg:flex justify-center">
   <div className="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden bg-slate-500">
@@ -15,8 +39,8 @@ function DealCard({ title, date, time, owner, price, nextBestPrice, upvotes, des
       <div className="text-sm text-gray-600 flex items-center justify-between">
         <div className='flex justify-around items-center gap-2 rounded-l-full rounded-r-full border border-black w-32 h-8 p-2 mb-2'>
           <button className='text-blue-500 font-bold text-2xl'>–</button>
-          <span className='font-bold text-lg'> {upvotes} </span>
-          <button className='text-orange-500 font-bold text-2xl'>+</button>          
+          <span className='font-bold text-lg'> {likes || 0} </span>
+          <button onClick={addLike} className='text-orange-500 font-bold text-2xl'>+</button>          
         </div>
         <div className='flex gap-2 items-center mb-2'>
           <AiOutlineClockCircle size={"1.4em"} />
