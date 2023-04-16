@@ -23,8 +23,12 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
   }
 
   const addLike = async () => {
-    await addDoc(likesRef, { userId: user.uid, postId: postId })
-    setLikes((prev) => [...prev, {userId: user.uid}])
+    try {
+      await addDoc(likesRef, { userId: user.uid, postId: postId })
+      setLikes((prev) => [...prev, {userId: user.uid}])
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   useEffect(() => {
