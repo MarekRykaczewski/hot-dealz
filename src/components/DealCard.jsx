@@ -10,8 +10,8 @@ import { UserAuth } from '../context/AuthContext'
 
 
 function DealCard({ postId, title, date, time, owner, price, nextBestPrice, description, dealLink }) {
-  
-  const { userData } = UserAuth()
+
+  const { user } = UserAuth()
   const likesRef = collection(db, "likes")
   const likesDoc = query(likesRef, where("postId", "==", postId))
 
@@ -23,7 +23,7 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
   }
 
   const addLike = async () => {
-    await addDoc(likesRef, { userId: userData.username, postId: postId })
+    await addDoc(likesRef, { userId: user.uid, postId: postId })
   }
 
   useEffect(() => {
