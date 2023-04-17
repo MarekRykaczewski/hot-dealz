@@ -11,6 +11,8 @@ import { UserAuth } from '../context/AuthContext'
 
 function DealCard({ postId, title, date, time, owner, price, nextBestPrice, description, dealLink }) {
 
+  // TODO REFACTOR TO AVOID REPETETIVE CODE
+
   const { user } = UserAuth()
   const likesRef = collection(db, "likes")
   const likesDoc = query(likesRef, where("postId", "==", postId))
@@ -34,6 +36,9 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
   const addLike = async () => {
     try {
       const newDoc = await addDoc(likesRef, { userId: user.uid, postId: postId})
+      if (userDisliked) {
+        deleteDislike()
+      }
       if (user) {
         setLikes((prev) => 
           prev
@@ -49,6 +54,9 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
   const addDislike = async () => {
     try {
       const newDoc = await addDoc(dislikesRef, { userId: user.uid, postId: postId})
+      if (userLiked) {
+        deleteLike()
+      }
       if (user) {
         setDislikes((prev) => 
           prev
