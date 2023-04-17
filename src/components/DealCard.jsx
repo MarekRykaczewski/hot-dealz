@@ -125,7 +125,6 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
   
   return (
 <div className="max-w-sm w-full lg:max-w-4xl lg:flex justify-center">
-  <Link to={`/deal/${postId}`} state={{ test: "test"}}>test</Link>
   <div className="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden bg-slate-500">
   </div>
   <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
@@ -144,7 +143,9 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
           </div>
         </div>
       </div>
-      <div className="text-gray-900 font-bold text-xl mb-2">{title}</div>
+      <Link className='block' to={`/deal/${postId}`} state={ {postId: postId, title: title, date :date, time: time, owner: owner, price: price, nextBestPrice: nextBestPrice, description: description, dealLink: dealLink} }>
+      <div className="text-gray-900 font-bold text-xl mb-2 hover:text-orange-500 transition">{title}</div>
+      </Link>
       <div className='flex gap-3'>
         <p className='text-orange-500 font-bold'> {price}</p>
         <del className=' text-gray-500 font-bold'> {nextBestPrice} </del>
