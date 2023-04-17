@@ -15,11 +15,20 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
   const likesRef = collection(db, "likes")
   const likesDoc = query(likesRef, where("postId", "==", postId))
 
+  const dislikesRef = collection(db, "dislikes")
+  const dislikesDoc = query(dislikesRef, where("postId", "==", postId))
+
   const [likes, setLikes] = useState([])
+  const [dislikes, setDislikes] = useState([])
 
   const getLikes = async () => {
     const data = await getDocs(likesDoc)
     setLikes(data.docs.map((doc) => ({ userId: doc.data().userId, likeId: doc.id })))
+  }
+
+  const getDislikes = async () => {
+    const data = await getDocs(dislikesDoc)
+    setDislikes(data.docs.map((doc) => ({ userId: doc.data().userId, dislikeId: doc.id })))
   }
 
   const addLike = async () => {
@@ -30,6 +39,21 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
           prev
             ? [...prev, { userId: user.uid, likeId: newDoc.id }]
             : [{ userId: user.uid, likeId: newDoc.id }]
+        )
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const addDislike = async () => {
+    try {
+      const newDoc = await addDoc(dislikesRef, { userId: user.uid, postId: postId})
+      if (user) {
+        setDislikes((prev) => 
+          prev
+            ? [...prev, { userId: user.uid, dislikeId: newDoc.id }]
+            : [{ userId: user.uid, dislikeId: newDoc.id }]
         )
       }
     } catch (err) {
@@ -59,10 +83,35 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
     }
   }
 
+  const deleteDislike = async () => {
+    try {
+      const dislikeToDeleteQuery = query(
+        dislikesRef,
+        where("postId", "==", postId),
+        where("userId", "==", user.uid)
+      )
+
+      const dislikeToDeleteData = await getDocs(dislikeToDeleteQuery)
+      const dislikeId = dislikeToDeleteData.docs[0].id
+      const dislikeToDelete = doc(db, "dislikes", dislikeId)
+      await deleteDoc(dislikeToDelete)
+      if (user) {
+        setDislikes ((prev) =>
+          prev.filter((like) => like.dislikeId !== dislikeId)
+        )
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const userLiked = likes.find((like) => like.userId === user.uid)
+
+  const userDisliked = dislikes.find((dislike) => dislike.userId === user.uid)
 
   useEffect(() => {
     getLikes()
+    getDislikes()
   }, [])
   
   return (
@@ -73,8 +122,8 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
     <div className="mb-8">
       <div className="text-sm text-gray-600 flex items-center justify-between">
         <div className='flex justify-around items-center gap-2 rounded-l-full rounded-r-full border border-black w-32 h-8 p-2 mb-2'>
-          <button className='text-blue-500 font-bold text-2xl'>–</button>
-          <span className='font-bold text-lg'> {likes.length || 0} </span>
+          <button onClick={userDisliked ? deleteDislike : addDislike} className='text-blue-500 font-bold text-2xl'>–</button>
+          <span className='font-bold text-lg'> {likes.length - dislikes.length || 0} </span>
           <button onClick={userLiked ? deleteLike : addLike} className='text-orange-500 font-bold text-2xl'>+</button>          
         </div>
         <div className='flex gap-2 items-center mb-2'>
