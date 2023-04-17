@@ -4,7 +4,7 @@ import { AiOutlineClockCircle } from 'react-icons/ai'
 import { BsBookmark } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../config/firebase'
 import { UserAuth } from '../context/AuthContext'
 
@@ -19,17 +19,47 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
 
   const getLikes = async () => {
     const data = await getDocs(likesDoc)
-    setLikes(data.docs.map((doc) => ({ userId: doc.data().userId })))
+    setLikes(data.docs.map((doc) => ({ userId: doc.data().userId, likeId: doc.id })))
   }
 
   const addLike = async () => {
     try {
-      await addDoc(likesRef, { userId: user.uid, postId: postId })
-      setLikes((prev) => [...prev, {userId: user.uid}])
+      const newDoc = await addDoc(likesRef, { userId: user.uid, postId: postId})
+      if (user) {
+        setLikes((prev) => 
+          prev
+            ? [...prev, { userId: user.uid, likeId: newDoc.id }]
+            : [{ userId: user.uid, likeId: newDoc.id }]
+        )
+      }
     } catch (err) {
       console.log(err)
     }
   }
+
+  const deleteLike = async () => {
+    try {
+      const likeToDeleteQuery = query(
+        likesRef,
+        where("postId", "==", postId),
+        where("userId", "==", user.uid)
+      )
+
+      const likeToDeleteData = await getDocs(likeToDeleteQuery)
+      const likeId = likeToDeleteData.docs[0].id
+      const likeToDelete = doc(db, "likes", likeId)
+      await deleteDoc(likeToDelete)
+      if (user) {
+        setLikes ((prev) =>
+          prev.filter((like) => like.likeId !== likeId)
+        )
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const userLiked = likes.find((like) => like.userId === user.uid)
 
   useEffect(() => {
     getLikes()
@@ -45,7 +75,7 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
         <div className='flex justify-around items-center gap-2 rounded-l-full rounded-r-full border border-black w-32 h-8 p-2 mb-2'>
           <button className='text-blue-500 font-bold text-2xl'>–</button>
           <span className='font-bold text-lg'> {likes.length || 0} </span>
-          <button onClick={addLike} className='text-orange-500 font-bold text-2xl'>+</button>          
+          <button onClick={userLiked ? deleteLike : addLike} className='text-orange-500 font-bold text-2xl'>+</button>          
         </div>
         <div className='flex gap-2 items-center mb-2'>
           <AiOutlineClockCircle size={"1.4em"} />
