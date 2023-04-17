@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import CategoryCarousel from '../components/CategoryCarousel'
-import Tabs from '../components/Tabs'
 import DealCard from '../components/DealCard'
-import FooterNav from '../components/FooterNav'
 import { db } from "../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
+import { Routes, Route } from 'react-router-dom'
+import DealDetails from './DealDetails'
+import Deals from './Deals'
 
 function Home() {
 
@@ -46,12 +46,10 @@ const dealElements =
 
   return (
     <div className='bg-slate-400'>
-    <CategoryCarousel />
-    <div className="flex flex-col w-full h-screen gap-3 justify-start items-center">
-      <Tabs />
-      {dealElements}
-      <FooterNav />
-    </div>
+    <Routes>
+      <Route path="/deal/*" element={<DealDetails />}/>
+      <Route path="/" element={<Deals dealElements={dealElements}/>} />
+    </Routes>
     </div>
   )
 }

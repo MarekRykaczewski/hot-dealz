@@ -8,6 +8,7 @@ import { Routes, Route } from "react-router-dom"
 import Settings from "./pages/Settings"
 import Profile from "./pages/Profile"
 import Submission from "./pages/Submission"
+import DealDetails from "./pages/DealDetails"
 
 function App() {
 
@@ -42,11 +43,12 @@ function App() {
     toggleNavAccountMenu={toggleNavAccountMenu}
    />
     <Routes> 
-      <Route path='/' element={<Home />} />
+      <Route path='*' element={<Home />} />
       <Route path='/submission' element={<Submission />}/>
       <Route path='/settings' element={<Settings />}>
         <Route path='/settings/profile' element={<Profile />}/>
       </Route>
+      {/* <Route path="/deal/:id" element={<DealDetails />}/>  */}
     </Routes>
   {openSignIn 
   && <SignInModal 

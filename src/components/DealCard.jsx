@@ -7,6 +7,7 @@ import { FiExternalLink } from 'react-icons/fi'
 import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../config/firebase'
 import { UserAuth } from '../context/AuthContext'
+import { Link } from 'react-router-dom'
 
 
 function DealCard({ postId, title, date, time, owner, price, nextBestPrice, description, dealLink }) {
@@ -124,6 +125,7 @@ function DealCard({ postId, title, date, time, owner, price, nextBestPrice, desc
   
   return (
 <div className="max-w-sm w-full lg:max-w-4xl lg:flex justify-center">
+  <Link to={`/deal/${postId}`} state={{ test: "test"}}>test</Link>
   <div className="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden bg-slate-500">
   </div>
   <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
