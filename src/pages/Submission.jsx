@@ -7,7 +7,8 @@ import ImagesUpload from '../components/ImagesUpload'
 import Tooltip from '../components/Tooltip'
 import PreviewDealModal from '../components/PreviewDealModal'
 import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore'
-import { db } from '../config/firebase'
+import { db, storage } from '../config/firebase'
+import { ref, uploadBytes } from 'firebase/storage'
 
 function Submission() {
 
@@ -62,9 +63,23 @@ function Submission() {
       nextBestPrice: formDetails.nextBestPrice,
       upvotes: 0,
       posted: serverTimestamp()
-    });
+    })
+
+    submitImages()
 
     console.log(res.id)
+  }
+
+  const submitImages = () => {
+    for (let i = 0; i < formDetails.images.length; i++) {
+      if (formDetails.images[i]) {
+        const randomId = doc(collection(db, "temp")).id
+        const imageRef = ref(storage, `images/${randomId}`)
+        uploadBytes(imageRef, formDetails.images[i])
+      } else {
+        return
+      }
+    }
   }
 
   const toggleOpenDealPreview = () => {
