@@ -34,15 +34,15 @@ function ImageSlider() {
     }
 
   return (
-    <div className='max-w-[500px] h-[700px] w-full m-auto py-16 px-4 relative group'>
-        <div style={{backgroundImage: `url(${slides[currentIndex].url})`}} className='w-full h-full rounded-2xl bg-center bg-cover duration-500'></div>
-        <div className='hidden group-hover:block absolute top-[50%] left-8 text-2xl rounded-full p-1 bg-orange-500 hover:bg-orange-400 transition text-white border-2 border-white shadow-lg cursor-pointer'>
-            <BiChevronLeft onClick={prevSlide} size={30} />
+    <div className='h-full w-full relative group'>
+        <div style={{backgroundImage: `url(${slides[currentIndex].url})`}} className='w-full h-full bg-center bg-cover duration-500'></div>
+        <div className='hidden group-hover:block absolute bottom-12 left-5 text-2xl rounded-full p-1 bg-orange-500 hover:bg-orange-400 transition text-white border-2 border-white shadow-lg cursor-pointer'>
+            <BiChevronLeft onClick={prevSlide} size={25} />
         </div>
-        <div className='hidden group-hover:block absolute top-[50%] right-8 text-2xl rounded-full p-1 bg-orange-500 hover:bg-orange-400 transition text-white border-2 border-white shadow-lg cursor-pointer'>
-            <BiChevronRight onClick={nextSlide} size={30} />
+        <div className='hidden group-hover:block absolute bottom-12 right-5 text-2xl rounded-full p-1 bg-orange-500 hover:bg-orange-400 transition text-white border-2 border-white shadow-lg cursor-pointer'>
+            <BiChevronRight onClick={nextSlide} size={25} />
         </div>
-        <div className='flex top-4 justify-center py-2'>
+        <div className='hidden group-hover:flex w-full items-center justify-center absolute bottom-0 py-2'>
             {slides.map((slide, slideIndex) => (
                 <div key={slideIndex} onClick={() => goToSlide(slideIndex)} className={`cursor-pointer drop-shadow-lg ${currentIndex === slideIndex ? 'text-orange-400' : 'text-white'}`}> 
                     <RxDotFilled size={30} />

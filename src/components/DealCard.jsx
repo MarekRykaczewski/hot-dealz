@@ -6,14 +6,16 @@ import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import DealCardVotes from './DealCardVotes'
+import ImageSlider from './ImageSlider'
 
 
 function DealCard({ postId, title, date, time, owner, price, nextBestPrice, description, dealLink }) {
   return (
 <div className="max-w-sm w-full lg:max-w-4xl lg:flex justify-center">
   <div className="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden bg-slate-500">
+  <ImageSlider />
   </div>
-  <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+  <div className="bg-white p-4 flex flex-col justify-between leading-normal">
     <div className="mb-8">
       <div className="text-sm text-gray-600 flex items-center justify-between">
         <DealCardVotes postId={postId} />
