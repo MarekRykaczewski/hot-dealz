@@ -64,6 +64,7 @@ function Submission() {
     await setDoc(newDocRef, {
       owner: userData.username,
       dealLink: formDetails.dealLink,
+      imageCount: formDetails.images.length, // No way to count folder items via Firebase, so this is needed.
       title: formDetails.title,
       description: formDetails.description,
       price: formDetails.price,
