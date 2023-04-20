@@ -1,27 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 import { RxDotFilled } from 'react-icons/rx'
-import { ref, getDownloadURL } from "firebase/storage"
-import { storage } from '../config/firebase'
 
-function ImageSlider({ postId, imageCount }) {
-
-    const [slides, setSlides] = useState([])
-
-    useEffect(() => {
-        const getImages = async () => {
-
-        const imageList = []
-
-          for (let i = 0; i < imageCount; i++) {
-            const imageRef = ref(storage, `images/${postId}/${i}`)
-            const url = await getDownloadURL(imageRef)
-            imageList.push({url: url})
-          }  
-          setSlides(imageList)
-        }
-        getImages()
-      }, [])
+function ImageSlider({ slides }) {
 
     const [currentIndex, setCurrentIndex] = useState(0)
 

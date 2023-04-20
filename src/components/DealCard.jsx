@@ -7,13 +7,34 @@ import { FiExternalLink } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import DealCardVotes from './DealCardVotes'
 import ImageSlider from './ImageSlider'
+import { ref, getDownloadURL } from "firebase/storage"
+import { storage } from '../config/firebase'
 
 
 function DealCard({ postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink }) {  
+  
+  const [slides, setSlides] = useState([""])
+
+  useEffect(() => {
+      const getImages = async () => {
+
+      const imageList = []
+
+        for (let i = 0; i < imageCount; i++) {
+          const imageRef = ref(storage, `images/${postId}/${i}`)
+          const url = await getDownloadURL(imageRef)
+          imageList.push({url: url})
+        }  
+        setSlides(imageList)
+      }
+      getImages()
+      console.log(slides)
+    }, [])
+  
   return (
 <div className="max-w-sm w-full lg:max-w-4xl lg:flex justify-center">
   <div className="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden bg-slate-500">
-  <ImageSlider postId={postId} imageCount={imageCount} />
+  <ImageSlider slides={slides} />
   </div>
   <div className="bg-white p-4 flex flex-col justify-between leading-normal">
     <div className="mb-8">
