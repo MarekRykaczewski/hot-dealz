@@ -54,7 +54,14 @@ function Submission() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const res = await addDoc(collection(db, "deals"), {
+
+    const dealsCollection = collection(db, "deals")
+
+    const newDocRef = doc(dealsCollection)
+
+    const newDocId = newDocRef.id
+
+    await setDoc(newDocRef, {
       owner: userData.username,
       dealLink: formDetails.dealLink,
       title: formDetails.title,
@@ -62,19 +69,17 @@ function Submission() {
       price: formDetails.price,
       nextBestPrice: formDetails.nextBestPrice,
       upvotes: 0,
-      posted: serverTimestamp()
+      posted: serverTimestamp(),
     })
+    
+    submitImages(newDocId)
 
-    submitImages()
-
-    console.log(res.id)
   }
 
-  const submitImages = () => {
+  const submitImages = (docId) => {
     for (let i = 0; i < formDetails.images.length; i++) {
       if (formDetails.images[i]) {
-        const randomId = doc(collection(db, "temp")).id
-        const imageRef = ref(storage, `images/${randomId}`)
+        const imageRef = ref(storage, `images/${docId}/${i}`)
         uploadBytes(imageRef, formDetails.images[i])
       } else {
         return
