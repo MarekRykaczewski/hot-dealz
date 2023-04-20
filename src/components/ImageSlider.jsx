@@ -43,11 +43,13 @@ function ImageSlider() {
             <BiChevronRight onClick={nextSlide} size={25} />
         </div>
         <div className='hidden group-hover:flex w-full items-center justify-center absolute bottom-0 py-2'>
+            <div className='flex bg-slate-800 bg-opacity-60 rounded-lg drop-shadow-lg'>
             {slides.map((slide, slideIndex) => (
                 <div key={slideIndex} onClick={() => goToSlide(slideIndex)} className={`cursor-pointer drop-shadow-lg ${currentIndex === slideIndex ? 'text-orange-400' : 'text-white'}`}> 
                     <RxDotFilled size={30} />
                 </div>
             ))}
+            </div>
         </div>
     </div>
   )
