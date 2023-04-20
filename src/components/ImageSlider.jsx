@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
+import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 import { RxDotFilled } from 'react-icons/rx'
 
 function ImageSlider() {
@@ -34,13 +34,13 @@ function ImageSlider() {
     }
 
   return (
-    <div className='max-w-[1400]px h-[700px] w-full m-auto py-16 px-4 relative group'>
+    <div className='max-w-[500px] h-[700px] w-full m-auto py-16 px-4 relative group'>
         <div style={{backgroundImage: `url(${slides[currentIndex].url})`}} className='w-full h-full rounded-2xl bg-center bg-cover duration-500'></div>
-        <div className='hidden group-hover:block absolute top-[50%] left-5 text-2xl rounded-full p-2 bg-black text-white cursor-pointer'>
-            <BsChevronLeft onClick={prevSlide} size={30} />
+        <div className='hidden group-hover:block absolute top-[50%] left-8 text-2xl rounded-full p-1 bg-orange-500 hover:bg-orange-400 transition text-white border-2 border-white shadow-lg cursor-pointer'>
+            <BiChevronLeft onClick={prevSlide} size={30} />
         </div>
-        <div className='hidden group-hover:block absolute top-[50%] right-5 text-2xl rounded-full p-2 bg-black text-white cursor-pointer'>
-            <BsChevronRight onClick={nextSlide} size={30} />
+        <div className='hidden group-hover:block absolute top-[50%] right-8 text-2xl rounded-full p-1 bg-orange-500 hover:bg-orange-400 transition text-white border-2 border-white shadow-lg cursor-pointer'>
+            <BiChevronRight onClick={nextSlide} size={30} />
         </div>
         <div className='flex top-4 justify-center py-2'>
             {slides.map((slide, slideIndex) => (
