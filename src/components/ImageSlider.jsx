@@ -1,19 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 import { RxDotFilled } from 'react-icons/rx'
+import { ref, getDownloadURL } from "firebase/storage"
+import { storage } from '../config/firebase'
 
-function ImageSlider() {
-    const slides = [
-        {
-            url: 'https://images.unsplash.com/photo-1681836695952-1f8073a7938d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
-        },
-        {
-            url: 'https://images.unsplash.com/photo-1681863089577-59cb6dc1a6a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=686&q=80'
-        },
-        {
-            url: 'https://images.unsplash.com/photo-1681867207129-a26a1f6e8346?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
+function ImageSlider({ postId, imageCount }) {
+
+    const [slides, setSlides] = useState([])
+
+    useEffect(() => {
+        const getImages = async () => {
+
+        const imageList = []
+
+          for (let i = 0; i < imageCount; i++) {
+            const imageRef = ref(storage, `images/${postId}/${i}`)
+            const url = await getDownloadURL(imageRef)
+            imageList.push({url: url})
+          }  
+          setSlides(imageList)
         }
-    ]
+        getImages()
+      }, [])
 
     const [currentIndex, setCurrentIndex] = useState(0)
 
