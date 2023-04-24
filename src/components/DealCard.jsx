@@ -66,10 +66,10 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
         </div>      
       </div>
       <div className='flex gap-5'>
-        <button><BsBookmark /></button>
-        <button className='flex items-center justify-center gap-1'><BiCommentDetail /> 175</button>
-        <button className='flex items-center justify-center gap-1'>
-         <a href={dealLink} target='_blank'> Go to deal<FiExternalLink /> </a> 
+        <button className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8'><BsBookmark /></button>
+        <button className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8'><BiCommentDetail /> 175</button>
+        <button className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-32 h-8'>
+         <a className='flex gap-2 items-center' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
         </button>
       </div>
     </div>
