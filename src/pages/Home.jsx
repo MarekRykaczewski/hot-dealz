@@ -46,7 +46,7 @@ const dealElements =
     })
 
   return (
-    <div className='bg-slate-400'>
+    <div className='bg-slate-200'>
     <Routes>
       <Route path="/deal/*" element={<DealDetails />}/>
       <Route path="/" element={<Deals dealElements={dealElements}/>} />
