@@ -32,11 +32,11 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
     }, [])
   
   return (
-<div className="max-w-sm w-full lg:max-w-4xl lg:flex justify-center">
+<div className="w-full lg:max-w-4xl lg:flex justify-center">
   <div className="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden bg-slate-500">
   <ImageSlider slides={slides} />
   </div>
-  <div className="bg-white p-4 flex flex-col justify-between leading-normal">
+  <div className="bg-white p-4 flex flex-col justify-between leading-normal w-full">
     <div className="mb-8">
       <div className="text-sm text-gray-600 flex items-center justify-between">
         <DealCardVotes postId={postId} />
