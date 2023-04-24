@@ -65,7 +65,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
           <p className="text-gray-900 leading-none">{owner}</p>
         </div>      
       </div>
-      <div className='flex gap-5'>
+      <div className='flex gap-3'>
         <button className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8'><BsBookmark /></button>
         <button className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8'><BiCommentDetail /> 175</button>
         <button className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-32 h-8'>
