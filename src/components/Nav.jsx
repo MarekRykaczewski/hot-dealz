@@ -14,9 +14,9 @@ function Nav({toggleSignInModal, openNavAccountMenu, toggleNavAccountMenu}) {
 
   return (
     <nav className='flex items-center justify-between bg-slate-700 p-6'>
-        <Link to='/' className="flex items-center flex-shrink-0 text-white mr-6 gap-1">
-            <AiFillFire fontSize='2em' color='orange'/>
-            <span className="font-semibold text-xl tracking-tight">Hot Dealz</span>
+        <Link to='/' className="flex items-center flex-shrink-0 text-white gap-1">
+            <AiFillFire fontSize='2.5em' color='orange'/>
+            <span className="font-semibold text-2xl tracking-tight">Hot Dealz</span>
         </Link>
         <div className="flex items-center justify-between w-full flex-grow lg:flex lg:items-center lg:w-auto">
             <div className="text-sm lg:flex-grow">
