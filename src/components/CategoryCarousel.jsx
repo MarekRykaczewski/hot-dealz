@@ -34,7 +34,7 @@ function CategoryCarousel() {
     const items = 
         categories.map(item => {
             return (
-                <button key={item.title} className='flex flex-none gap-1 h-10 w-[150px] items-center justify-center bg-slate-500 rounded-lg p-2 text-white font-bold hover:bg-slate-400 transition'> 
+                <button key={item.title} className='flex flex-none gap-1 h-10 w-[150px] items-center justify-center bg-slate-600 rounded-lg p-2 text-white font-bold hover:bg-slate-500 transition'> 
                 {item.title}
                 </button>
             )
@@ -42,7 +42,7 @@ function CategoryCarousel() {
     
 
   return (
-    <div className=' flex items-center justify-center bg-slate-800 mb-3'>
+    <div className=' flex items-center justify-center bg-slate-900 mb-3'>
         <button onClick={() => scroll(-150)} id='slideLeft' className='flex item-center justify-center p-2'>
             <AiFillCaretLeft fontSize='1.5em' className=' text-slate-500'/>
         </button>
