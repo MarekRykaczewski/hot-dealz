@@ -5,7 +5,7 @@ import { AiFillCaretRight } from 'react-icons/ai'
 
 function FooterNav() {
   return (
-    <div className='flex items-center justify-between p-5 bg-slate-300 fixed bottom-0 w-full'>
+    <div className='flex text-lg font-semibold text-slate-600 items-center justify-between p-5 bg-white border-t-2 border-gray-300 fixed bottom-0 w-full'>
         <span> Go to top </span>
         <div className='flex justify-between items-center w-40'>
             <span> 1 ... </span>
