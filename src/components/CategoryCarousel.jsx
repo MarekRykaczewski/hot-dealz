@@ -42,16 +42,18 @@ function CategoryCarousel() {
     
 
   return (
-    <div className=' flex items-center justify-center bg-slate-900 py-2'>
-        <button onClick={() => scroll(-150)} id='slideLeft' className='flex item-center justify-center p-2'>
-            <AiFillCaretLeft fontSize='1.5em' className=' text-slate-500'/>
-        </button>
-        <div ref={ref} id='carouselContainer' className='flex flex-row w-2/4 overflow-x-hidden scroll-smooth gap-4 p-3'>
-        {items}
+    <div className='bg-slate-900 py-2 w-full'>
+        <div className='flex items-center justify-center'>
+            <button onClick={() => scroll(-150)} id='slideLeft' className='flex item-center justify-center p-2'>
+                <AiFillCaretLeft fontSize='1.5em' className=' text-slate-500'/>
+            </button>
+            <div ref={ref} id='carouselContainer' className='flex flex-row w-fit overflow-x-hidden scroll-smooth gap-4 p-3'>
+            {items}
+            </div>
+            <button onClick={() => scroll(150)} id='slideRight' className='flex item-center justify-center p-2'>
+                <AiFillCaretRight fontSize='1.5em' className='text-slate-500'/>
+            </button>
         </div>
-        <button onClick={() => scroll(150)} id='slideRight' className='flex item-center justify-center p-2'>
-            <AiFillCaretRight fontSize='1.5em' className='text-slate-500'/>
-        </button>
     </div>
   )
 }
