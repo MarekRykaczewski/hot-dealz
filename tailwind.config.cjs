@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'space-grotesk': ['"Space Grotesk"']
+      },
       keyframes: {
         slidefromtop: {
           '0%': { 'max-height': '0px' },
