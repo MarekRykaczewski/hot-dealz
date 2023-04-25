@@ -32,8 +32,8 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
     }, [])
   
   return (
-<div className="w-full lg:max-w-4xl lg:flex justify-center">
-  <div className="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden bg-slate-500">
+<div className="px-5 w-full sm:max-w-4xl sm:flex justify-center">
+  <div className="h-48 sm:h-auto sm:w-64 flex-none bg-cover text-center overflow-hidden bg-slate-500">
   <ImageSlider slides={slides} />
   </div>
   <div className="bg-white p-4 flex flex-col justify-between leading-normal w-full">
@@ -65,7 +65,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
           <p className="text-gray-900 leading-none">{owner}</p>
         </div>      
       </div>
-      <div className='flex gap-3'>
+      <div className='flex flex-wrap gap-3 items-center justify-end text-gray-600'>
         <button className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8'><BsBookmark /></button>
         <button className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8'><BiCommentDetail /> 175</button>
         <button className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-32 h-8'>

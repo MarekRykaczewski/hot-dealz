@@ -23,7 +23,7 @@ function ImageSlider({ slides }) {
     }
 
   return (
-    <div className='h-full w-full relative group'>
+    <div className='h-full w-max-full relative group'>
         <div style={{backgroundImage: `url(${slides[currentIndex].url})`}} className='w-full h-full bg-center bg-cover duration-500'></div>
         <div className='hidden group-hover:block absolute bottom-12 left-5 text-2xl rounded-full p-1 bg-orange-500 hover:bg-orange-400 transition text-white border-2 border-white shadow-lg cursor-pointer'>
             <BiChevronLeft onClick={prevSlide} size={25} />
