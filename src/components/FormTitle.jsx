@@ -4,10 +4,10 @@ import { useFormContext } from "react-hook-form";
 
 function FormTitle({ formDetails, handleInputChange, TITLE_CHARACTER_LIMIT }) {
    
-    const { register } = useFormContext();
-   
+    const { register, formState: { errors } } = useFormContext();
+
     return (
-    <div>
+    <div className='mb-1'>
         <div className='flex justify-between items-center'>
             <h3 className='text-sm font-bold text-gray-500 mb-2'> Title </h3>
             <span className='text-xs text-gray-500'> {TITLE_CHARACTER_LIMIT - formDetails.title.length} Characters remaining </span>
@@ -29,7 +29,9 @@ function FormTitle({ formDetails, handleInputChange, TITLE_CHARACTER_LIMIT }) {
                 className='border rounded-md p-1 focus:outline-orange-500 w-full' 
                 type="text" 
             />
+            <span className='text-sm text-red-500 mt-1'>{errors.title?.message}</span>
         </Tooltip>
+        
     </div>
   )
 }

@@ -4,10 +4,10 @@ import Tooltip from './Tooltip';
 
 function FormDescription({ formDetails, handleInputChange, DESCRIPTION_CHARACTER_LIMIT}) {
    
-    const { register } = useFormContext();
+    const { register, formState: { errors } } = useFormContext();
    
     return (
-    <div>
+    <div className='flex flex-col'>
         <div className='flex justify-between items-center'>
             <h3 className='text-sm font-bold text-gray-500 mb-2'> Description </h3>
             <span className='text-xs text-gray-500'> {DESCRIPTION_CHARACTER_LIMIT - formDetails.description.length} Characters remaining </span>
@@ -26,11 +26,13 @@ function FormDescription({ formDetails, handleInputChange, DESCRIPTION_CHARACTER
             value={formDetails.description} 
             onChange={handleInputChange} 
             maxLength={DESCRIPTION_CHARACTER_LIMIT} 
-            className='resize-none border rounded-md p-3 focus:outline-orange-500 w-full h-[300px]' 
+            className='block resize-none border rounded-md p-3 focus:outline-orange-500 w-full h-[300px]' // block needed to remove extra bottom margin from Chrome/Firefox !!!
             type="text" 
             placeholder='Here you can describe the deal in your own words and explain to other users why it is a good deal!' 
         />
+         <span className='text-sm text-red-500 mt-1'>{errors.description?.message}</span>
         </Tooltip>
+       
     </div>
   )
 }

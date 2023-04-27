@@ -4,10 +4,10 @@ import { useFormContext } from "react-hook-form";
 
 function FormDealLink({ formDetails, handleInputChange }) {
 
-    const { register } = useFormContext();
+    const { register, formState: { errors } } = useFormContext();
 
   return (
-    <div>
+    <div className='flex flex-col'>
         <div>        
         <div className='relative'>
             <h1 className='text-2xl font-bold mb-4'> Deal Link </h1>
@@ -23,6 +23,7 @@ function FormDealLink({ formDetails, handleInputChange }) {
         className='border w-full rounded-md p-1 pl-7 focus:outline-orange-500' 
         type="text" 
         />
+        <span className='text-sm text-red-500 mt-1'>{errors.dealLink?.message}</span>
   </div>
   )
 }
