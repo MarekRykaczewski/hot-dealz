@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react'
 
 import { UserAuth } from '../context/AuthContext'
-import { AiOutlineLink } from 'react-icons/ai'
 import CategorySelector from '../components/CategorySelector'
 import ImagesUpload from '../components/ImagesUpload'
 import Tooltip from '../components/Tooltip'
@@ -9,11 +8,13 @@ import PreviewDealModal from '../components/PreviewDealModal'
 import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore'
 import { db, storage } from '../config/firebase'
 import { ref, uploadBytes } from 'firebase/storage'
-import { useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
+import FormDealLink from '../components/FormDealLink'
 
 function Submission() {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
+  const methods = useForm()
 
   console.log(errors)
 
@@ -114,30 +115,20 @@ function Submission() {
       />}
 
 
+      <FormProvider {...methods}>
         <form 
-        onSubmit={handleSubmit(() => submitData())}
+        onSubmit={methods.handleSubmit(() => submitData())}
         className='flex flex-col p-5 bg-white ml-auto mr-auto w-[700px]'
         >
-            
-            <div>
-              <h1 className='text-2xl font-bold'> Add a new deal </h1>
-              <hr className='mb-4 mt-4'></hr>
-              
-              <div className='relative'>
-                <h1 className='text-2xl font-bold mb-4'> Deal Link </h1>
-                <AiOutlineLink className='absolute top-14 left-2 text-gray-400'/>
-              </div>
-            </div>
 
-            <input 
-              {...register("dealLink", { required: "This is required." })} 
-              name='dealLink' 
-              value={formDetails.dealLink} 
-              onChange={handleInputChange} 
-              className='border rounded-md p-1 pl-7 focus:outline-orange-500' 
-              type="text" 
-            />
-            
+          <h1 className='text-2xl font-bold'> Add a new deal </h1>
+          <hr className='mb-4 mt-4'></hr>
+
+          <FormDealLink
+            formDetails={formDetails}
+            handleInputChange={handleInputChange}
+          />
+
             <div>
               <hr className='mb-4 mt-4'></hr>
               
@@ -315,6 +306,7 @@ function Submission() {
                 className='bg-orange-500 hover:bg-orange-400 transition-all text-white py-2 px-5 rounded-3xl'> Publish </button>
             </div>
         </form>
+        </FormProvider>
     </div>
   )
 }
