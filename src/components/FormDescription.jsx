@@ -9,7 +9,7 @@ function FormDescription({ formDetails, handleInputChange, DESCRIPTION_CHARACTER
     return (
     <div className='flex flex-col'>
         <div className='flex justify-between items-center'>
-            <h3 className='text-sm font-bold text-gray-500 mb-2'> Description </h3>
+            <h3 className='text-sm font-bold text-gray-500 mb-2 mt-2'> Description </h3>
             <span className='text-xs text-gray-500'> {DESCRIPTION_CHARACTER_LIMIT - formDetails.description.length} Characters remaining </span>
         </div>
     

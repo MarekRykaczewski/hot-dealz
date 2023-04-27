@@ -39,11 +39,9 @@ const handleImageRemove = (file) => {
   return (
     <div className='w-full'>
     <div className='relative flex justify-center items-center w-full h-full'>
-      <div className='flex flex-col gap-3 items-center justify-center'>
         <div className='flex gap-3'>
         {imageUploaderElements}
         </div>
-      </div>
     </div>
   </div>
   )

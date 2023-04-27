@@ -121,7 +121,7 @@ function Submission() {
       <FormProvider {...methods}>
         <form 
         onSubmit={methods.handleSubmit(() => submitData())}
-        className='flex flex-col p-5 bg-white ml-auto mr-auto w-[700px]'
+        className='flex flex-col p-5 bg-white ml-auto mr-auto sm:max-w-[700px]'
         >
 
           <h1 className='text-2xl font-bold'> Add a new deal </h1>
