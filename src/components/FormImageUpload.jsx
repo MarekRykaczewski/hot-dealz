@@ -1,7 +1,7 @@
 import React from 'react'
 import ImagesUpload from '../components/ImagesUpload'
 
-function FormImageUpload({ formDetails, setFormDetails, TITLE_CHARACTER_LIMIT }) {
+function FormImageUpload({ formDetails, setFormDetails }) {
   return (
     <div>
         <h1 className='text-2xl font-bold mb-4'> The essentials </h1>
@@ -14,11 +14,6 @@ function FormImageUpload({ formDetails, setFormDetails, TITLE_CHARACTER_LIMIT })
         </div>
         <ImagesUpload size={3} formDetails={formDetails} setFormDetails={setFormDetails}/>
         </div>  
-        
-        <div className='flex justify-between items-center'>
-        <h3 className='text-sm font-bold text-gray-500 mb-2'> Title </h3>
-        <span className='text-xs text-gray-500'> {TITLE_CHARACTER_LIMIT - formDetails.title.length} Characters remaining </span>
-        </div>
     </div>
   )
 }
