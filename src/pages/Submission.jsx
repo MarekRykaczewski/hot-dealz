@@ -12,6 +12,7 @@ import FormDealLink from '../components/FormDealLink'
 import FormImageUpload from '../components/FormImageUpload'
 import FormTitle from '../components/FormTitle'
 import FormDescription from '../components/FormDescription'
+import FormPriceDetails from '../components/FormPriceDetails'
 
 function Submission() {
 
@@ -155,73 +156,11 @@ function Submission() {
 
             <h3 className='text-2xl font-bold mb-4'> Price details </h3>
             
-            <div className='flex flex-col gap-3 items-center justify-start'>
-              <div className='flex w-full justify-start items-center gap-4'>
-                <Tooltip text={"Tell us the price"} subtext={"This should be the total price after any discounts"}>
-                  <div className='flex flex-col w-max '>
-                    <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="price">Price </label>
-                    <input 
-                      {...register("price", { required: "This is required." })} 
-                      name='price' 
-                      value={formDetails.price} 
-                      onChange={handleInputChange} 
-                      className='border rounded-md p-1 focus:outline-orange-500 mb-3' 
-                      type="text" 
-                    />
-                  </div>
-                </Tooltip>
-              
-                <Tooltip text={"Tell us the price"} subtext={"This should be the total price after any discounts"}>
-                <div className='flex flex-col w-max'>
-                  <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="nextBestPrice">Next best price</label>
-                  <input 
-                    {...register("nextBestPrice", { required: "This is required." })} 
-                    name='nextBestPrice' 
-                    value={formDetails.nextBestPrice} 
-                    onChange={handleInputChange} 
-                    className='border rounded-md p-1 focus:outline-orange-500 mb-3'
-                    type="text" 
-                  />
-                </div>
-                </Tooltip> 
-              </div>
-
-              <div className='flex w-full justify-start items-center gap-4'>
-                <div className='flex flex-col'>
-                  <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="">Shipping cost</label>
-                  <input 
-                    {...register("shippingCost", { required: "This is required." })} 
-                    name='shippingCost' 
-                    value={formDetails.shippingCost} 
-                    onChange={handleInputChange} 
-                    className='border rounded-md p-1 focus:outline-orange-500 mb-3' 
-                    type="text" 
-                  />
-                </div>
-
-                <div className='flex flex-row-reverse gap-2 items-center mt-7 mb-3'>
-                  <label className='text-sm font-bold text-gray-500' htmlFor="">Free shipping?</label>
-                  <input 
-                    {...register("freeShipping", { required: "This is required." })} 
-                    onChange={(e) => handleCheckChange(e)} 
-                    type="checkbox" 
-                  />
-                </div>
-              </div>
-
-              <div className='flex w-full justify-start items-center gap-4'>
-                <div className='flex flex-col'>
-                  <label className='text-sm font-bold text-gray-500 mb-2' htmlFor="">Voucher Code </label>
-                  <input
-                    {...register("voucherCode", { required: "This is required." })} 
-                    name='voucherCode' 
-                    value={formDetails.voucherCode} 
-                    onChange={handleInputChange} 
-                    className='border rounded-md p-1 focus:outline-orange-500 mb-3' 
-                    type="text" />
-                  </div>
-              </div>
-            </div>
+            <FormPriceDetails
+              handleCheckChange={handleCheckChange}
+              handleInputChange={handleInputChange}
+              formDetails={formDetails}
+             />
 
             <div>
               <hr className='mb-4 mt-4'></hr>
