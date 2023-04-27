@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react'
 
 import { UserAuth } from '../context/AuthContext'
 import CategorySelector from '../components/CategorySelector'
-import ImagesUpload from '../components/ImagesUpload'
 import Tooltip from '../components/Tooltip'
 import PreviewDealModal from '../components/PreviewDealModal'
 import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore'
@@ -10,6 +9,7 @@ import { db, storage } from '../config/firebase'
 import { ref, uploadBytes } from 'firebase/storage'
 import { FormProvider, useForm } from 'react-hook-form'
 import FormDealLink from '../components/FormDealLink'
+import FormImageUpload from '../components/FormImageUpload'
 
 function Submission() {
 
@@ -129,26 +129,15 @@ function Submission() {
             handleInputChange={handleInputChange}
           />
 
-            <div>
-              <hr className='mb-4 mt-4'></hr>
-              
-              <h1 className='text-2xl font-bold mb-4'> The essentials </h1>
-              
-              <h3 className='text-sm font-bold text-gray-500 mb-2'> Gallery </h3>
-              <div className='flex p-3 border-2 border-dashed rounded-md w-full h-[200px] mb-4'>
-                <div className='w-full'>
-                  <span> Make your deal stand out with images </span>
-                  <p className='text-xs text-gray-500'> Upload up to 3 images to publish your deal.</p>
-                </div>
-                <ImagesUpload size={3} formDetails={formDetails} setFormDetails={setFormDetails}/>
-              </div>  
-              
-              <div className='flex justify-between items-center'>
-                <h3 className='text-sm font-bold text-gray-500 mb-2'> Title </h3>
-                <span className='text-xs text-gray-500'> {TITLE_CHARACTER_LIMIT - formDetails.title.length} Characters remaining </span>
-              </div>
-            </div>
-            
+
+          <hr className='mb-4 mt-4'></hr>
+
+          <FormImageUpload
+            formDetails={formDetails}
+            setFormDetails={setFormDetails}
+            TITLE_CHARACTER_LIMIT={TITLE_CHARACTER_LIMIT}
+          />
+                          
             <Tooltip 
               text={"Make your title stand out"} 
               subtext={"Include the Brand, Product type, Color, and Model in your title (e.g. Nike Airforce 1 White)"}> 
