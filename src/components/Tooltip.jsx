@@ -19,7 +19,7 @@ function Tooltip({ text, subtext, children }) {
     {children}
     {firstClick &&
     <div className={`overflow-hidden ${visible ? 'animate-slidefromtop' : 'animate-contract'}`}>
-      <div className={`flex flex-col bg-slate-300 rounded-xl p-3 mb-3`}>
+      <div className={`flex flex-col bg-slate-300 rounded-xl p-3 mt-2`}>
           <span className='text-sm font-bold text-gray-600'>{text}</span>
           <span className='text-xs text-gray-600'>{subtext}</span>
       </div>
