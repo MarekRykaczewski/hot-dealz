@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react'
 
 import { UserAuth } from '../context/AuthContext'
-import CategorySelector from '../components/CategorySelector'
 import Tooltip from '../components/Tooltip'
 import PreviewDealModal from '../components/PreviewDealModal'
 import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore'
@@ -13,6 +12,7 @@ import FormImageUpload from '../components/FormImageUpload'
 import FormTitle from '../components/FormTitle'
 import FormDescription from '../components/FormDescription'
 import FormPriceDetails from '../components/FormPriceDetails'
+import FormFinalDetails from '../components/FormFinalDetails'
 
 function Submission() {
 
@@ -132,7 +132,6 @@ function Submission() {
             handleInputChange={handleInputChange}
           />
 
-
           <hr className='mb-4 mt-4'></hr>
 
           <FormImageUpload
@@ -162,38 +161,10 @@ function Submission() {
               formDetails={formDetails}
              />
 
-            <div>
-              <hr className='mb-4 mt-4'></hr>
-              
-              <h3 className='text-2xl font-bold mb-4'> Final details </h3>
-              
-              <span className='text-sm font-bold text-gray-500' >Categories</span>
-              <span className='text-xs text-gray-500 mb-3'> Which of these categories best describes your deal?</span>
-            </div>
-           
-            <CategorySelector 
+            <FormFinalDetails 
+              formDetails={formDetails}
               handleInputChange={handleInputChange}
             />
-
-            <div className='flex flex-col items-start gap-3'>
-              <label className='text-sm font-bold text-gray-500' htmlFor=""> Start Date </label>
-              <input 
-                name='startDate' 
-                value={formDetails.startDate} 
-                onChange={handleInputChange} 
-                className='border rounded-md p-1 focus:outline-orange-500' 
-                type="date" 
-                placeholder='DD/MM/YYYY' 
-              />
-              <label className='text-sm font-bold text-gray-500' htmlFor=""> End Date </label>
-              <input 
-                name='endDate' 
-                value={formDetails.endDate} 
-                onChange={handleInputChange} 
-                className='border rounded-md p-1 focus:outline-orange-500' 
-                type="date" 
-                placeholder='DD/MM/YYYY' />
-            </div>
             
             <div className='flex gap-3 items-center justify-end w-ful'>
               <button 
@@ -205,7 +176,7 @@ function Submission() {
                 className='bg-orange-500 hover:bg-orange-400 transition-all text-white py-2 px-5 rounded-3xl'> Publish </button>
             </div>
         </form>
-        </FormProvider>
+      </FormProvider>
     </div>
   )
 }
