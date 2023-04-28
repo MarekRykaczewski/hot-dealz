@@ -166,7 +166,7 @@ function Submission() {
               handleInputChange={handleInputChange}
             />
             
-            <div className='flex gap-3 items-center justify-end w-ful'>
+            <div className='flex gap-3 items-center mt-4 sm:justify-end justify-center w-ful'>
               <button 
                 onClick={toggleOpenDealPreview} 
                 className='bg-white hover:bg-gray-200 border transition-all text-gray-500 py-2 px-5 rounded-3xl'> Preview 
