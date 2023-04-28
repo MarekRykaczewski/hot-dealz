@@ -9,7 +9,7 @@ function FormFinalDetails({ formDetails, handleInputChange }) {
 
     return (
     <div>
-        <div>
+        <div className='mb-1'>
             <hr className='mb-4 mt-4'></hr>
             
             <h3 className='text-2xl font-bold mb-4'> Final details </h3>
@@ -18,11 +18,13 @@ function FormFinalDetails({ formDetails, handleInputChange }) {
             <span className='text-xs text-gray-500 mb-3'> Which of these categories best describes your deal?</span>
         </div>
     
+        <div className='mb-2'>
         <CategorySelector 
             handleInputChange={handleInputChange}
         />
+        </div>
 
-        <div className='flex flex-col items-start gap-3'>
+        <div className='flex flex-col items-start gap-2'>
             <label className='text-sm font-bold text-gray-500' htmlFor=""> Start Date </label>
             <input 
             name='startDate' 

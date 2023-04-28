@@ -14,7 +14,7 @@ function CategorySelector({ handleInputChange }) {
     )    
 
     return (
-    <fieldset className='flex flex-wrap mb-3 gap-3'>
+    <fieldset className='flex flex-wrap mb-0 gap-3'>
         {checkboxElements}
     </fieldset>
     )
