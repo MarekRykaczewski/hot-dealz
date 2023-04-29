@@ -37,7 +37,7 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="">Shipping cost</label>
         <input 
-        {...register("shippingCost", { required: "This is required." })} 
+        {...register("shippingCost")} 
         name='shippingCost' 
         value={formDetails.shippingCost} 
         onChange={handleInputChange} 
