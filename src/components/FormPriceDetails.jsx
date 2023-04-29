@@ -47,7 +47,7 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="">Free shipping?</label>
         <input 
-        {...register("freeShipping", { required: "This is required." })} 
+        {...register("freeShipping")} 
         onChange={(e) => handleCheckChange(e)} 
         type="checkbox" 
         className='scale-150'
@@ -55,7 +55,7 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="">Voucher Code </label>
         <input
-        {...register("voucherCode", { required: "This is required." })} 
+        {...register("voucherCode")} 
         name='voucherCode' 
         value={formDetails.voucherCode} 
         onChange={handleInputChange} 
