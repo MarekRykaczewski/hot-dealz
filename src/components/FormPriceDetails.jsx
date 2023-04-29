@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 
 function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) {
 
-    const { register } = useFormContext();
+    const { register, formState: { errors } } = useFormContext();
 
     return (
     <div className='grid grid-cols-2 items-center gap-2'>
@@ -19,6 +19,7 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
             className='border rounded-md p-1 focus:outline-orange-500 w-full' 
             type="text" 
         />
+        <span className='text-sm text-red-500 mt-1'>{errors.price?.message}</span>
         </Tooltip>
 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="nextBestPrice">Next best price</label>
@@ -31,6 +32,7 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
         className='border rounded-md p-1 focus:outline-orange-500 w-full'
         type="text" 
         />
+        <span className='text-sm text-red-500 mt-1'>{errors.nextBestPrice?.message}</span>
         </Tooltip>
 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="">Shipping cost</label>
