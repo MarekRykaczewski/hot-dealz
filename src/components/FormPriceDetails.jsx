@@ -23,7 +23,7 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
         </Tooltip>
 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="nextBestPrice">Next best price</label>
-        <Tooltip text={"What was the next best price?"} subtext={"This should be the total price before any discounts"}>
+        <Tooltip text={"Tell us the price"} subtext={"This should be the total price before any discounts"}>
         <input 
         {...register("nextBestPrice", { required: "This is required." })} 
         name='nextBestPrice' 
