@@ -36,14 +36,20 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
         </Tooltip>
 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="">Shipping cost</label>
-        <input 
-        {...register("shippingCost")} 
-        name='shippingCost' 
-        value={formDetails.shippingCost} 
-        onChange={handleInputChange} 
-        className='border rounded-md p-1 focus:outline-orange-500' 
-        type="text" 
-        />
+        <div className='flex flex-col'>
+            <input 
+            {...register("shippingCost", { min: 0, required: "This is required." })} 
+            name='shippingCost' 
+            value={formDetails.freeShipping ? 0 : formDetails.shippingCost} 
+            onChange={handleInputChange} 
+            className='border rounded-md p-1 focus:outline-orange-500' 
+            type="number"
+            min={0}
+            disabled={formDetails.freeShipping ? true : false}
+            />
+            <span className='text-sm text-red-500 mt-1'>{errors.shippingCost?.message}</span>
+        </div>
+
 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="">Free shipping?</label>
         <input 
