@@ -61,8 +61,8 @@ function Submission() {
     })
   }
 
-  const submitData = async (e) => {
-    e.preventDefault()
+  const submitData = async () => {
+    // e.preventDefault()
 
     const dealsCollection = collection(db, "deals")
 
