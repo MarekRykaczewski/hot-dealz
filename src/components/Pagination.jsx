@@ -8,11 +8,11 @@ function Pagination({ dealsPerPage, totalDeals, paginate }) {
         pageNumbers.push(i)
     }
   return (
-    <nav className='absolute bottom-0'>
-        <ul>
+    <nav>
+        <ul className='flex gap-3 items-center justify-center'>
             {pageNumbers.map(number => (
                 <li key={number}>
-                    <button onClick={() => paginate(number)}>{number}</button>                   
+                    <button className='border h-8 w-8 rounded-xl hover:bg-slate-100 hover:text-orange-500 transition' onClick={() => paginate(number)}>{number}</button>                   
                 </li>
             ))}
         </ul>

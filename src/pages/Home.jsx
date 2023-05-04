@@ -61,9 +61,9 @@ const dealElements =
     <div className='bg-slate-200'>
     <Routes>
       <Route path="/deal/*" element={<DealDetails />}/>
-      <Route path="/" element={<Deals dealElements={dealElements}/>} />
+      <Route path="/" element={<Deals dealElements={dealElements} dealsPerPage={dealsPerPage} totalDeals={deals.length} paginate={paginate}/>} />
     </Routes>
-    <Pagination dealsPerPage={dealsPerPage} totalDeals={deals.length} paginate={paginate}/>
+    {/* <Pagination dealsPerPage={dealsPerPage} totalDeals={deals.length} paginate={paginate}/> */}
     </div>
   )
 }
