@@ -5,8 +5,14 @@ import { getDocs, collection } from "firebase/firestore";
 import { Routes, Route } from 'react-router-dom'
 import DealDetails from './DealDetails'
 import Deals from './Deals'
+import Pagination from '../components/Pagination';
 
 function Home() {
+
+  const [deals, setDeals] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [dealsPerPage, setDealsPerPage] = useState(2)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,10 +30,16 @@ function Home() {
     fetchData()
 }, [])
 
-const [deals, setDeals] = useState([])
+const indexOfLastDeal = currentPage * dealsPerPage
+const indexOfFirstDeal = indexOfLastDeal - dealsPerPage
+const currentDeals = deals.slice(indexOfFirstDeal, indexOfLastDeal)
+
+const paginate = (pageNumber) => {
+  setCurrentPage(pageNumber)
+}
 
 const dealElements = 
-    deals.map(item => {
+    currentDeals.map(item => {
         return (
           <DealCard
             key={item.id}
@@ -51,6 +63,7 @@ const dealElements =
       <Route path="/deal/*" element={<DealDetails />}/>
       <Route path="/" element={<Deals dealElements={dealElements}/>} />
     </Routes>
+    <Pagination dealsPerPage={dealsPerPage} totalDeals={deals.length} paginate={paginate}/>
     </div>
   )
 }
