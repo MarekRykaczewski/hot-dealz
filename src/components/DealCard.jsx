@@ -34,7 +34,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
   return (
 <div className="px-5 w-full sm:max-w-4xl sm:flex justify-center">
   <div className="h-48 sm:h-auto sm:w-64 flex-none bg-cover text-center overflow-hidden bg-slate-500">
-  <ImageSlider slides={slides} />
+  {imageCount > 0 && <ImageSlider slides={slides} />}
   </div>
   <div className="bg-white p-4 flex flex-col justify-between leading-normal w-full">
     <div className="mb-8">
@@ -48,7 +48,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
           </div>
         </div>
       </div>
-      <Link className='block' to={`/deal/${postId}`} state={ {postId: postId, title: title, date :date, time: time, owner: owner, price: price, nextBestPrice: nextBestPrice, description: description, dealLink: dealLink} }>
+      <Link className='block' to={`/deal/${postId}`} state={ {postId: postId, title: title, date :date, time: time, owner: owner, price: price, nextBestPrice: nextBestPrice, description: description, dealLink: dealLink, imageCount: imageCount, slides: slides} }>
       <div className="text-gray-900 font-bold text-xl mb-2 hover:text-orange-500 transition">{title}</div>
       </Link>
       <div className='flex gap-3'>
