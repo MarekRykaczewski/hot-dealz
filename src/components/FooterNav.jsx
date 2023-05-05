@@ -1,8 +1,4 @@
 import React from 'react'
-import Pagination from './Pagination'
-
-import { AiFillCaretLeft } from 'react-icons/ai'
-import { AiFillCaretRight } from 'react-icons/ai'
 
 function FooterNav({ dealsPerPage, totalDeals, paginate }) {
 
