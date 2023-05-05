@@ -5,7 +5,6 @@ import { getDocs, collection } from "firebase/firestore";
 import { Routes, Route } from 'react-router-dom'
 import DealDetails from './DealDetails'
 import Deals from './Deals'
-import Pagination from '../components/Pagination';
 
 function Home() {
 
@@ -61,9 +60,8 @@ const dealElements =
     <div className='bg-slate-200'>
     <Routes>
       <Route path="/deal/*" element={<DealDetails />}/>
-      <Route path="/" element={<Deals dealElements={dealElements} dealsPerPage={dealsPerPage} totalDeals={deals.length} paginate={paginate}/>} />
+      <Route path="/" element={<Deals dealElements={dealElements} dealsPerPage={dealsPerPage} totalDeals={deals.length} paginate={paginate} currentPage={currentPage}/>} />
     </Routes>
-    {/* <Pagination dealsPerPage={dealsPerPage} totalDeals={deals.length} paginate={paginate}/> */}
     </div>
   )
 }
