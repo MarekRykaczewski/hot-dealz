@@ -116,10 +116,10 @@ function DealCardVotes({ postId }) {
     }, [])
 
   return (
-    <div className='flex justify-around items-center gap-2 rounded-l-full rounded-r-full border w-32 h-8 p-2 mb-2'>
-        <button onClick={userDisliked ? deleteDislike : addDislike} className='text-blue-500 font-bold text-2xl'>–</button>
+    <div className='relative flex justify-between items-center gap-2 rounded-l-full rounded-r-full border w-28 h-8 py-4 mb-2'>
+        <button onClick={userDisliked ? deleteDislike : addDislike} className='text-blue-500 font-bold text-2xl hover:bg-blue-100 rounded-full h-8 w-8 items-center justify-center flex'>–</button>
             <span className='font-bold text-lg'> {likes.length - dislikes.length || 0} </span>
-        <button onClick={userLiked ? deleteLike : addLike} className='text-orange-500 font-bold text-2xl'>+</button>          
+        <button onClick={userLiked ? deleteLike : addLike} className='text-orange-500 font-bold text-2xl hover:bg-orange-100 rounded-full h-8 w-8 items-center justify-center flex'>+</button>          
     </div>
   )
 }
