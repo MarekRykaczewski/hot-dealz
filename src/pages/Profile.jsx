@@ -8,6 +8,7 @@ function Profile() {
 
     const [editUsername, setEditUsername] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
+    const [editPassword, setEditPassword] = useState(false)
     
   return (
     <div className='flex flex-col'>
@@ -47,8 +48,14 @@ function Profile() {
                 <span className='font-bold'> password </span>
             </div>
             <div className='flex flex-col gap-4 w-[300px]'>
-                <span className='text-blue-700'> ... </span>
-                <button className='self-center py-1 border rounded-2xl w-[250px]'> Change password </button>
+                {!editPassword ? <span className='text-blue-700'> ... </span> : 
+                    <div className='flex flex-col gap-1'>
+                        <input className='border p-1 rounded-lg' placeholder='New password' type="text" name="" id="" />
+                        <input className='border p-1 rounded-lg' placeholder='Confirm new password' type="text" name="" id="" />
+                    </div>
+                    }
+                <button onClick={() => setEditPassword(!editPassword)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> {editPassword ? 'Cancel' : 'Change Password'} </button>
+                {editPassword && <button onClick={() => setEditEmail(false)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Submit </button>}
             </div>
         </div>
         <hr className='mb-10'></hr>
