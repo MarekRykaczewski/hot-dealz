@@ -27,9 +27,8 @@ function Profile() {
                 <span className='font-bold'> username </span>
             </div>
             <div className='flex flex-col gap-4 w-[300px]'>
-                <span className='text-blue-700'> {userData.username} </span>
+                {!editUsername ? <span className='text-blue-700'> {userData.username} </span> : <input className='border p-1 rounded-lg' placeholder={userData.username} type="text" name="" id="" />}
                 <button onClick={() => setEditUsername(!editUsername)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> {editUsername ? 'Cancel' : 'Change Username'} </button>
-                {editUsername && <input className='border p-1 rounded-lg' placeholder={userData.username} type="text" name="" id="" />}
                 {editUsername && <button onClick={() => setEditUsername(false)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Submit </button>}
             </div>
         </div>
@@ -38,9 +37,8 @@ function Profile() {
                 <span className='font-bold'> e-mail </span>
             </div>
             <div className='flex flex-col gap-4 w-[300px]'>
-                <span className='text-blue-700'> {user.email} </span>
-                <button onClick={() => setEditEmail(!editEmail)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Change email </button>
-                {editEmail && <input className='border p-1 rounded-lg' placeholder={user.email} type="text" name="" id="" />}
+                {!editEmail ? <span className='text-blue-700'> {user.email} </span> : <input className='border p-1 rounded-lg' placeholder={user.email} type="text" name="" id="" />}
+                <button onClick={() => setEditEmail(!editEmail)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> {editEmail ? 'Cancel' : 'Change Email'} </button>
                 {editEmail && <button onClick={() => setEditEmail(false)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Submit </button>}
             </div>
         </div>
