@@ -35,15 +35,6 @@ function Profile() {
         </div>
         <div className='flex flex-row justify-start mb-10'>
             <div className='flex flex-col mr-10 w-[200px]'>
-                <span className='font-bold'> your bio </span>
-            </div>
-            <div className='flex flex-col gap-4 w-[300px]'>
-                <span className='text-blue-700'> ... </span>
-                <button className='self-center py-1 border rounded-2xl w-[250px]'> Change bio </button>
-            </div>
-        </div>
-        <div className='flex flex-row justify-start mb-10'>
-            <div className='flex flex-col mr-10 w-[200px]'>
                 <span className='font-bold'> e-mail </span>
             </div>
             <div className='flex flex-col gap-4 w-[300px]'>
