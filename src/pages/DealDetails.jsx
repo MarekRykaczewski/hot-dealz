@@ -6,6 +6,7 @@ import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
 import DealCardVotes from '../components/DealCardVotes'
 import ImageSlider from '../components/ImageSlider'
+import CommentSection from '../components/CommentSection'
 
 function DealDetails() {
 
@@ -15,7 +16,7 @@ function DealDetails() {
     console.log(imageCount)
 
   return (
-    <div className='bg-slate-200 w-full h-screen flex flex-col ml-auto mr-auto items-center justify-start'>
+    <div className='bg-slate-200 w-full h-full flex flex-col ml-auto mr-auto items-center justify-start'>
       <div className='bg-white flex justify-center items-center rounded-lg w-full max-w-3xl mt-3'>
           <div className='h-64 w-full bg-slate-500'>
             {imageCount > 0 && <ImageSlider slides={slides} />}
@@ -61,9 +62,7 @@ function DealDetails() {
             <button className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>Save for later <BsBookmark /></button>
           </div>
       </div>
-      <div className='flex flex-col w-full max-w-3xl bg-white mt-2 rounded-lg overflow-hidden'>
-        Comments
-      </div>
+      <CommentSection />
     </div>
   )
 }
