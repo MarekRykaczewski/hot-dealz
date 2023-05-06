@@ -4,10 +4,10 @@ import { UserAuth } from '../context/AuthContext'
 
 function Profile() {
 
-    const { userData } = UserAuth()
+    const { user, userData } = UserAuth()
 
     const [editUsername, setEditUsername] = useState(false)
-    const [editBio, setEditBio] = useState(false)
+    const [editEmail, setEditEmail] = useState(false)
     
   return (
     <div className='flex flex-col'>
@@ -38,8 +38,10 @@ function Profile() {
                 <span className='font-bold'> e-mail </span>
             </div>
             <div className='flex flex-col gap-4 w-[300px]'>
-                <span className='text-blue-700'> email here </span>
-                <button className='self-center py-1 border rounded-2xl w-[250px]'> Change email </button>
+                <span className='text-blue-700'> {user.email} </span>
+                <button onClick={() => setEditEmail(!editEmail)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Change email </button>
+                {editEmail && <input className='border p-1 rounded-lg' placeholder={user.email} type="text" name="" id="" />}
+                {editEmail && <button onClick={() => setEditEmail(false)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Submit </button>}
             </div>
         </div>
         <div className='flex flex-row justify-start mb-10'>
