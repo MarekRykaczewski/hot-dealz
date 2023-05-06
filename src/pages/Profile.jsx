@@ -1,6 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
+
+import { UserAuth } from '../context/AuthContext'
 
 function Profile() {
+
+    const { userData } = UserAuth()
+
+    const [editUsername, setEditUsername] = useState(false)
+    const [editBio, setEditBio] = useState(false)
+    
   return (
     <div className='flex flex-col'>
         <span className='text-2xl mb-6'> Profile </span>
@@ -19,8 +27,10 @@ function Profile() {
                 <span className='font-bold'> username </span>
             </div>
             <div className='flex flex-col gap-4 w-[300px]'>
-                <span className='text-blue-700'> username </span>
-                <button className='self-center py-1 border rounded-2xl w-[250px]'> Change username </button>
+                <span className='text-blue-700'> {userData.username} </span>
+                <button onClick={() => setEditUsername(!editUsername)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> {editUsername ? 'Cancel' : 'Change Username'} </button>
+                {editUsername && <input className='border p-1 rounded-lg' placeholder={userData.username} type="text" name="" id="" />}
+                {editUsername && <button onClick={() => setEditUsername(false)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Submit </button>}
             </div>
         </div>
         <div className='flex flex-row justify-start mb-10'>
