@@ -29,6 +29,16 @@ function Home() {
     fetchData()
 }, [])
 
+
+const sortByNewest = () => {
+  const dealsCopy = [...deals]
+  dealsCopy.sort((a, b) => {
+    return a.posted - b.posted
+  })
+  setDeals(dealsCopy)
+}
+
+
 const indexOfLastDeal = currentPage * dealsPerPage
 const indexOfFirstDeal = indexOfLastDeal - dealsPerPage
 const currentDeals = deals.slice(indexOfFirstDeal, indexOfLastDeal)
@@ -60,7 +70,16 @@ const dealElements =
     <div className='bg-slate-200'>
     <Routes>
       <Route path="/deal/*" element={<DealDetails />}/>
-      <Route path="/" element={<Deals dealElements={dealElements} dealsPerPage={dealsPerPage} totalDeals={deals.length} paginate={paginate} currentPage={currentPage}/>} />
+      <Route path="/" element={
+      <Deals 
+        dealElements={dealElements} 
+        dealsPerPage={dealsPerPage} 
+        totalDeals={deals.length} 
+        paginate={paginate} 
+        currentPage={currentPage}
+        sortByNewest={sortByNewest}
+        />
+      } />
     </Routes>
     </div>
   )
