@@ -106,9 +106,9 @@ function DealCardVotes({ postId }) {
       }
     }
   
-    const userLiked = likes.find((like) => like.userId === user.uid)
+    const userLiked = likes.find((like) => like.userId === user?.uid)
   
-    const userDisliked = dislikes.find((dislike) => dislike.userId === user.uid)
+    const userDisliked = dislikes.find((dislike) => dislike.userId === user?.uid)
   
     useEffect(() => {
       getLikes()
