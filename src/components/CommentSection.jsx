@@ -3,8 +3,6 @@ import { setDoc, serverTimestamp, addDoc, collection, deleteDoc, doc, getDocs, q
 import { db } from '../config/firebase'
 import { UserAuth } from '../context/AuthContext'
 
-import Comment from './Comment'
-
 function CommentSection({ postId }) {
 
   const { user } = UserAuth()
@@ -18,19 +16,16 @@ function CommentSection({ postId }) {
   console.log(comment)
 
   const submitComment = async () => {
-
-    const commentsDocRef = collection(db, "comments")
-
-    const newDocRef = doc(commentsDocRef)
-    
-    await setDoc(newDocRef, { 
-      userId: user.uid, 
-      postId: postId,
+    const postCommentsCollectionRef = collection(db, "deals", postId, "comments");
+    const newCommentDocRef = doc(postCommentsCollectionRef);
+  
+    await setDoc(newCommentDocRef, {
+      userId: user.uid,
       comment: comment,
       posted: serverTimestamp()
-    })    
+    });
   }
-
+  
   return (
     <div className='flex flex-col w-full max-w-3xl bg-white mt-2 rounded-lg overflow-hidden'>
         <div className='flex flex-col gap-4 p-6'>
@@ -44,9 +39,6 @@ function CommentSection({ postId }) {
                 <button onClick={() => submitComment()} className='transition border hover:text-orange-500 hover:bg-gray-100 rounded-3xl px-5 py-2'> Submit </button>
             </div>
         </div>
-        <Comment />
-        <Comment />
-        <Comment />
     </div>
   )
 }
