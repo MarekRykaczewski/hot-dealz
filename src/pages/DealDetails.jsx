@@ -62,7 +62,7 @@ function DealDetails() {
             <button className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>Save for later <BsBookmark /></button>
           </div>
       </div>
-      <CommentSection />
+      <CommentSection postId={postId} />
     </div>
   )
 }
