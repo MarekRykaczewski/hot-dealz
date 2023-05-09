@@ -2,7 +2,7 @@ import React from 'react'
 
 import { FiThumbsUp } from 'react-icons/fi'
 
-function Comment() {
+function Comment({ username, comment, date, time }) {
   return (
     <div className='border border-gray-400 border-t-1 border-b-0 border-l-0 border-r-0 w-full'>
         <div className='flex flex-col p-6'>
@@ -10,8 +10,8 @@ function Comment() {
                 <div className='flex'>
                     <img className="self-start w-10 h-10 rounded-full mr-4" src="/img/jonathan.jpg" alt="Avatar of Jonathan Reinink" />
                     <div className='flex flex-col'>
-                        <span>Username</span>
-                        <span>Time</span>
+                        <span>{username}</span>
+                        <span>{date + " " + time}</span>
                     </div>
                 </div>
                 <div>
@@ -22,7 +22,7 @@ function Comment() {
                 </div>
             </div>
             <div>
-                Comment Contents
+                {comment}
             </div>
         </div>
     </div>

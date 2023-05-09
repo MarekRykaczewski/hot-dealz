@@ -3,7 +3,7 @@ import { setDoc, serverTimestamp, addDoc, collection, deleteDoc, doc, getDocs, q
 import { db } from '../config/firebase'
 import { UserAuth } from '../context/AuthContext'
 
-function CommentSection({ postId }) {
+function CommentSection({ postId, commentElements }) {
 
   const { user } = UserAuth()
 
@@ -38,6 +38,7 @@ function CommentSection({ postId }) {
                 <textarea onChange={(e) => handleInputChange(e)} maxLength='350' className='p-4 resize-none w-full h-48 border border-gray-300 rounded-md' type="textarea" placeholder='What do you think?' name="comment" />
                 <button onClick={() => submitComment()} className='transition border hover:text-orange-500 hover:bg-gray-100 rounded-3xl px-5 py-2'> Submit </button>
             </div>
+          {commentElements}
         </div>
     </div>
   )

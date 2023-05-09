@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { BsBookmark } from 'react-icons/bs'
@@ -7,13 +7,48 @@ import { FiExternalLink } from 'react-icons/fi'
 import DealCardVotes from '../components/DealCardVotes'
 import ImageSlider from '../components/ImageSlider'
 import CommentSection from '../components/CommentSection'
+import Comment from '../components/Comment'
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "../config/firebase";
+
 
 function DealDetails() {
 
     const location = useLocation()
     const { postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, slides } = location.state
 
-    console.log(imageCount)
+    const [comments, setComments] = useState([])
+
+    useEffect(() => {
+      const fetchData = async () => {
+          let list = []
+          try {
+              const querySnapshot = await getDocs(collection(db, "deals", postId,"comments"))
+              querySnapshot.forEach((doc) => {
+                  list.push({ id: doc.id, ...doc.data() })
+              });
+              setComments(list)
+          } catch (err) {
+              console.log(err)
+          }
+      }
+      fetchData()
+  }, [])
+
+    console.log(comments)
+
+    const commentElements = 
+      comments.map(comment => {
+          return (
+            <Comment
+             key={comment.id}
+             username={comment.userId}
+             comment={comment.comment}
+             date={comment.posted.toDate().toDateString()}
+             time={comment.posted.toDate().toLocaleTimeString()}
+            />
+          )
+      })
 
   return (
     <div className='bg-slate-200 w-full h-full flex flex-col ml-auto mr-auto items-center justify-start'>
@@ -62,7 +97,7 @@ function DealDetails() {
             <button className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>Save for later <BsBookmark /></button>
           </div>
       </div>
-      <CommentSection postId={postId} />
+      <CommentSection postId={postId} commentElements={commentElements}  />
     </div>
   )
 }
