@@ -9,7 +9,12 @@ function Profile() {
     const [editUsername, setEditUsername] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
     const [editPassword, setEditPassword] = useState(false)
+    const [profilePicture, setProfilePicture] = useState('')
     
+    const handleImageUpload = (e) => {
+        setProfilePicture(e.target.files[0])
+    }
+
   return (
     <div className='flex flex-col'>
         <span className='text-2xl mb-6'> Profile </span>
@@ -19,8 +24,9 @@ function Profile() {
                 <span> Optional </span>
             </div>
             <div className='flex flex-col gap-4 w-[300px]'>
-                <div className='self-center w-[200px] h-[200px] bg-slate-600'> Placeholder (image) </div>
-                <button className='self-center py-1 border rounded-2xl w-[250px]'> Add image </button>
+                <img src={URL.createObjectURL(profilePicture)} className='self-center w-[200px] h-[200px] bg-slate-600'/>
+                <label htmlFor="profilePic" className='text-center self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Upload </label>
+                <input onChange={(e) => handleImageUpload(e)} className='hidden' id='profilePic' type='file' />
             </div>
         </div>
         <div className='flex flex-row justify-start mb-10'>
