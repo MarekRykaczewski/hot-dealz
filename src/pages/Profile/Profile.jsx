@@ -2,13 +2,12 @@ import React, { useState } from 'react'
 import ProfileUsername from './ProfileUsername'
 
 import { UserAuth } from '../../context/AuthContext'
+import ProfileEmail from './ProfileEmail'
 
 function Profile() {
 
     const { user, userData } = UserAuth()
 
-
-    const [editEmail, setEditEmail] = useState(false)
     const [editPassword, setEditPassword] = useState(false)
     const [profilePicture, setProfilePicture] = useState('')
     
@@ -31,16 +30,7 @@ function Profile() {
             </div>
         </div>
         <ProfileUsername />
-        <div className='flex flex-row justify-start mb-10'>
-            <div className='flex flex-col mr-10 w-[200px]'>
-                <span className='font-bold'> e-mail </span>
-            </div>
-            <div className='flex flex-col gap-4 w-[300px]'>
-                {!editEmail ? <span className='text-blue-700'> {user.email} </span> : <input className='border p-1 rounded-lg' placeholder={user.email} type="text" name="" id="" />}
-                <button onClick={() => setEditEmail(!editEmail)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> {editEmail ? 'Cancel' : 'Change Email'} </button>
-                {editEmail && <button onClick={() => setEditEmail(false)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Submit </button>}
-            </div>
-        </div>
+        <ProfileEmail />
         <div className='flex flex-row justify-start mb-10'>
             <div className='flex flex-col mr-10 w-[200px]'>
                 <span className='font-bold'> password </span>
