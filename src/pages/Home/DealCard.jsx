@@ -9,11 +9,15 @@ import DealCardVotes from './DealCardVotes'
 import ImageSlider from './ImageSlider'
 import { ref, getDownloadURL } from "firebase/storage"
 import { storage } from '../../config/firebase'
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../config/firebase'
+
 
 
 function DealCard({ postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink }) {  
   
   const [slides, setSlides] = useState([""])
+  const [commentCount, setCommentCount] = useState(0)
 
   useEffect(() => {
       const getImages = async () => {
@@ -30,6 +34,24 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
       getImages()
       console.log(slides)
     }, [])
+
+
+    useEffect(() => {
+      async function fetchCommentCount() {
+        const count = await getCommentCountFromDealId(postId);
+        setCommentCount(count);
+      }
+    
+      fetchCommentCount();
+    }, []);
+
+    async function getCommentCountFromDealId(dealId) {
+      const commentsCollectionRef = collection(db, `deals/${dealId}/comments`);
+      const commentsSnapshot = await getDocs(commentsCollectionRef);
+      const commentCount = commentsSnapshot.size;
+      return commentCount;
+    }
+    
   
   return (
 <div className="px-5 w-full sm:max-w-4xl sm:flex justify-center">
@@ -67,7 +89,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
       </div>
       <div className='flex flex-wrap gap-3 items-center justify-end text-gray-600'>
         <button className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8'><BsBookmark /></button>
-        <button className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8'><BiCommentDetail /> 175</button>
+        <button className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8'><BiCommentDetail /> {commentCount} </button>
         <button className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-32 h-8'>
          <a className='flex gap-2 items-center' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
         </button>
