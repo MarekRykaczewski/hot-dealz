@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { UserAuth } from '../context/AuthContext'
+import { UserAuth } from '../../context/AuthContext'
 
 function Profile() {
 

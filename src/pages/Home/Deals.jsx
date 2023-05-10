@@ -1,7 +1,7 @@
 import React from 'react'
-import CategoryCarousel from '../components/CategoryCarousel'
-import Tabs from '../components/Tabs'
-import FooterNav from '../components/FooterNav'
+import CategoryCarousel from './CategoryCarousel'
+import Tabs from './Tabs'
+import FooterNav from './FooterNav'
 
 function Deals({ dealElements, dealsPerPage, totalDeals, paginate, currentPage, sortByNewest }) {
   return (

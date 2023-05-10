@@ -1,6 +1,6 @@
 import React from 'react'
 import { useFormContext } from "react-hook-form";
-import CategorySelector from '../components/CategorySelector'
+import CategorySelector from './CategorySelector'
 
 
 function FormFinalDetails({ formDetails, handleInputChange }) {

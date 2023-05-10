@@ -1,14 +1,13 @@
 import { useState } from "react"
-import Nav from "./components/Nav"
-import Home from "./pages/Home"
-import SignUpModal from './components/SignUpModal'
-import SignInModal  from './components/SignInModal'
+import Nav from "./pages/Nav"
+import Home from "./pages/Home/Home"
+import SignUpModal from './pages/SignUpModal'
+import SignInModal  from './pages/SignInModal'
 import { AuthContextProvider } from "./context/AuthContext"
 import { Routes, Route } from "react-router-dom"
-import Settings from "./pages/Settings"
-import Profile from "./pages/Profile"
-import Submission from "./pages/Submission"
-import DealDetails from "./pages/DealDetails"
+import Settings from "./pages/Settings/Settings"
+import Profile from "./pages/Profile/Profile"
+import Submission from "./pages/Submission/Submission"
 
 function App() {
 

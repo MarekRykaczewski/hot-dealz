@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { AiFillCaretLeft } from 'react-icons/ai'
 import { AiFillCaretRight } from 'react-icons/ai'
-import { db } from "../config/firebase";
+import { db } from "../../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
 
 function CategoryCarousel() {

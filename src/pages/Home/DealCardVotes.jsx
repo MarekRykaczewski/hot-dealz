@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
 import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore'
-import { db } from '../config/firebase'
-import { UserAuth } from '../context/AuthContext'
+import { db } from '../../config/firebase'
+import { UserAuth } from '../../context/AuthContext'
 
 function DealCardVotes({ postId }) {
 

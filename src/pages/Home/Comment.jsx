@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getDocs, collection, doc, getDoc } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { db } from "../../config/firebase";
 
 import { FiThumbsUp } from 'react-icons/fi'
 

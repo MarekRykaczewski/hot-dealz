@@ -1,5 +1,5 @@
 import React from 'react'
-import ImagesUpload from '../components/ImagesUpload'
+import ImagesUpload from './ImagesUpload'
 
 function FormImageUpload({ formDetails, setFormDetails }) {
   return (

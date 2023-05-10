@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import DealCardVotes from './DealCardVotes'
 import ImageSlider from './ImageSlider'
 import { ref, getDownloadURL } from "firebase/storage"
-import { storage } from '../config/firebase'
+import { storage } from '../../config/firebase'
 
 
 function DealCard({ postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink }) {  

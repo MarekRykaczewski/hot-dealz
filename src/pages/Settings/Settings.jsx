@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserAuth } from '../context/AuthContext'
+import { UserAuth } from '../../context/AuthContext'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { TbPlaceholder } from 'react-icons/tb'

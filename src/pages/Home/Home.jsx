@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import DealCard from '../components/DealCard'
-import { db } from "../config/firebase";
+import DealCard from './DealCard'
+import { db } from "../../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
 import { Routes, Route } from 'react-router-dom'
 import DealDetails from './DealDetails'

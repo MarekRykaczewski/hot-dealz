@@ -4,12 +4,12 @@ import { AiOutlineClockCircle } from 'react-icons/ai'
 import { BsBookmark } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
-import DealCardVotes from '../components/DealCardVotes'
-import ImageSlider from '../components/ImageSlider'
-import CommentSection from '../components/CommentSection'
-import Comment from '../components/Comment'
+import DealCardVotes from './DealCardVotes'
+import ImageSlider from './ImageSlider'
+import CommentSection from './CommentSection'
+import Comment from './Comment'
 import { getDocs, collection, doc, getDoc } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { db } from "../../config/firebase";
 
 
 function DealDetails() {
