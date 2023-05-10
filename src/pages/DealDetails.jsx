@@ -8,7 +8,7 @@ import DealCardVotes from '../components/DealCardVotes'
 import ImageSlider from '../components/ImageSlider'
 import CommentSection from '../components/CommentSection'
 import Comment from '../components/Comment'
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 
@@ -42,7 +42,9 @@ function DealDetails() {
           return (
             <Comment
              key={comment.id}
-             username={comment.userId}
+             commentId={comment.id}
+             userId={comment.userId}
+             postId={postId}
              comment={comment.comment}
              date={comment.posted.toDate().toDateString()}
              time={comment.posted.toDate().toLocaleTimeString()}

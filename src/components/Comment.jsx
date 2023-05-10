@@ -1,8 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { getDocs, collection, doc, getDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
 
 import { FiThumbsUp } from 'react-icons/fi'
 
-function Comment({ username, comment, date, time }) {
+function Comment({ postId, commentId, comment, date, time }) {
+
+    const [username, setUsername] = useState()
+
+    useEffect(() => {
+        async function getUsername() {
+            const username = await getUsernameFromComment(commentId, postId)
+            setUsername(username)
+        }
+        getUsername()
+    }, [])
+
+    async function getUsernameFromComment(commentId, dealId) {
+        const commentRef = doc(collection(doc(db, `deals/${dealId}`), "comments"), commentId);
+        const commentDoc = await getDoc(commentRef);
+      
+        if (!commentDoc.exists()) {
+          throw new Error(`Comment not found with id ${commentId}`);
+        }
+      
+        const userId = commentDoc.data().userId;
+        const userRef = doc(db, "users", userId);
+        const userDoc = await getDoc(userRef);
+      
+        if (!userDoc.exists()) {
+          throw new Error(`User not found with id ${userId}`);
+        }
+      
+        const username = userDoc.data().username;
+        return username;
+      }
+
+
   return (
     <div className='border border-gray-400 border-t-1 border-b-0 border-l-0 border-r-0 w-full'>
         <div className='flex flex-col p-6'>
