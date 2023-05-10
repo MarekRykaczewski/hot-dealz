@@ -24,7 +24,7 @@ function Profile() {
                 <span> Optional </span>
             </div>
             <div className='flex flex-col gap-4 w-[300px]'>
-                <img src={URL.createObjectURL(profilePicture)} className='self-center w-[200px] h-[200px] bg-slate-600'/>
+                <img src={profilePicture ? URL.createObjectURL(profilePicture) : ''} className='self-center w-[200px] h-[200px] bg-slate-600'/>
                 <label htmlFor="profilePic" className='text-center self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Upload </label>
                 <input onChange={(e) => handleImageUpload(e)} className='hidden' id='profilePic' type='file' />
             </div>
