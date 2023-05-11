@@ -3,12 +3,12 @@ import ProfileUsername from './ProfileUsername'
 
 import { UserAuth } from '../../context/AuthContext'
 import ProfileEmail from './ProfileEmail'
+import ProfilePassword from './ProfilePassword'
 
 function Profile() {
 
     const { user, userData } = UserAuth()
 
-    const [editPassword, setEditPassword] = useState(false)
     const [profilePicture, setProfilePicture] = useState('')
     
     const handleImageUpload = (e) => {
@@ -31,21 +31,7 @@ function Profile() {
         </div>
         <ProfileUsername />
         <ProfileEmail />
-        <div className='flex flex-row justify-start mb-10'>
-            <div className='flex flex-col mr-10 w-[200px]'>
-                <span className='font-bold'> password </span>
-            </div>
-            <div className='flex flex-col gap-4 w-[300px]'>
-                {!editPassword ? <span className='text-blue-700'> ... </span> : 
-                    <div className='flex flex-col gap-1'>
-                        <input className='border p-1 rounded-lg' placeholder='New password' type="text" name="" id="" />
-                        <input className='border p-1 rounded-lg' placeholder='Confirm new password' type="text" name="" id="" />
-                    </div>
-                    }
-                <button onClick={() => setEditPassword(!editPassword)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> {editPassword ? 'Cancel' : 'Change Password'} </button>
-                {editPassword && <button onClick={() => setEditEmail(false)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Submit </button>}
-            </div>
-        </div>
+        <ProfilePassword />
         <hr className='mb-10'></hr>
         <div className='flex flex-row justify-start mb-10'>
             <div className='flex flex-col mr-10 w-[200px]'>
