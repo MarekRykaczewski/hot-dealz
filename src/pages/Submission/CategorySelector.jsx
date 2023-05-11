@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { getDocs, collection } from 'firebase/firestore'
 import { db } from '../../config/firebase'
+import { useFormContext } from "react-hook-form";
 
 function CategorySelector({ handleInputChange }) {
 
     const [categories, setCategories] = useState([])
+
+    const { register, formState: { errors } } = useFormContext();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,17 +29,28 @@ function CategorySelector({ handleInputChange }) {
 
     const checkboxElements = [...Array(n)].map((e, i) => 
         <div key={i}>
-            <input value={categories[i]} onClick={(e) => handleInputChange(e)} name="category" className='peer hidden' id={`category-${i}`} type="radio"/>
-            <label className='flex items-center gap-2 peer-checked:bg-orange-100 peer-checked:text-orange-500 peer-checked:border-orange-500 transition font-bold text-slate-500 border rounded-xl py-1 px-5 w-fit' htmlFor={`category-${i}`}>
+            <input 
+                {...register("category", { required: "This is required." })} 
+                value={categories[i]} onClick={(e) => handleInputChange(e)} 
+                name="category" className='peer hidden' id={`category-${i}`} 
+                type="radio"/>
+            <label 
+                className='flex items-center gap-2 peer-checked:bg-orange-100 peer-checked:text-orange-500 peer-checked:border-orange-500 transition font-bold text-slate-500 border rounded-xl py-1 px-5 w-fit' 
+                htmlFor={`category-${i}`}
+            >
             <span> {categories[i].title} </span>
             </label>
         </div>
     )    
 
     return (
-    <fieldset className='flex flex-wrap mb-0 gap-3'>
-        {checkboxElements}
-    </fieldset>
+    <div>
+        <fieldset className='flex flex-wrap mb-0 gap-3'>
+            {checkboxElements}
+        </fieldset>
+        <span className='text-sm text-red-500 mt-1'>{errors.category?.message}</span>
+    </div>
+
     )
     }
 
