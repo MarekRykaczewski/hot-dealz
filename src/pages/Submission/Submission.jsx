@@ -76,7 +76,8 @@ function Submission() {
       price: formDetails.price,
       nextBestPrice: formDetails.nextBestPrice,
       posted: serverTimestamp(),
-      category: formDetails.category
+      category: formDetails.category,
+      voucherCode: formDetails.voucherCode,
     })
     
     submitImages(newDocId)

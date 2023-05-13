@@ -14,7 +14,7 @@ import { db } from '../../config/firebase'
 
 
 
-function DealCard({ postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink }) {  
+function DealCard({ postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode }) {  
   
   const [slides, setSlides] = useState([""])
   const [commentCount, setCommentCount] = useState(0)
@@ -78,6 +78,14 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
         <del className=' text-gray-500 font-bold'> {nextBestPrice} </del>
         <p> -{Math.floor((nextBestPrice - price) / nextBestPrice * 100)}% </p> 
       </div>
+      {voucherCode && 
+      <div className='mb-2 mt-2 flex gap-3 w-full text-gray-60'>
+        <button className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-full h-8'> {voucherCode} </button>
+        <button className='flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-full h-8'>
+         <a className='flex gap-2 items-center ' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
+        </button>
+      </div>}
+      
       <p className="text-gray-700 text-base">{description}</p>
     </div>
     <div className="flex items-center justify-between gap-5">
@@ -90,9 +98,9 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
       <div className='flex flex-wrap gap-3 items-center justify-end text-gray-600'>
         <button className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8'><BsBookmark /></button>
         <button className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8'><BiCommentDetail /> {commentCount} </button>
-        <button className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-32 h-8'>
+        {!voucherCode && <button className='flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-32 h-8'>
          <a className='flex gap-2 items-center' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
-        </button>
+        </button>}
       </div>
     </div>
   </div>
