@@ -38,7 +38,11 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="">Shipping cost</label>
         <div className='flex flex-col'>
             <input 
-            {...register("shippingCost", { min: 0, required: "This is required." })} 
+            {...register("shippingCost", { min: 0, validate: {
+                required: value => {
+                    if (!(value >= 0)) return "This is required"
+                }
+            }  })} 
             name='shippingCost' 
             value={formDetails.freeShipping ? 0 : formDetails.shippingCost} 
             onChange={handleInputChange} 
