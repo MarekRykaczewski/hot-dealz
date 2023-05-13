@@ -52,6 +52,10 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
       return commentCount;
     }
     
+    const copyToClipboard = (e) => {
+      navigator.clipboard.writeText(e.target.value)
+      alert("copied!")
+    }
   
   return (
 <div className="px-5 w-full sm:max-w-4xl sm:flex justify-center">
