@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { BsBookmark } from 'react-icons/bs'
-import { BiCommentDetail } from 'react-icons/bi'
+import { BiCommentDetail, BiCopyAlt } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import DealCardVotes from './DealCardVotes'
@@ -80,7 +80,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
       </div>
       {voucherCode && 
       <div className='mb-2 mt-2 flex gap-3 w-full text-gray-60'>
-        <button className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-full h-8'> {voucherCode} </button>
+        <button value={voucherCode} onClick={(e) => copyToClipboard(e)} className='flex border-dashed border-2 border-gray-300 hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-full h-8'> {voucherCode} <BiCopyAlt size={20}/> </button>
         <button className='flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-full h-8'>
          <a className='flex gap-2 items-center ' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
         </button>
