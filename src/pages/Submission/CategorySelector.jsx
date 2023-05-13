@@ -31,7 +31,7 @@ function CategorySelector({ handleInputChange }) {
         <div key={i}>
             <input 
                 {...register("category", { required: "This is required." })} 
-                value={categories[i]} onClick={(e) => handleInputChange(e)} 
+                value={categories[i].title} onClick={(e) => handleInputChange(e)} 
                 name="category" className='peer hidden' id={`category-${i}`} 
                 type="radio"/>
             <label 

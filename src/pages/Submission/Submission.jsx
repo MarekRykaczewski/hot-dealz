@@ -18,8 +18,6 @@ function Submission() {
   const { register, handleSubmit, formState: { errors } } = useForm()
   const methods = useForm()
 
-  console.log(errors)
-
   const [openDealPreview, setOpenDealPreview] = useState(false)
 
   const { userData } = UserAuth()
@@ -70,20 +68,22 @@ function Submission() {
     const newDocId = newDocRef.id
 
     await setDoc(newDocRef, {
-      owner: userData.username,
+      owner: userData.username || 'test',
       dealLink: formDetails.dealLink,
       imageCount: formDetails.images.length, // No way to count folder items via Firebase, so this is needed.
       title: formDetails.title,
       description: formDetails.description,
       price: formDetails.price,
       nextBestPrice: formDetails.nextBestPrice,
-      upvotes: 0,
       posted: serverTimestamp(),
+      category: formDetails.category
     })
     
     submitImages(newDocId)
 
   }
+
+  console.log(formDetails.category)
 
   const submitImages = (docId) => {
     for (let i = 0; i < formDetails.images.length; i++) {
