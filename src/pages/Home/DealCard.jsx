@@ -9,10 +9,14 @@ import DealCardVotes from './DealCardVotes'
 import ImageSlider from './ImageSlider'
 import { ref, getDownloadURL } from "firebase/storage"
 import { storage } from '../../config/firebase'
+import { db } from '../../config/firebase'
+import { UserAuth } from '../../context/AuthContext'
+import { doc, setDoc } from 'firebase/firestore'
 
 function DealCard({ postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode, comments }) {  
   
   const [slides, setSlides] = useState([""])
+  const { user } = UserAuth()
 
   useEffect(() => {
       const getImages = async () => {
@@ -34,6 +38,11 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
       navigator.clipboard.writeText(e.target.value)
       alert("copied!")
     }
+
+    const addToSaved = async (userId, postId) => {
+      const userRef = doc(db, "users", userId, "saved", postId);
+      await setDoc(userRef, {});
+    };
   
   return (
 <div className="px-5 w-full sm:max-w-4xl sm:flex justify-center">
@@ -78,7 +87,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
         </div>      
       </div>
       <div className='flex flex-wrap gap-3 items-center justify-end text-gray-600'>
-        <button className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8'><BsBookmark /></button>
+        <button onClick={() => addToSaved(user.uid, postId)} className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8'><BsBookmark /></button>
         <button className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8'><BiCommentDetail /> {comments} </button>
         {!voucherCode && <button className='flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-32 h-8'>
          <a className='flex gap-2 items-center' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
