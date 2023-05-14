@@ -11,7 +11,7 @@ import { ref, getDownloadURL } from "firebase/storage"
 import { auth, storage } from '../../config/firebase'
 import { db } from '../../config/firebase'
 import { UserAuth } from '../../context/AuthContext'
-import { doc, setDoc, collection, getDoc } from 'firebase/firestore'
+import { doc, setDoc, collection, getDoc, deleteDoc } from 'firebase/firestore'
 
 function DealCard({ postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode, comments }) {  
   
@@ -55,9 +55,20 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
       alert("copied!")
     }
 
-    const addToSaved = async (userId, postId) => {
-      const userRef = doc(db, "users", userId, "saved", postId);
-      await setDoc(userRef, {});
+    const toggleSaved = async (userId, postId) => {
+      const userRef = doc(db, "users", userId);
+      const savedRef = collection(userRef, "saved");
+      const savedPostRef = doc(savedRef, postId);
+    
+      const savedPost = await getDoc(savedPostRef);
+    
+      if (savedPost.exists()) {
+        // post is already saved, so remove it
+        await deleteDoc(savedPostRef);
+      } else {
+        // post is not saved, so add it
+        await setDoc(savedPostRef, {});
+      }
     };
   
   return (
@@ -103,7 +114,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
         </div>      
       </div>
       <div className='flex flex-wrap gap-3 items-center justify-end text-gray-600'>
-        <button onClick={() => addToSaved(user.uid, postId)} className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8'>{hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}</button>
+        <button onClick={() => toggleSaved(user.uid, postId)} className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8'>{hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}</button>
         <button className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8'><BiCommentDetail /> {comments} </button>
         {!voucherCode && <button className='flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-32 h-8'>
          <a className='flex gap-2 items-center' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
