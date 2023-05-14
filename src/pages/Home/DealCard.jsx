@@ -65,9 +65,11 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
       if (savedPost.exists()) {
         // post is already saved, so remove it
         await deleteDoc(savedPostRef);
+        if (hasSaved) setHasSaved(false)
       } else {
         // post is not saved, so add it
         await setDoc(savedPostRef, {});
+        if (!hasSaved) setHasSaved(true)
       }
     };
   
