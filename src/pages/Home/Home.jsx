@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DealCard from './DealCard'
 import { db } from "../../config/firebase";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, collectionGroup } from "firebase/firestore";
 import { Routes, Route } from 'react-router-dom'
 import DealDetails from './DealDetails'
 import Deals from './Deals'
@@ -15,19 +15,24 @@ function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-        let list = []
-        try {
-            const querySnapshot = await getDocs(collection(db, "deals"))
-            querySnapshot.forEach((doc) => {
-                list.push({ id: doc.id, ...doc.data() })
-            });
-            setDeals(list)
-        } catch (err) {
-            console.log(err)
+      let list = [];
+      try {
+        const querySnapshot = await getDocs(collection(db, "deals"));
+        for (const doc of querySnapshot.docs) {
+          const dealData = doc.data();
+          const commentsSnapshot = await getDocs(
+            collection(doc.ref, "comments")
+          );
+          const commentsCount = commentsSnapshot.size;
+          list.push({ id: doc.id, ...dealData, comments: commentsCount });
         }
-    }
-    fetchData()
-}, [])
+        setDeals(list);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
 
 
 const sortByNewest = () => {
@@ -38,6 +43,13 @@ const sortByNewest = () => {
   setDeals(dealsCopy)
 }
 
+const sortByComments = () => {
+  const dealsCopy = [...deals];
+  dealsCopy.sort((a, b) => {
+    return b.comments - a.comments;
+  });
+  setDeals(dealsCopy);
+};
 
 const indexOfLastDeal = currentPage * dealsPerPage
 const indexOfFirstDeal = indexOfLastDeal - dealsPerPage
@@ -79,6 +91,7 @@ const dealElements =
         paginate={paginate} 
         currentPage={currentPage}
         sortByNewest={sortByNewest}
+        sortByComments={sortByComments}
         />
       } />
     </Routes>
