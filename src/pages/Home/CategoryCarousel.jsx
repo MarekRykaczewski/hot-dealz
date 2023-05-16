@@ -4,8 +4,9 @@ import { AiFillCaretLeft } from 'react-icons/ai'
 import { AiFillCaretRight } from 'react-icons/ai'
 import { db } from "../../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
+import { Link } from 'react-router-dom';
 
-function CategoryCarousel() {
+function CategoryCarousel({ deals, filterDealsByCategory }) {
 
     const ref = useRef(null)
 
@@ -34,9 +35,11 @@ function CategoryCarousel() {
     const items = 
         categories.map(item => {
             return (
-                <button key={item.title} className='flex flex-none text-lg gap-1 h-10 w-fit items-center justify-center bg-slate-600 rounded-lg px-5 text-white font-semibold hover:bg-slate-500 transition'> 
+                <Link key={item.title} to={`/?category=${encodeURIComponent(item.title)}`}>
+                <button className='flex flex-none text-lg gap-1 h-10 w-fit items-center justify-center bg-slate-600 rounded-lg px-5 text-white font-semibold hover:bg-slate-500 transition'> 
                 {item.title}
                 </button>
+                </Link>
             )
         })
     

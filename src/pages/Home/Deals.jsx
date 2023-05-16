@@ -3,10 +3,13 @@ import CategoryCarousel from './CategoryCarousel'
 import Tabs from './Tabs'
 import FooterNav from './FooterNav'
 
-function Deals({ dealElements, dealsPerPage, totalDeals, paginate, currentPage, sortByNewest, sortByComments }) {
+function Deals({ deals, dealElements, dealsPerPage, totalDeals, paginate, currentPage, sortByNewest, sortByComments, filterDealsByCategory }) {
   return (
     <div>
-    <CategoryCarousel />
+    <CategoryCarousel 
+      filterDealsByCategory={filterDealsByCategory}
+      deals={deals}
+    />
     <div className="flex flex-col w-full h-screen gap-3 justify-start items-center">
       <Tabs 
         sortByNewest={sortByNewest} 

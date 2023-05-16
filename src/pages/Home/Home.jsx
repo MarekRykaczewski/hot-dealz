@@ -2,16 +2,21 @@ import React, { useEffect, useState } from 'react'
 import DealCard from './DealCard'
 import { db } from "../../config/firebase";
 import { getDocs, collection, collectionGroup } from "firebase/firestore";
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import DealDetails from './DealDetails'
 import Deals from './Deals'
 
 function Home() {
 
   const [deals, setDeals] = useState([])
+  const [filteredDeals, setFilteredDeals] = useState([])
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [dealsPerPage, setDealsPerPage] = useState(2)
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const category = searchParams.get('category');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +39,13 @@ function Home() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (category) {
+      setFilteredDeals(filterDealsByCategory(category, deals));
+    } else {
+      setFilteredDeals(deals); // Set to unfiltered deals when category is not present
+    }
+  }, [category, deals]);
 
 const sortByNewest = () => {
   const dealsCopy = [...deals]
@@ -53,10 +65,16 @@ const sortByComments = () => {
 
 const indexOfLastDeal = currentPage * dealsPerPage
 const indexOfFirstDeal = indexOfLastDeal - dealsPerPage
-const currentDeals = deals.slice(indexOfFirstDeal, indexOfLastDeal)
+const currentDeals = filteredDeals.slice(indexOfFirstDeal, indexOfLastDeal)
 
 const paginate = (pageNumber) => {
   setCurrentPage(pageNumber)
+}
+
+function filterDealsByCategory(category, deals) {
+  const dealsCopy = [...deals]
+  const filteredDeals = dealsCopy.filter(deal => deal.category && deal.category.toLowerCase() === category.toLowerCase())
+  return filteredDeals
 }
 
 const dealElements = 
@@ -86,6 +104,7 @@ const dealElements =
       <Route path="/deal/*" element={<DealDetails />}/>
       <Route path="/" element={
       <Deals 
+        deals={deals}
         dealElements={dealElements} 
         dealsPerPage={dealsPerPage} 
         totalDeals={deals.length} 
@@ -93,6 +112,7 @@ const dealElements =
         currentPage={currentPage}
         sortByNewest={sortByNewest}
         sortByComments={sortByComments}
+        filterDealsByCategory={filterDealsByCategory}
         />
       } />
     </Routes>
