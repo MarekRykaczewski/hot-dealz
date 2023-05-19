@@ -24,7 +24,7 @@ function ProfileConfirmDeleteModal({ setDeleteAccountModal }) {
             </div>
             <div className='flex flex-col p-6'>
                 <span className='mb-4'>Confirm you want to delete this acccount by typing the username</span>
-                <input onChange={(e) => handleChanges(e)} className='border self-start p-1 w-80 mb-4' type="text" placeholder='username' />
+                <input onChange={(e) => handleChanges(e)} className='border self-start p-1 w-80 mb-4' type="text" placeholder={userData.username} />
                 <div className='self-center w-full flex justify-between'>
                     <button onClick={() => setDeleteAccountModal(false)} className='py-1 border rounded-2xl w-[250px] hover:bg-gray-100'>Cancel</button>
                     <button disabled={confirmationInput === userData.username ? true : false} className={`${confirmationInput !== userData.username ? 'bg-gray-300 hover:bg-gray-300 text-gray-500' : 'text-red-700 border border-red-700'} py-1  rounded-2xl w-[250px] hover:bg-red-100`}>Delete</button>
