@@ -1,8 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function ProfileUploadImage({ profilePicture, setProfilePicture, handleImageUpload }) {
-
-    const imgRef = useRef(null)
   
     const [editing, setEditing] = useState(false)
 
@@ -21,7 +19,7 @@ function ProfileUploadImage({ profilePicture, setProfilePicture, handleImageUplo
         <span> Optional </span>
     </div>
     <div className='flex flex-col gap-4 w-[300px]'>
-        <img ref={imgRef} src={profilePicture ? URL.createObjectURL(profilePicture) : ''} className='self-center w-[200px] h-[200px] bg-slate-600'/>
+        <img src={profilePicture ? URL.createObjectURL(profilePicture) : ''} className='self-center w-[200px] h-[200px] bg-slate-600'/>
         {!editing && 
         <div className='flex flex-col w-[300px]'>
             <label htmlFor="profilePic" className='text-center self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Upload </label>
