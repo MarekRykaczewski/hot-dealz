@@ -8,10 +8,9 @@ import { Link } from 'react-router-dom'
 import DealCardVotes from './DealCardVotes'
 import ImageSlider from './ImageSlider'
 import { ref, getDownloadURL } from "firebase/storage"
-import { auth, storage } from '../../config/firebase'
-import { db } from '../../config/firebase'
+import { auth, storage, db } from '../../config/firebase'
 import { UserAuth } from '../../context/AuthContext'
-import { doc, setDoc, collection, getDoc, deleteDoc } from 'firebase/firestore'
+import { doc, collection, getDoc} from 'firebase/firestore'
 import { toggleSaved } from '../../utils'
 
 function DealCard({ postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode, comments }) {  
@@ -36,20 +35,20 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
     }
   }, []);
 
+  const getImages = async () => {
+
+    const imageList = []
+
+      for (let i = 0; i < imageCount; i++) {
+        const imageRef = ref(storage, `images/${postId}/${i}`)
+        const url = await getDownloadURL(imageRef)
+        imageList.push({url: url})
+      }  
+      setSlides(imageList)
+    }
+
   useEffect(() => {
-      const getImages = async () => {
-
-      const imageList = []
-
-        for (let i = 0; i < imageCount; i++) {
-          const imageRef = ref(storage, `images/${postId}/${i}`)
-          const url = await getDownloadURL(imageRef)
-          imageList.push({url: url})
-        }  
-        setSlides(imageList)
-      }
       getImages()
-      console.log(slides)
     }, [])
 
     const copyToClipboard = (e) => {
