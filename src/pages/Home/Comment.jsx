@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { getDocs, collection, doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
-
 import { FiThumbsUp } from 'react-icons/fi'
 
 function Comment({ postId, commentId, comment, date, time }) {
 
     const [username, setUsername] = useState()
 
+    async function getUsername() {
+        const username = await getUsernameFromComment(commentId, postId)
+        setUsername(username)
+    }
+
     useEffect(() => {
-        async function getUsername() {
-            const username = await getUsernameFromComment(commentId, postId)
-            setUsername(username)
-        }
         getUsername()
     }, [])
 
