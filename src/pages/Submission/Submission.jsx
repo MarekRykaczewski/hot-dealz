@@ -35,9 +35,7 @@ function Submission() {
     freeShipping: false,
     shippingCost: "",
     voucherCode: "",
-    category: "",
-    startDate: "",
-    endDate: ""
+    category: ""
   }
 
   const [formDetails, setFormDetails] = useState(formDetailsObj)

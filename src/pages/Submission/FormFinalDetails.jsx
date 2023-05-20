@@ -23,26 +23,6 @@ function FormFinalDetails({ formDetails, handleInputChange }) {
             handleInputChange={handleInputChange}
         />
         </div>
-
-        <div className='flex flex-col items-start gap-2'>
-            <label className='text-sm font-bold text-gray-500' htmlFor=""> Start Date </label>
-            <input 
-            name='startDate' 
-            value={formDetails.startDate} 
-            onChange={handleInputChange} 
-            className='border rounded-md p-1 focus:outline-orange-500' 
-            type="date" 
-            placeholder='DD/MM/YYYY' 
-            />
-            <label className='text-sm font-bold text-gray-500' htmlFor=""> End Date </label>
-            <input 
-            name='endDate' 
-            value={formDetails.endDate} 
-            onChange={handleInputChange} 
-            className='border rounded-md p-1 focus:outline-orange-500' 
-            type="date" 
-            placeholder='DD/MM/YYYY' />
-        </div>
     </div>
   )
 }
