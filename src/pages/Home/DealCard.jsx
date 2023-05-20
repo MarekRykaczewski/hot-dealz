@@ -16,6 +16,7 @@ import { doc, setDoc, collection, getDoc, deleteDoc } from 'firebase/firestore'
 function DealCard({ postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode, comments }) {  
   
   const [hasSaved, setHasSaved] = useState(false)
+  const [isCopied, setIsCopied] = useState(false)
   const [slides, setSlides] = useState([""])
   const { user } = UserAuth()
   const userId = auth.currentUser?.uid
@@ -52,7 +53,11 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
 
     const copyToClipboard = (e) => {
       navigator.clipboard.writeText(e.target.value)
-      alert("copied!")
+      setIsCopied(true)
+
+      setTimeout(() => {
+        setIsCopied(false)
+      }, 2000)
     }
 
     const toggleSaved = async (userId, postId) => {
@@ -100,7 +105,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
       </div>
       {voucherCode && 
       <div className='mb-2 mt-2 flex gap-3 w-full text-gray-60'>
-        <button value={voucherCode} onClick={(e) => copyToClipboard(e)} className='flex border-dashed border-2 border-gray-300 hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-full h-8'> {voucherCode} <BiCopyAlt size={20}/> </button>
+        <button value={voucherCode} onClick={(e) => copyToClipboard(e)} className='flex border-dashed border-2 border-gray-300 hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-full h-8'> {isCopied ? 'Copied!' : voucherCode} <BiCopyAlt size={20}/> </button>
         <button className='flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-full h-8'>
          <a className='flex gap-2 items-center ' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
         </button>
