@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { setDoc, serverTimestamp, addDoc, collection, deleteDoc, doc, getDocs, query, where, Timestamp } from 'firebase/firestore'
+import { setDoc, serverTimestamp, collection } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import { UserAuth } from '../../context/AuthContext'
 
@@ -12,8 +12,6 @@ function CommentSection({ postId, commentElements }) {
   const handleInputChange = (e) => {
     setComment(e.target.value)
   }
-
-  console.log(comment)
 
   const submitComment = async () => {
     const postCommentsCollectionRef = collection(db, "deals", postId, "comments");
