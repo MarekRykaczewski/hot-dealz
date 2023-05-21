@@ -7,107 +7,70 @@ import { UserAuth } from '../../context/AuthContext'
 function DealCardVotes({ postId }) {
 
     const { user } = UserAuth()
-    const likesRef = collection(db, "likes")
-    const likesDoc = query(likesRef, where("postId", "==", postId))
-  
-    const dislikesRef = collection(db, "dislikes")
-    const dislikesDoc = query(dislikesRef, where("postId", "==", postId))
-  
+    const likesQuery = query(collection(db, "likes"), where("postId", "==", postId));
+    const dislikesQuery = query(collection(db, "dislikes"), where("postId", "==", postId));
     const [likes, setLikes] = useState([])
     const [dislikes, setDislikes] = useState([])
   
     const getLikes = async () => {
-      const data = await getDocs(likesDoc)
+      const data = await getDocs(likesQuery)
       setLikes(data.docs.map((doc) => ({ userId: doc.data().userId, likeId: doc.id })))
     }
   
     const getDislikes = async () => {
-      const data = await getDocs(dislikesDoc)
+      const data = await getDocs(dislikesQuery)
       setDislikes(data.docs.map((doc) => ({ userId: doc.data().userId, dislikeId: doc.id })))
     }
   
-    const addLike = async () => {
+    const handleVote = async (voteType) => {
       try {
-        const newDoc = await addDoc(likesRef, { userId: user.uid, postId: postId})
-        if (userDisliked) {
-          deleteDislike()
+        const voteCollection = voteType === 'like' ? 'likes' : 'dislikes';
+        const voteRef = collection(db, voteCollection);
+        const newDoc = await addDoc(voteRef, { userId: user.uid, postId });
+        const voteState = voteType === 'like' ? { userId: user.uid, likeId: newDoc.id } : { userId: user.uid, dislikeId: newDoc.id };
+        const setVoteState = voteType === 'like' ? setLikes : setDislikes;
+  
+        if (userDisliked && voteType === 'like') {
+          deleteDislike();
+        }
+        if (userLiked && voteType === 'dislike') {
+          deleteLike();
         }
         if (user) {
-          setLikes((prev) => 
-            prev
-              ? [...prev, { userId: user.uid, likeId: newDoc.id }]
-              : [{ userId: user.uid, likeId: newDoc.id }]
-          )
+          setVoteState((prev) => (prev ? [...prev, voteState] : [voteState]));
         }
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    }
-  
-    const addDislike = async () => {
+    };
+        
+    const deleteVote = async (voteType) => {
       try {
-        const newDoc = await addDoc(dislikesRef, { userId: user.uid, postId: postId})
-        if (userLiked) {
-          deleteLike()
-        }
-        if (user) {
-          setDislikes((prev) => 
-            prev
-              ? [...prev, { userId: user.uid, dislikeId: newDoc.id }]
-              : [{ userId: user.uid, dislikeId: newDoc.id }]
-          )
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    }
-  
-    const deleteLike = async () => {
-      try {
-        const likeToDeleteQuery = query(
-          likesRef,
-          where("postId", "==", postId),
-          where("userId", "==", user.uid)
-        )
-  
-        const likeToDeleteData = await getDocs(likeToDeleteQuery)
-        const likeId = likeToDeleteData.docs[0].id
-        const likeToDelete = doc(db, "likes", likeId)
-        await deleteDoc(likeToDelete)
-        if (user) {
-          setLikes ((prev) =>
-            prev.filter((like) => like.likeId !== likeId)
-          )
+        const voteCollection = voteType === 'like' ? 'likes' : 'dislikes';
+        const voteRef = collection(db, voteCollection);
+        const voteToDeleteQuery = query(voteRef, where('postId', '==', postId), where('userId', '==', user.uid));
+        const voteToDeleteSnapshot = await getDocs(voteToDeleteQuery);
+        const voteToDeleteDocs = voteToDeleteSnapshot.docs;
+        if (voteToDeleteDocs.length > 0) {
+          const voteId = voteToDeleteDocs[0].id;
+          const voteToDelete = doc(db, voteCollection, voteId);
+          await deleteDoc(voteToDelete);
+          const voteState = voteType === 'like' ? setLikes : setDislikes;
+          if (user) {
+            voteState((prev) => prev.filter((vote) => vote.likeId !== voteId && vote.dislikeId !== voteId));
+          }
         }
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    }
-  
-    const deleteDislike = async () => {
-      try {
-        const dislikeToDeleteQuery = query(
-          dislikesRef,
-          where("postId", "==", postId),
-          where("userId", "==", user.uid)
-        )
-  
-        const dislikeToDeleteData = await getDocs(dislikeToDeleteQuery)
-        const dislikeId = dislikeToDeleteData.docs[0].id
-        const dislikeToDelete = doc(db, "dislikes", dislikeId)
-        await deleteDoc(dislikeToDelete)
-        if (user) {
-          setDislikes ((prev) =>
-            prev.filter((like) => like.dislikeId !== dislikeId)
-          )
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    }
-  
+    };
+    
+    const addLike = () => handleVote('like');
+    const addDislike = () => handleVote('dislike');
+    const deleteLike = () => deleteVote('like');
+    const deleteDislike = () => deleteVote('dislike');
+    
     const userLiked = likes.find((like) => like.userId === user?.uid)
-  
     const userDisliked = dislikes.find((dislike) => dislike.userId === user?.uid)
   
     useEffect(() => {
