@@ -47,21 +47,21 @@ function Home() {
     }
   }, [category, deals]);
 
-const sortByNewest = () => {
-  const dealsCopy = [...deals]
-  dealsCopy.sort((a, b) => {
-    return a.posted - b.posted
-  })
-  setDeals(dealsCopy)
-}
+// const sortByNewest = (deals, setDeals) => {
+//   const dealsCopy = [...deals]
+//   dealsCopy.sort((a, b) => {
+//     return a.posted - b.posted
+//   })
+//   setDeals(dealsCopy)
+// }
 
-const sortByComments = () => {
-  const dealsCopy = [...deals];
-  dealsCopy.sort((a, b) => {
-    return b.comments - a.comments;
-  });
-  setDeals(dealsCopy);
-};
+// const sortByComments = (deals, setDeals) => {
+//   const dealsCopy = [...deals];
+//   dealsCopy.sort((a, b) => {
+//     return b.comments - a.comments;
+//   });
+//   setDeals(dealsCopy);
+// };
 
 const indexOfLastDeal = currentPage * dealsPerPage
 const indexOfFirstDeal = indexOfLastDeal - dealsPerPage
@@ -105,13 +105,12 @@ const dealElements =
       <Route path="/" element={
       <Deals 
         deals={deals}
+        setDeals={setDeals}
         dealElements={dealElements} 
         dealsPerPage={dealsPerPage} 
         totalDeals={deals.length} 
         paginate={paginate} 
         currentPage={currentPage}
-        sortByNewest={sortByNewest}
-        sortByComments={sortByComments}
         filterDealsByCategory={filterDealsByCategory}
         />
       } />

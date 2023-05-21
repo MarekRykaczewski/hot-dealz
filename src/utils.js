@@ -18,3 +18,19 @@ export const toggleSaved = async (hasSaved, setHasSaved, userId, postId) => {
       if (!hasSaved) setHasSaved(true)
     }
   };
+
+export const sortByNewest = (deals, setDeals) => {
+  const dealsCopy = [...deals]
+  dealsCopy.sort((a, b) => {
+    return a.posted - b.posted
+  })
+  setDeals(dealsCopy)
+}
+
+export const sortByComments = (deals, setDeals) => {
+  const dealsCopy = [...deals];
+  dealsCopy.sort((a, b) => {
+    return b.comments - a.comments;
+  });
+  setDeals(dealsCopy);
+};
