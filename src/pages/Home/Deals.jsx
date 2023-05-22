@@ -10,7 +10,7 @@ function Deals({ deals, setDeals, dealElements, dealsPerPage, totalDeals, pagina
       filterDealsByCategory={filterDealsByCategory}
       deals={deals}
     />
-    <div className="flex flex-col w-full h-screen gap-3 justify-start items-center">
+    <div className="flex flex-col w-full h-full gap-3 justify-start items-center">
       <Tabs
         deals={deals}
         setDeals={setDeals} 
