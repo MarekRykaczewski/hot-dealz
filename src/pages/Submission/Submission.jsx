@@ -12,6 +12,7 @@ import FormTitle from './FormTitle'
 import FormDescription from './FormDescription'
 import FormPriceDetails from './FormPriceDetails'
 import FormFinalDetails from './FormFinalDetails'
+// import { data } from '../../data.js'
 
 function Submission() {
 
@@ -82,8 +83,38 @@ function Submission() {
 
   }
 
-  console.log(formDetails.category)
+  // Programatically insert data
 
+  // const submitData = async () => {  
+  //   const dealsCollection = collection(db, "deals");
+  
+  //   for (const formDetails of data) {
+  //     const newDocRef = doc(dealsCollection);
+  
+  //     const newDocId = newDocRef.id;
+  
+  //     const docData = {
+  //       owner: formDetails.owner,
+  //       dealLink: formDetails.dealLink,
+  //       imageCount: formDetails.imageCount,
+  //       title: formDetails.title,
+  //       description: formDetails.description,
+  //       price: formDetails.price,
+  //       nextBestPrice: formDetails.nextBestPrice,
+  //       posted: serverTimestamp(),
+  //       category: formDetails.category,
+  //     };
+  
+  //     if (formDetails.voucherCode) {
+  //       docData.voucherCode = formDetails.voucherCode;
+  //     }
+  
+  //     await setDoc(newDocRef, docData);
+  
+  //     submitImages(newDocId);
+  //   }
+  // }
+  
   const submitImages = (docId) => {
     for (let i = 0; i < formDetails.images.length; i++) {
       if (formDetails.images[i]) {
@@ -170,7 +201,8 @@ function Submission() {
                 className='bg-white hover:bg-gray-200 border transition-all text-gray-500 py-2 px-5 rounded-3xl'> Preview 
               </button>
               <button 
-                type="submit" 
+                // type="submit" 
+                onClick={() => submitData()}
                 className='bg-orange-500 hover:bg-orange-400 transition-all text-white py-2 px-5 rounded-3xl'> Publish </button>
             </div>
         </form>
