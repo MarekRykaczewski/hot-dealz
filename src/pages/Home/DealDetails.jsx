@@ -53,7 +53,7 @@ function DealDetails() {
       })
 
   return (
-    <div className='bg-slate-200 w-full h-full flex flex-col ml-auto mr-auto items-center justify-start'>
+    <div className='bg-slate-200 w-full h-screen flex flex-col ml-auto mr-auto items-center justify-start'>
       <div className='bg-white flex justify-center items-center rounded-lg w-full max-w-3xl mt-3'>
           <div className='h-64 w-full bg-slate-500'>
             {imageCount > 0 && <ImageSlider slides={slides} />}
