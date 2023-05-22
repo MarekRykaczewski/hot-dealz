@@ -12,7 +12,7 @@ function Home() {
   const [filteredDeals, setFilteredDeals] = useState([])
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const [dealsPerPage, setDealsPerPage] = useState(2)
+  const [dealsPerPage, setDealsPerPage] = useState(5)
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
