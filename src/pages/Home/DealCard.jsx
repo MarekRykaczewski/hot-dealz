@@ -61,12 +61,12 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
     }
   
   return (
-<div className="px-5 w-full sm:max-w-4xl sm:flex justify-center">
+<div className="px-5 w-full max-h-96 sm:max-w-4xl sm:flex justify-center">
   <div className="h-48 sm:h-auto sm:w-64 flex-none bg-cover text-center overflow-hidden bg-slate-500">
   {imageCount > 0 && <ImageSlider slides={slides} />}
   </div>
-  <div className="bg-white p-4 flex flex-col justify-between leading-normal w-full">
-    <div className="mb-8">
+  <div className="bg-white p-4 h-80 flex flex-col gap-4 justify-between leading-normal w-full">
+    <div className='flex flex-col gap-1'>
       <div className="text-sm text-gray-600 flex items-center justify-between">
         <DealCardVotes postId={postId} />
         <div className='flex gap-2 items-center mb-2'>
@@ -78,7 +78,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
         </div>
       </div>
       <Link className='block' to={`/deal/${postId}`} state={ {postId: postId, title: title, date :date, time: time, owner: owner, price: price, nextBestPrice: nextBestPrice, description: description, dealLink: dealLink, imageCount: imageCount, slides: slides} }>
-      <div className="text-gray-900 font-bold text-xl mb-2 hover:text-orange-500 transition">{title}</div>
+      <div className="text-gray-900 font-bold text-xl hover:text-orange-500 transition">{title}</div>
       </Link>
       <div className='flex gap-3'>
         <p className='text-orange-500 font-bold'> {price}</p>
@@ -92,8 +92,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
          <a className='flex gap-2 items-center ' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
         </button>
       </div>}
-      
-      <p className="text-gray-700 text-base">{description}</p>
+      <p className={`text-gray-700 ${voucherCode ? 'line-clamp-3' : 'line-clamp-5'} w-full overflow-hidden text-ellipsis`}>{description}</p>
     </div>
     <div className="flex items-center justify-between gap-5">
       <div className='flex justify-center items-center'>
