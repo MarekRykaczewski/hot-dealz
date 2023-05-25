@@ -83,7 +83,7 @@ const dealElements =
     })
 
   return (
-    <div className='bg-slate-200'>
+    <div className='bg-slate-200 h-screen'>
     <Routes>
       <Route path="/deal/*" element={<DealDetails />}/>
       <Route path="/" element={
