@@ -60,7 +60,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
     }
   
   return (
-<div className="px-5 w-full max-h-96 sm:max-w-4xl sm:flex justify-center">
+<div className="px-5 w-full max-h-96 sm:max-w-4xl sm:flex justify-center mb-32 lg:mb-0">
   <div className="h-48 sm:h-auto sm:w-64 flex-none bg-cover text-center overflow-hidden bg-slate-500">
   {imageCount > 0 && <ImageSlider slides={slides} />}
   </div>
