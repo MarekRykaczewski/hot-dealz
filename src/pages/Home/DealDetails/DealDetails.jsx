@@ -8,7 +8,7 @@ import DealCardVotes from '../DealCardVotes'
 import ImageSlider from '../ImageSlider'
 import CommentSection from './CommentSection'
 import Comment from './Comment'
-import { getDocs, collection, doc, getDoc } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
 
