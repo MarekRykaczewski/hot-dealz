@@ -30,8 +30,8 @@ function CategoryCarousel() {
       }, []);
 
       const items = categories.map(item => (
-        <Link key={item.title} to={`/?category=${encodeURIComponent(item.title)}`}>
-          <button className='flex flex-none text-lg gap-1 h-10 w-fit items-center justify-center bg-slate-600 rounded-lg px-5 text-white font-semibold hover:bg-slate-500 transition'> 
+        <Link className='w-fit' key={item.title} to={`/?category=${encodeURIComponent(item.title)}`}>
+          <button className='flex text-md leading-6 gap-1 h-12 min-w-fit w-[150px] px-2 items-center justify-center bg-slate-600 rounded-lg text-white font-semibold hover:bg-slate-500 transition'> 
             {item.title}
           </button>
         </Link>
