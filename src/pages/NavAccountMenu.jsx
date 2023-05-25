@@ -36,6 +36,11 @@ function NavAccountMenu({ openNavAccountMenu, toggleNavAccountMenu, profileRef }
           <Link onClick={() => toggleNavAccountMenu()} to='/settings/profile' className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</Link>
         </li>
       </ul>
+      <ul className="py-2 text-md text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformationButton">
+        <li>
+          <Link onClick={() => toggleNavAccountMenu()} to='/saved/' className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My saved</Link>
+        </li>
+      </ul>
       <div className="py-2">
         <a onClick={handleLogout} className="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
       </div>

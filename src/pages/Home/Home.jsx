@@ -5,6 +5,7 @@ import { getDocs, collection } from "firebase/firestore";
 import { Routes, Route, useLocation } from 'react-router-dom'
 import DealDetails from './DealDetails/DealDetails'
 import Deals from './Deals/Deals';
+import Saved from './Saved/Saved';
 
 function Home() {
 
@@ -85,6 +86,14 @@ const dealElements =
   return (
     <div className='bg-slate-200 h-screen'>
     <Routes>
+      <Route path="/saved/*" element={<Saved 
+        dealsPerPage={dealsPerPage} 
+        paginate={paginate} 
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        filterDealsByCategory={filterDealsByCategory}
+      />}
+      />
       <Route path="/deal/*" element={<DealDetails />}/>
       <Route path="/" element={
       <Deals 
