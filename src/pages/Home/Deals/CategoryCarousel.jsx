@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
-import { db } from "../../config/firebase";
+import { db } from "../../../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
 import { Link } from 'react-router-dom';
 

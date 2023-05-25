@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import DealCard from './DealCard'
 import { db } from "../../config/firebase";
-import { getDocs, collection, collectionGroup } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 import { Routes, Route, useLocation } from 'react-router-dom'
-import DealDetails from './DealDetails'
-import Deals from './Deals'
+import DealDetails from './DealDetails/DealDetails'
+import Deals from './Deals/Deals';
 
 function Home() {
 
