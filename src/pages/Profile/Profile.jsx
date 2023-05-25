@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import ProfileUsername from './ProfileUsername'
-
-import { UserAuth } from '../../context/AuthContext'
 import ProfileEmail from './ProfileEmail'
 import ProfilePassword from './ProfilePassword'
 import ProfileConfirmDeleteModal from './ProfileConfirmDeleteModal'
@@ -9,9 +7,8 @@ import ProfileUploadImage from './ProfileUploadImage'
 
 function Profile() {
 
-    const { user, userData } = UserAuth()
-
     const [profilePicture, setProfilePicture] = useState('')
+    const [profileURL, setProfileURL] = useState('')
     const [deleteAccountModal, setDeleteAccountModal] = useState(false)
 
     const handleImageUpload = (e) => {
@@ -26,6 +23,7 @@ function Profile() {
             profilePicture={profilePicture} 
             setProfilePicture={setProfilePicture}
             handleImageUpload={handleImageUpload}
+            setProfileURL={setProfileURL}
         />
         <ProfileUsername />
         <ProfileEmail />
