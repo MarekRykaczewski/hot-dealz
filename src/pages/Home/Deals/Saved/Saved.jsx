@@ -68,10 +68,7 @@ function Saved({ dealsPerPage, paginate, currentPage, filterDealsByCategory }) {
   
     return (
     <div>
-    <CategoryCarousel 
-      filterDealsByCategory={filterDealsByCategory}
-      deals={deals}
-    />
+    <CategoryCarousel />
     <div className="flex bg-gray-200 flex-col w-full h-full gap-3 justify-start items-center">
       <Tabs
         deals={deals}
