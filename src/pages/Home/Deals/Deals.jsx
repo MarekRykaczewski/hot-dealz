@@ -1,6 +1,6 @@
 import React from 'react'
 import CategoryCarousel from './CategoryCarousel'
-import Tabs from '../Tabs'
+import Tabs from './Tabs'
 import FooterNav from './FooterNav'
 
 function Deals({ deals, setDeals, dealElements, dealsPerPage, totalDeals, paginate, currentPage, filterDealsByCategory }) {
