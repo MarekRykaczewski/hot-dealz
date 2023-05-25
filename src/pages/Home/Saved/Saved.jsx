@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import CategoryCarousel from '../Deals/CategoryCarousel'
-import Tabs from '../Deals/Tabs'
+import Tabs from '../Tabs'
 import FooterNav from '../Deals/FooterNav'
 import DealCard from '../DealCard'
 import { db } from '../../../config/firebase'
