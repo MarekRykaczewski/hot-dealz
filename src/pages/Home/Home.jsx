@@ -21,18 +21,15 @@ function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      let list = [];
       try {
         const querySnapshot = await getDocs(collection(db, "deals"));
-        for (const doc of querySnapshot.docs) {
+        const dealList = await Promise.all(querySnapshot.docs.map(async (doc) => {
           const dealData = doc.data();
-          const commentsSnapshot = await getDocs(
-            collection(doc.ref, "comments")
-          );
+          const commentsSnapshot = await getDocs(collection(doc.ref, "comments"));
           const commentsCount = commentsSnapshot.size;
-          list.push({ id: doc.id, ...dealData, comments: commentsCount });
-        }
-        setDeals(list);
+          return { id: doc.id, ...dealData, comments: commentsCount };
+        }));
+        setDeals(dealList);
       } catch (err) {
         console.log(err);
       }
