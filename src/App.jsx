@@ -6,7 +6,7 @@ import SignInModal  from './pages/SignInModal'
 import { AuthContextProvider } from "./context/AuthContext"
 import { Routes, Route } from "react-router-dom"
 import Settings from "./pages/Settings/Settings"
-import Profile from "./pages/Profile/Profile"
+import Profile from "./pages/Settings/Profile/Profile"
 import Submission from "./pages/Submission/Submission"
 
 function App() {

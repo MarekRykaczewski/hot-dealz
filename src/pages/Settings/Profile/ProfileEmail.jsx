@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { auth } from '../../config/firebase'
+import { auth } from '../../../config/firebase'
 import { updateEmail } from 'firebase/auth'
 
-import { UserAuth } from '../../context/AuthContext'
+import { UserAuth } from '../../../context/AuthContext'
 
 function ProfileEmail() {
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { updatePassword } from "firebase/auth";
-import { auth } from '../../config/firebase'
+import { auth } from '../../../config/firebase'
 import { useForm } from 'react-hook-form'
 
 function ProfilePassword() {

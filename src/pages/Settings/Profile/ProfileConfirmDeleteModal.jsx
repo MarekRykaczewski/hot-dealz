@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { AiFillWarning } from 'react-icons/ai'
-import { UserAuth } from '../../context/AuthContext'
+import { UserAuth } from '../../../context/AuthContext'
 
 function ProfileConfirmDeleteModal({ setDeleteAccountModal }) {
 

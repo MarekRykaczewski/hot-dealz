@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { storage } from '../../config/firebase';
-import { UserAuth } from '../../context/AuthContext';
+import { storage } from '../../../config/firebase';
+import { UserAuth } from '../../../context/AuthContext';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 function ProfileUploadImage({ profilePicture, setProfilePicture, handleImageUpload, setProfileURL }) {

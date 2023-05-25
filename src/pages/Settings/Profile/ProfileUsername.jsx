@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { auth } from '../../config/firebase'
+import { auth } from '../../../config/firebase'
 import { collection, doc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
-import { db, storage } from '../../config/firebase'
+import { db, storage } from '../../../config/firebase'
 import { ref, uploadBytes } from 'firebase/storage'
 
-import { UserAuth } from '../../context/AuthContext'
+import { UserAuth } from '../../../context/AuthContext'
 
 function ProfileUsername() {
 
