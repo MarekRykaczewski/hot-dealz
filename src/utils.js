@@ -1,6 +1,15 @@
 import { doc, setDoc, collection, getDoc, deleteDoc } from 'firebase/firestore'
 import { db } from './config/firebase';
 
+export const checkSavedDeal = async (setHasSaved, userId, postId) => {
+  const userRef = doc(db, "users", userId);
+  const savedRef = collection(userRef, "saved");
+  const savedDealRef = doc(savedRef, postId);
+
+  const savedDeal = await getDoc(savedDealRef);
+  setHasSaved(savedDeal.exists());
+};
+
 export const toggleSaved = async (hasSaved, setHasSaved, userId, postId) => {
     const userRef = doc(db, "users", userId);
     const savedRef = collection(userRef, "saved");

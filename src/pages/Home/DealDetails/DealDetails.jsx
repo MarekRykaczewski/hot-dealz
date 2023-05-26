@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { BsBookmark } from 'react-icons/bs'
+import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
 import DealCardVotes from '../DealCardVotes'
@@ -9,10 +9,13 @@ import CommentSection from './CommentSection'
 import Comment from './Comment'
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../../config/firebase";
-
+import { toggleSaved, checkSavedDeal } from '../../../utils'
+import { auth } from '../../../config/firebase'
 
 function DealDetails() {
 
+    const userId = auth.currentUser?.uid
+    const [hasSaved, setHasSaved] = useState(false)
     const location = useLocation()
     const { postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, slides } = location.state
 
@@ -33,6 +36,12 @@ function DealDetails() {
       }
       fetchData()
   }, [])
+
+    useEffect(() => {
+      if (userId) {
+        checkSavedDeal(setHasSaved, userId, postId);
+      }
+    }, []);
 
     console.log(comments)
 
@@ -95,7 +104,7 @@ function DealDetails() {
           </div>
           <div className='bg-slate-300 flex gap-4 w-full px-6 py-3'>
             <button className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>New comment <BiCommentDetail /></button>
-            <button className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>Save for later <BsBookmark /></button>
+            <button onClick={() => toggleSaved(hasSaved, setHasSaved, userId, postId)} className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>Save for later {hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}</button>
           </div>
       </div>
       <CommentSection postId={postId} commentElements={commentElements}  />

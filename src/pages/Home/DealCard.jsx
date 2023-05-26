@@ -7,10 +7,9 @@ import { Link } from 'react-router-dom'
 import DealCardVotes from './DealCardVotes'
 import ImageSlider from './ImageSlider'
 import { ref, getDownloadURL } from "firebase/storage"
-import { auth, storage, db } from '../../config/firebase'
+import { auth, storage } from '../../config/firebase'
 import { UserAuth } from '../../context/AuthContext'
-import { doc, collection, getDoc} from 'firebase/firestore'
-import { toggleSaved } from '../../utils'
+import { toggleSaved, checkSavedDeal } from '../../utils'
 
 function DealCard({ postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode, comments }) {  
   
@@ -22,15 +21,7 @@ function DealCard({ postId, imageCount, title, date, time, owner, price, nextBes
 
   useEffect(() => {
     if (userId) {
-      const checkSavedDeal = async () => {
-        const userRef = doc(db, "users", userId);
-        const savedRef = collection(userRef, "saved");
-        const savedDealRef = doc(savedRef, postId);
-
-        const savedDeal = await getDoc(savedDealRef);
-        setHasSaved(savedDeal.exists());
-      };
-      checkSavedDeal();
+      checkSavedDeal(setHasSaved, userId, postId);
     }
   }, []);
 
