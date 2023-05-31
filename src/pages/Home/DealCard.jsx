@@ -11,17 +11,17 @@ import { auth, storage } from '../../config/firebase'
 import { UserAuth } from '../../context/AuthContext'
 import { toggleSaved, checkSavedDeal } from '../../utils'
 
-function DealCard({ postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode, comments }) {  
+function DealCard({ userId, postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode, comments }) {  
   
   const [hasSaved, setHasSaved] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
   const [slides, setSlides] = useState([""])
   const { user } = UserAuth()
-  const userId = auth.currentUser?.uid
+  const currentUserId = auth.currentUser?.uid
 
   useEffect(() => {
-    if (userId) {
-      checkSavedDeal(setHasSaved, userId, postId);
+    if (currentUserId) {
+      checkSavedDeal(setHasSaved, currentUserId, postId);
     }
   }, []);
 

@@ -76,6 +76,7 @@ const dealElements =
             time={item.posted.toDate().toLocaleTimeString()}
             voucherCode={item.voucherCode}
             comments={item.comments}
+            userId={item.userId}
            />
         )
     })
