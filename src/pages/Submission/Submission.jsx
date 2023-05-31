@@ -12,11 +12,13 @@ import FormTitle from './FormTitle'
 import FormDescription from './FormDescription'
 import FormPriceDetails from './FormPriceDetails'
 import FormFinalDetails from './FormFinalDetails'
+import { useNavigate } from 'react-router-dom'
 
 function Submission() {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
   const methods = useForm()
+  const navigate = useNavigate()
 
   const [openDealPreview, setOpenDealPreview] = useState(false)
 
@@ -79,7 +81,7 @@ function Submission() {
     })
     
     submitImages(newDocId)
-
+    navigate('/')
   }
   
   const submitImages = (docId) => {
