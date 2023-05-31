@@ -22,7 +22,7 @@ function Submission() {
 
   const [openDealPreview, setOpenDealPreview] = useState(false)
 
-  const { userData } = UserAuth()
+  const { user, userData } = UserAuth()
 
   const TITLE_CHARACTER_LIMIT = 100
   const DESCRIPTION_CHARACTER_LIMIT = 500
@@ -78,6 +78,7 @@ function Submission() {
       posted: serverTimestamp(),
       category: formDetails.category,
       voucherCode: formDetails.voucherCode,
+      userId: user.uid
     })
     
     submitImages(newDocId)
