@@ -92,7 +92,7 @@ const dealElements =
         filterDealsByCategory={filterDealsByCategory}
       />}
       />
-      <Route path="/deal/*" element={<DealDetails />}/>
+      <Route path="/deal/:dealId" element={<DealDetails />}/>
       <Route path="/" element={
       <Deals 
         deals={deals}

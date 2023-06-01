@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
@@ -7,43 +7,50 @@ import DealCardVotes from '../DealCardVotes'
 import ImageSlider from '../ImageSlider'
 import CommentSection from './CommentSection'
 import Comment from './Comment'
-import { getDocs, collection } from "firebase/firestore";
+import { collection, getDoc, getDocs, doc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { toggleSaved, checkSavedDeal } from '../../../utils'
-import { auth } from '../../../config/firebase'
+import { auth, storage } from '../../../config/firebase'
+import { getDownloadURL, ref } from 'firebase/storage'
 
 function DealDetails() {
 
     const userId = auth.currentUser?.uid
     const [hasSaved, setHasSaved] = useState(false)
-    const location = useLocation()
-    const { postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, slides } = location.state
-
+    const [deal, setDeal] = useState([])
+    const { postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink } = deal
+    const { dealId } = useParams();
+    const [slides, setSlides] = useState([])
     const [comments, setComments] = useState([])
 
-    useEffect(() => {
-      const fetchData = async () => {
-          let list = []
-          try {
-              const querySnapshot = await getDocs(collection(db, "deals", postId,"comments"))
-              querySnapshot.forEach((doc) => {
-                  list.push({ id: doc.id, ...doc.data() })
-              });
-              setComments(list)
-          } catch (err) {
-              console.log(err)
-          }
-      }
-      fetchData()
-  }, [])
+  const fetchData = async (dealId) => {
+    try {
+      const dealRef = doc(db, "deals", dealId);
+      const dealSnapshot = await getDoc(dealRef);
 
-    useEffect(() => {
-      if (userId) {
-        checkSavedDeal(setHasSaved, userId, postId);
+      if (dealSnapshot.exists()) {
+        const dealData = dealSnapshot.data();
+        const commentsSnapshot = await getDocs(collection(dealRef, "comments"));
+        const commentsCount = commentsSnapshot.size;
+        const specificDeal = { id: dealSnapshot.id, ...dealData, comments: commentsCount };
+        setDeal(specificDeal);
+      } else {
+        setDeal([]);
       }
-    }, []);
-
-    console.log(comments)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+    const getImages = async () => {
+      const imageList = []
+        for (let i = 0; i < imageCount; i++) {
+          const imageRef = ref(storage, `images/${dealId}/${i}`)
+          const url = await getDownloadURL(imageRef)
+          imageList.push({url: url})
+        }  
+        setSlides(imageList)
+      }
 
     const commentElements = 
       comments.map(comment => {
@@ -59,12 +66,28 @@ function DealDetails() {
             />
           )
       })
+      
+  useEffect(() => {
+    fetchData(dealId)
+  }, [])
+    
+  useEffect(() => {
+    if (deal) {
+      getImages()
+    }
+  }, [deal]);
+
+  useEffect(() => {
+    if (userId) {
+      checkSavedDeal(setHasSaved, userId, postId);
+    }
+  }, []);
 
   return (
     <div className='bg-slate-200 w-full h-screen flex flex-col ml-auto mr-auto items-center justify-start'>
       <div className='bg-white flex justify-center items-center rounded-lg w-full max-w-3xl mt-3'>
           <div className='h-64 w-full bg-slate-500'>
-            {imageCount > 0 && <ImageSlider slides={slides} />}
+            {slides.length > 0 && <ImageSlider slides={slides} />}
           </div>
           <div className="bg-white p-4 flex flex-col w-full max-w-3xl">
               <div className="text-sm text-gray-600 flex flex-col items-start gap-3">
@@ -76,7 +99,7 @@ function DealDetails() {
                     <span className='text-xs'> {time} </span>
                     </div>
                   </div>
-                  <DealCardVotes postId={postId} />
+                  <DealCardVotes postId={dealId} />
                 </div>
               <div className="text-gray-900 font-bold text-3xl mb-2">{title}</div>
               <div className='flex gap-3 items-center'>
