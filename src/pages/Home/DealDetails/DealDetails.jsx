@@ -18,7 +18,7 @@ function DealDetails() {
     const userId = auth.currentUser?.uid
     const [hasSaved, setHasSaved] = useState(false)
     const [deal, setDeal] = useState([])
-    const { postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink } = deal
+    const { imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink } = deal
     const { dealId } = useParams();
     const [slides, setSlides] = useState([])
     const [comments, setComments] = useState([])
@@ -59,7 +59,7 @@ function DealDetails() {
              key={comment.id}
              commentId={comment.id}
              userId={comment.userId}
-             postId={postId}
+             postId={dealId}
              comment={comment.comment}
              date={comment.posted.toDate().toDateString()}
              time={comment.posted.toDate().toLocaleTimeString()}
@@ -79,7 +79,7 @@ function DealDetails() {
 
   useEffect(() => {
     if (userId) {
-      checkSavedDeal(setHasSaved, userId, postId);
+      checkSavedDeal(setHasSaved, userId, dealId);
     }
   }, []);
 
@@ -128,10 +128,10 @@ function DealDetails() {
           </div>
           <div className='bg-slate-300 flex gap-4 w-full px-6 py-3'>
             <button className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>New comment <BiCommentDetail /></button>
-            <button onClick={() => toggleSaved(hasSaved, setHasSaved, userId, postId)} className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>Save for later {hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}</button>
+            <button onClick={() => toggleSaved(hasSaved, setHasSaved, userId, dealId)} className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>Save for later {hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}</button>
           </div>
       </div>
-      <CommentSection postId={postId} commentElements={commentElements}  />
+      <CommentSection postId={dealId} commentElements={commentElements}  />
     </div>
   )
 }
