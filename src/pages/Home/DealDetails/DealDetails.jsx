@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
@@ -22,6 +22,12 @@ function DealDetails() {
   const { dealId } = useParams();
   const [slides, setSlides] = useState([])
   const [comments, setComments] = useState([])
+  const commentInput = useRef(null)
+
+  const focusElement = () => {
+    commentInput.current && commentInput.current.focus()
+    commentInput.current.scrollIntoView({ behavior: "smooth", block: "start", inline: "start" })
+  }
 
   const fetchData = async (dealId) => {
     try {
@@ -144,11 +150,11 @@ function DealDetails() {
             <p className="text-gray-700 text-base">{description}</p>
           </div>
           <div className='bg-slate-300 flex gap-4 w-full px-6 py-3'>
-            <button className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>New comment <BiCommentDetail /></button>
+            <button onClick={() => focusElement()} className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>New comment <BiCommentDetail /></button>
             <button onClick={() => toggleSaved(hasSaved, setHasSaved, userId, dealId)} className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>Save for later {hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}</button>
           </div>
       </div>
-      <CommentSection postId={dealId} commentElements={commentElements}  />
+      <CommentSection commentInput={commentInput} postId={dealId} commentElements={commentElements}  />
     </div>
   )
 }
