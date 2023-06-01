@@ -15,13 +15,13 @@ import { getDownloadURL, ref } from 'firebase/storage'
 
 function DealDetails() {
 
-    const userId = auth.currentUser?.uid
-    const [hasSaved, setHasSaved] = useState(false)
-    const [deal, setDeal] = useState([])
-    const { imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink } = deal
-    const { dealId } = useParams();
-    const [slides, setSlides] = useState([])
-    const [comments, setComments] = useState([])
+  const userId = auth.currentUser?.uid
+  const [hasSaved, setHasSaved] = useState(false)
+  const [deal, setDeal] = useState([])
+  const { imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink } = deal
+  const { dealId } = useParams();
+  const [slides, setSlides] = useState([])
+  const [comments, setComments] = useState([])
 
   const fetchData = async (dealId) => {
     try {
@@ -41,31 +41,44 @@ function DealDetails() {
       console.log(err);
     }
   };
-  
-    const getImages = async () => {
-      const imageList = []
-        for (let i = 0; i < imageCount; i++) {
-          const imageRef = ref(storage, `images/${dealId}/${i}`)
-          const url = await getDownloadURL(imageRef)
-          imageList.push({url: url})
-        }  
-        setSlides(imageList)
-      }
 
-    const commentElements = 
-      comments.map(comment => {
-          return (
-            <Comment
-             key={comment.id}
-             commentId={comment.id}
-             userId={comment.userId}
-             postId={dealId}
-             comment={comment.comment}
-             date={comment.posted.toDate().toDateString()}
-             time={comment.posted.toDate().toLocaleTimeString()}
-            />
-          )
-      })
+  const fetchComments = async () => {
+    let list = []
+    try {
+        const querySnapshot = await getDocs(collection(db, "deals", dealId, "comments"))
+        querySnapshot.forEach((doc) => {
+            list.push({ id: doc.id, ...doc.data() })
+        });
+        setComments(list)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+  const getImages = async () => {
+    const imageList = []
+      for (let i = 0; i < imageCount; i++) {
+        const imageRef = ref(storage, `images/${dealId}/${i}`)
+        const url = await getDownloadURL(imageRef)
+        imageList.push({url: url})
+      }  
+      setSlides(imageList)
+    }
+
+  const commentElements = 
+    comments.map(comment => {
+        return (
+          <Comment
+            key={comment.id}
+            commentId={comment.id}
+            userId={comment.userId}
+            postId={dealId}
+            comment={comment.comment}
+            date={comment.posted.toDate().toDateString()}
+            time={comment.posted.toDate().toLocaleTimeString()}
+          />
+        )
+    })
       
   useEffect(() => {
     fetchData(dealId)
@@ -82,6 +95,10 @@ function DealDetails() {
       checkSavedDeal(setHasSaved, userId, dealId);
     }
   }, []);
+
+  useEffect(() => {
+    fetchComments()
+  }, [])
 
   return (
     <div className='bg-slate-200 w-full h-screen flex flex-col ml-auto mr-auto items-center justify-start'>
