@@ -108,7 +108,7 @@ function DealCard({ userId, postId, imageCount, title, date, time, owner, price,
       </div>
       <div className='flex flex-wrap gap-3 items-center justify-end text-gray-600'>
         <button onClick={() => toggleSaved(hasSaved, setHasSaved, user.uid, postId)} className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8'>{hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}</button>
-        <button className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8'><BiCommentDetail /> {comments} </button>
+        <Link to={`/deal/${postId}`} state={ {postId: postId, title: title, date :date, time: time, owner: owner, price: price, nextBestPrice: nextBestPrice, description: description, dealLink: dealLink, imageCount: imageCount, slides: slides} } className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8'><BiCommentDetail /> {comments} </Link>
         {!voucherCode && <button className='flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-32 h-8'>
          <a className='flex gap-2 items-center' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
         </button>}
