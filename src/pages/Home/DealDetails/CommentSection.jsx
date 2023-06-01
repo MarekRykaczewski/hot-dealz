@@ -25,7 +25,7 @@ function CommentSection({ postId, commentElements }) {
   }
   
   return (
-    <div className='flex flex-col w-full max-w-3xl bg-white mt-2 rounded-lg overflow-hidden'>
+    <div className='flex flex-col w-full h-full max-w-3xl bg-white mt-2 rounded-lg'>
         <div className='flex flex-col gap-4 p-6'>
             <div className='flex start gap-3'>
                 <span className='text-xl'>{commentElements.length} Comments</span>
