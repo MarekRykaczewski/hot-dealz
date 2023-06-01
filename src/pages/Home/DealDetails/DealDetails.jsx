@@ -23,6 +23,7 @@ function DealDetails() {
   const [slides, setSlides] = useState([])
   const [comments, setComments] = useState([])
   const commentInput = useRef(null)
+  const [profileUrl, setProfileUrl] = useState('')
 
   const focusElement = () => {
     commentInput.current && commentInput.current.focus()
@@ -70,6 +71,20 @@ function DealDetails() {
       }  
       setSlides(imageList)
     }
+
+    useEffect(() => {
+      fetchProfileImage();
+    }, [userId]);
+  
+    const fetchProfileImage = async () => {
+      try {
+        const imageRef = ref(storage, `profileImages/${userId}/image`);
+        const imageUrl = await getDownloadURL(imageRef);
+        setProfileUrl(imageUrl);
+      } catch (error) {
+        console.log('Error fetching profile image:', error);
+      }
+    };
 
   const commentElements = 
     comments.map(comment => {
@@ -135,7 +150,7 @@ function DealDetails() {
               </button>
               <div className="flex items-center justify-between gap-5">
                 <div className='flex justify-center items-center'>
-                  <img className="w-10 h-10 rounded-full mr-4" src="/img/jonathan.jpg" alt="Avatar of Jonathan Reinink" />
+                  <img className="w-10 h-10 rounded-full mr-4" src={profileUrl} />
                   <div className="text-sm">
                     <p className="text-gray-900 leading-none">Shared by {owner}</p>
                   </div>      
