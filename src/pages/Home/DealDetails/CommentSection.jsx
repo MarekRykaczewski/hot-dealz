@@ -5,7 +5,7 @@ import { UserAuth } from '../../../context/AuthContext'
 
 function CommentSection({ postId, commentElements, commentInput }) {
 
-  const { user } = UserAuth()
+  const { user, userData } = UserAuth()
 
   const [comment, setComment] = useState()
 
@@ -32,7 +32,7 @@ function CommentSection({ postId, commentElements, commentInput }) {
                 <span className='text-xl'>Sorting: Newest first</span>
             </div>
             <div className='flex items-center gap-3'>
-                <img className="self-start w-10 h-10 rounded-full mr-4" src="/img/jonathan.jpg" alt="Avatar of Jonathan Reinink" />
+                <img className="self-start w-10 h-10 rounded-full mr-4" src={userData.profileUrl} />
                 <textarea ref={commentInput} onChange={(e) => handleInputChange(e)} maxLength='350' className='p-4 resize-none w-full h-48 border border-gray-300 rounded-md' type="textarea" placeholder='What do you think?' name="comment" />
                 <button onClick={() => submitComment()} className='transition border hover:text-orange-500 hover:bg-gray-100 rounded-3xl px-5 py-2'> Submit </button>
             </div>
