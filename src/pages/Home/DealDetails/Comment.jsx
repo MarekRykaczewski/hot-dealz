@@ -2,20 +2,39 @@ import React, { useEffect, useState } from 'react'
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { FiThumbsUp } from 'react-icons/fi'
+import { storage } from '../../../config/firebase';
+import { ref, getDownloadURL } from 'firebase/storage';
 
-function Comment({ postId, commentId, comment, date, time }) {
+function Comment({ userId, postId, commentId, comment, date, time }) {
 
     const [username, setUsername] = useState()
+    const [profileUrl, setProfileUrl] = useState()
 
     async function getUsername() {
         const username = await getUsernameFromComment(commentId, postId)
         setUsername(username)
     }
 
+    async function getProfileUrl() {
+        const url = await getProfileUrlFromUserId(userId)
+        setProfileUrl(url)
+    }
+
     useEffect(() => {
         getUsername()
     }, [])
 
+    useEffect(() => {
+        getProfileUrl(userId)
+    }, [])
+
+    async function getProfileUrlFromUserId(userId) {
+        const storageRef = ref(storage, `profileImages/${userId}/image`);
+        const profileImageUrl = await getDownloadURL(storageRef);
+        
+        return profileImageUrl;
+      }
+         
     async function getUsernameFromComment(commentId, dealId) {
         const commentRef = doc(collection(doc(db, `deals/${dealId}`), "comments"), commentId);
         const commentDoc = await getDoc(commentRef);
@@ -42,7 +61,7 @@ function Comment({ postId, commentId, comment, date, time }) {
         <div className='flex flex-col p-6'>
             <div className='flex mb-3 justify-between'>
                 <div className='flex'>
-                    <img className="self-start w-10 h-10 rounded-full mr-4" src="/img/jonathan.jpg" alt="Avatar of Jonathan Reinink" />
+                    <img className="self-start w-10 h-10 rounded-full mr-4" src={profileUrl} alt="Avatar of Jonathan Reinink" />
                     <div className='flex flex-col'>
                         <span>{username}</span>
                         <span>{date + " " + time}</span>
