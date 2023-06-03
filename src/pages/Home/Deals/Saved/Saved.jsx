@@ -74,7 +74,7 @@ function Saved({ dealsPerPage, paginate, currentPage, filterDealsByCategory }) {
         deals={deals}
         setDeals={setDeals} 
       />
-      {dealElements}
+      {deals.length > 0 ? dealElements : <div> Nothing here! </div>}
       <FooterNav dealsPerPage={dealsPerPage} totalDeals={totalDeals} paginate={paginate} currentPage={currentPage}/>
     </div>
     </div>
