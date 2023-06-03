@@ -35,42 +35,60 @@ function ProfilePassword() {
       }
 
   return (
-    <div className='flex flex-row justify-start mb-10'>
-        <div className='flex flex-col mr-10 w-[200px]'>
-            <span className='font-bold'> password </span>
-        </div>
-        <form onSubmit={handleSubmit(() => submitData())} className='flex flex-col gap-4 w-[300px]'>
-            {!editPassword ? <span className='text-blue-700'> ... </span> : 
-                <div className='flex flex-col gap-1'>
-                    <input
-                      {...register("password", {
-                        required: true
-                      })} 
-                      onChange={(e) => setNewPassword(e.target.value)} 
-                      className='border p-1 rounded-lg' placeholder='New password' 
-                      type="text" 
-                    />
-                    <input
-                      {...register("confirm_password", {
-                        required: true,
-                        validate: (val) => {
-                          if (watch('password') !== val) {
-                            return "Your passwords do not match";
-                          }
-                        }
-                      })}
-                      onChange={(e) => setNewConfirmPassowrd(e.target.value)} 
-                      className='border p-1 rounded-lg' 
-                      placeholder='Confirm new password' 
-                      type="text" 
-                    />
-                    <span className='text-sm text-red-500 mt-1'>{errors.confirm_password?.message}</span>
-                </div>
-                }
-            <button type='button' onClick={() => setEditPassword(!editPassword)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> {editPassword ? 'Cancel' : 'Change Password'} </button>
-            {editPassword && <button type='submit' className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Submit </button>}
-        </form>
+  <div className='flex flex-col md:flex-row justify-between mb-10'>
+    <div className='flex flex-col md:mr-10'>
+      <span className='font-bold'> password </span>
     </div>
+    <form onSubmit={handleSubmit(() => submitData())} className='flex flex-col gap-4 w-full md:w-[300px]'>
+      {!editPassword ? (
+        <span className='text-blue-700'> ... </span>
+      ) : (
+        <div className='flex flex-col gap-1'>
+          <input
+            {...register('password', {
+              required: true,
+            })}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className='border p-1 rounded-lg'
+            placeholder='New password'
+            type='password'
+          />
+          <input
+            {...register('confirm_password', {
+              required: true,
+              validate: (val) => {
+                if (watch('password') !== val) {
+                  return 'Your passwords do not match';
+                }
+              },
+            })}
+            onChange={(e) => setNewConfirmPassword(e.target.value)}
+            className='border p-1 rounded-lg'
+            placeholder='Confirm new password'
+            type='password'
+          />
+          <span className='text-sm text-red-500 mt-1'>{errors.confirm_password?.message}</span>
+        </div>
+      )}
+      <div className='flex flex-col md:flex-row gap-4'>
+        <button
+          type='button'
+          onClick={() => setEditPassword(!editPassword)}
+          className='self-center py-1 border rounded-2xl w-full md:w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'
+        >
+          {editPassword ? 'Cancel' : 'Change Password'}
+        </button>
+        {editPassword && (
+          <button
+            type='submit'
+            className='self-center py-1 border rounded-2xl w-full md:w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'
+            >
+            Submit
+          </button>
+        )}
+      </div>
+    </form>
+  </div>
   )
 }
 

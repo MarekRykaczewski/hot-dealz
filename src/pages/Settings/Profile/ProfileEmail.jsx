@@ -36,16 +36,43 @@ function ProfileEmail() {
       }
 
   return (
-    <div className='flex flex-row justify-start mb-10'>
-        <div className='flex flex-col mr-10 w-[200px]'>
-            <span className='font-bold'> e-mail </span>
-        </div>
-        <form onSubmit={handleSubmit} className='flex flex-col gap-4 w-[300px]'>
-            {!editEmail ? <span className='text-blue-700'> {user.email} </span> : <input onChange={(e) => setNewEmail(e.target.value)} className='border p-1 rounded-lg' placeholder={user.email} type="text" name="" id="" />}
-            <button type='button' onClick={() => setEditEmail(!editEmail)} className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> {editEmail ? 'Cancel' : 'Change Email'} </button>
-            {editEmail && <button type='submit' className='self-center py-1 border rounded-2xl w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'> Submit </button>}
-        </form>
+<div className='flex flex-col md:flex-row justify-between mb-10'>
+  <div className='flex flex-col md:mr-10'>
+    <span className='font-bold'> e-mail </span>
+  </div>
+  <form onSubmit={handleSubmit} className='flex flex-col gap-4 w-full md:w-[300px]'>
+    {!editEmail ? (
+      <span className='text-blue-700'> {user.email} </span>
+    ) : (
+      <input
+        onChange={(e) => setNewEmail(e.target.value)}
+        className='border p-1 rounded-lg'
+        placeholder={user.email}
+        type='text'
+        name=''
+        id=''
+      />
+    )}
+    <div className='flex flex-col md:flex-row gap-4'>
+      <button
+        type='button'
+        onClick={() => setEditEmail(!editEmail)}
+        className='self-center py-1 border rounded-2xl w-full md:w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'
+        >
+        {editEmail ? 'Cancel' : 'Change Email'}
+      </button>
+      {editEmail && (
+        <button
+          type='submit'
+          className='self-center py-1 border rounded-2xl w-full md:w-[250px] hover:bg-gray-100 hover:text-orange-500 transition'
+        >
+          Submit
+        </button>
+      )}
     </div>
+  </form>
+</div>
+
   )
 }
 
