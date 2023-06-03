@@ -8,6 +8,7 @@ import { Routes, Route } from "react-router-dom"
 import Settings from "./pages/Settings/Settings"
 import Profile from "./pages/Settings/Profile/Profile"
 import Submission from "./pages/Submission/Submission"
+import Preferences from "./pages/Settings/Preferences/Preferences"
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
       <Route path='/submission' element={<Submission />}/>
       <Route path='/settings' element={<Settings />}>
         <Route path='/settings/profile' element={<Profile />}/>
+        <Route path='/settings/preferences' element={<Preferences />}/>
       </Route>
       {/* <Route path="/deal/:id" element={<DealDetails />}/>  */}
     </Routes>
