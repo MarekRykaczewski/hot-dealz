@@ -90,7 +90,7 @@ function DealCard({ userId, postId, shippingCost, imageCount, title, date, time,
         <p className='text-orange-500 font-bold'> {price}</p>
         <del className=' text-gray-500 font-bold'> {nextBestPrice} </del>
         <p> -{Math.floor((nextBestPrice - price) / nextBestPrice * 100)}% </p> 
-        <p className='flex flex-row text-slate-700 gap-2 items-center ml-auto'> <MdOutlineLocalShipping /> {shippingCost} </p>
+        <p className='flex flex-row text-slate-700 gap-2 items-center ml-auto'> <MdOutlineLocalShipping size={20}/> {shippingCost} </p>
       </div>
       {voucherCode && 
       <div className='mb-2 mt-2 flex gap-3 w-full text-gray-60'>
