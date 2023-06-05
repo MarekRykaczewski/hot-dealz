@@ -12,13 +12,14 @@ import { db } from "../../../config/firebase";
 import { toggleSaved, checkSavedDeal } from '../../../utils'
 import { auth, storage } from '../../../config/firebase'
 import { getDownloadURL, ref } from 'firebase/storage'
+import { MdOutlineLocalShipping } from 'react-icons/md'
 
 function DealDetails() {
 
   const userId = auth.currentUser?.uid
   const [hasSaved, setHasSaved] = useState(false)
   const [deal, setDeal] = useState([])
-  const { imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink } = deal
+  const { imageCount, title, date, time, owner, price, nextBestPrice, description, shippingCost, dealLink } = deal
   const { dealId } = useParams();
   const [slides, setSlides] = useState([])
   const [comments, setComments] = useState([])
@@ -140,10 +141,11 @@ function DealDetails() {
                   <DealCardVotes postId={dealId} />
                 </div>
               <div className="text-gray-900 font-bold text-3xl mb-2">{title}</div>
-              <div className='flex gap-3 items-center'>
+              <div className='flex gap-3 items-center w-full'>
                 <p className='text-orange-500 font-bold text-3xl'> {price}</p>
                 <del className=' text-gray-500 font-bold text-xl'> {nextBestPrice} </del>
                 <p className='text-xl'> -{Math.floor((nextBestPrice - price) / nextBestPrice * 100)}% </p> 
+                <p className='flex flex-row text-lg text-slate-700 gap-2 items-center ml-auto'> <MdOutlineLocalShipping size={20} /> {shippingCost} </p>
               </div>
               <button className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-32 h-8'>
                 <a className='flex gap-2 items-center' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
