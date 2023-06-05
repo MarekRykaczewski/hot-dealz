@@ -115,6 +115,7 @@ function Submission() {
         upvotes={100}
         description={formDetails.description || "Your wonderful description appears right here"} 
         toggleOpenDealPreview={toggleOpenDealPreview}
+        shippingCost={formDetails.shippingCost || 2.99}
       />}
 
 

@@ -4,8 +4,9 @@ import { AiOutlineClockCircle } from 'react-icons/ai'
 import { BsBookmark } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
+import { MdOutlineLocalShipping } from 'react-icons/md'
 
-function PreviewDealModal({ toggleOpenDealPreview, title, date, time, owner, price, lastBestPrice, upvotes, description }) {
+function PreviewDealModal({ toggleOpenDealPreview, title, date, time, owner, shippingCost, price, lastBestPrice, upvotes, description }) {
   return (
     <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-50 z-10 '>
         <div className='relative flex flex-col gap-3 bg-white border p-10'>
@@ -36,6 +37,7 @@ function PreviewDealModal({ toggleOpenDealPreview, title, date, time, owner, pri
                     <p className='text-orange-500 font-bold'> {price}</p>
                     <del className=' text-gray-500 font-bold'> {lastBestPrice} </del>
                     <p> -{Math.floor((lastBestPrice - price) / lastBestPrice * 100)}% </p> 
+                    <p className='flex flex-row text-slate-700 gap-2 items-center ml-auto'> <MdOutlineLocalShipping size={20}/> {shippingCost} </p>
                 </div>
                 <p className="text-gray-700 text-base">{description}</p>
                 </div>
