@@ -7,7 +7,7 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
     const { register, formState: { errors } } = useFormContext();
 
     return (
-    <div className='grid grid-cols-2 items-center gap-2'>
+    <div className='grid grid-cols-2 overflow-hidden items-center gap-2'>
                 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="price">Price </label>
         <Tooltip text={"Tell us the price"} subtext={"This should be the total price after any discounts"}>
@@ -60,7 +60,7 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
         {...register("freeShipping")} 
         onChange={(e) => handleCheckChange(e)} 
         type="checkbox" 
-        className='scale-150'
+        className='scale-150 overflow-hidden'
         />
 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="">Voucher Code </label>
