@@ -10,6 +10,7 @@ function Comment({ userId, postId, commentId, comment, date, time }) {
     const [username, setUsername] = useState()
     const [profileUrl, setProfileUrl] = useState()
     const [liked, setLiked] = useState(false)
+    const [likes, setLikes] = useState(0)
 
     async function getUsername() {
         const username = await getUsernameFromComment(commentId, postId)
@@ -101,6 +102,26 @@ function Comment({ userId, postId, commentId, comment, date, time }) {
         fetchLikedStatus();
       }, [postId, commentId, userId]);
 
+    // Function to fetch the number of likes for a comment
+    async function fetchCommentLikeCount(dealId, commentId) {
+        const likesCollectionRef = collection(db, `deals/${dealId}/comments/${commentId}/likes`);
+    
+        try {
+        const commentLikesSnapshot = await getDocs(likesCollectionRef);
+        const likeCount = commentLikesSnapshot.size;
+        return likeCount;
+        } catch (error) {
+        console.error('Error fetching comment like count:', error);
+        return 0; // Return 0 in case of an error
+        }
+    }
+
+    useEffect(() => {
+        async function fetchLikes() {
+            setLikes(await fetchCommentLikeCount(postId, commentId)) 
+        }
+        fetchLikes()
+    }, [liked])
 
   return (
     <div className='border border-gray-400 border-t-1 border-b-0 border-l-0 border-r-0 w-full'>
@@ -120,8 +141,11 @@ function Comment({ userId, postId, commentId, comment, date, time }) {
                     </button>
                 </div>
             </div>
-            <div>
+            <div className='flex flex-col'>
                 {comment}
+            <div className={`mt-5 ${likes > 0 && "border-t"} text-sm text-gray-500`}>
+            {likes > 0 && `${likes} User${likes > 1 ? "s" : ""} have liked this`}
+            </div>
             </div>
         </div>
     </div>
