@@ -116,6 +116,7 @@ function Submission() {
         description={formDetails.description || "Your wonderful description appears right here"} 
         toggleOpenDealPreview={toggleOpenDealPreview}
         shippingCost={formDetails.shippingCost || 2.99}
+        profileUrl={userData.profileUrl}
       />}
 
 

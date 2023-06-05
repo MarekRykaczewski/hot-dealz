@@ -6,7 +6,7 @@ import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
 import { MdOutlineLocalShipping } from 'react-icons/md'
 
-function PreviewDealModal({ toggleOpenDealPreview, title, date, time, owner, shippingCost, price, lastBestPrice, upvotes, description }) {
+function PreviewDealModal({ toggleOpenDealPreview, title, date, time, owner, shippingCost, price, lastBestPrice, upvotes, description, profileUrl }) {
   return (
     <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-50 z-10 '>
         <div className='relative flex flex-col gap-3 bg-white border p-10'>
@@ -43,7 +43,7 @@ function PreviewDealModal({ toggleOpenDealPreview, title, date, time, owner, shi
                 </div>
                 <div className="flex items-center justify-between gap-5">
                 <div className='flex justify-center items-center'>
-                    <img className="w-10 h-10 rounded-full mr-4" src="/img/jonathan.jpg" alt="Avatar of Jonathan Reinink" />
+                    <img className="w-10 h-10 rounded-full mr-4" src={profileUrl} />
                     <div className="text-sm">
                     <p className="text-gray-900 leading-none">{owner}</p>
                     </div>      
