@@ -3,6 +3,7 @@ import { AiOutlineClockCircle } from 'react-icons/ai'
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs'
 import { BiCommentDetail, BiCopyAlt } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
+import { MdOutlineLocalShipping } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import DealCardVotes from './DealCardVotes'
 import ImageSlider from './ImageSlider'
@@ -11,7 +12,7 @@ import { auth, storage } from '../../config/firebase'
 import { UserAuth } from '../../context/AuthContext'
 import { toggleSaved, checkSavedDeal } from '../../utils'
 
-function DealCard({ userId, postId, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode, comments }) {  
+function DealCard({ userId, postId, shippingCost, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode, comments }) {  
   
   const [hasSaved, setHasSaved] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
@@ -89,6 +90,7 @@ function DealCard({ userId, postId, imageCount, title, date, time, owner, price,
         <p className='text-orange-500 font-bold'> {price}</p>
         <del className=' text-gray-500 font-bold'> {nextBestPrice} </del>
         <p> -{Math.floor((nextBestPrice - price) / nextBestPrice * 100)}% </p> 
+        <p className='flex flex-row- gap-2 items-center ml-auto'> <MdOutlineLocalShipping /> {shippingCost} </p>
       </div>
       {voucherCode && 
       <div className='mb-2 mt-2 flex gap-3 w-full text-gray-60'>

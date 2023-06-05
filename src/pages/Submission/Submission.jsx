@@ -78,6 +78,7 @@ function Submission() {
       posted: serverTimestamp(),
       category: formDetails.category,
       voucherCode: formDetails.voucherCode,
+      shippingCost: formDetails.shippingCost,
       userId: user.uid
     })
     

@@ -77,6 +77,7 @@ const dealElements =
             voucherCode={item.voucherCode}
             comments={item.comments}
             userId={item.userId}
+            shippingCost={item.shippingCost}
            />
         )
     })
