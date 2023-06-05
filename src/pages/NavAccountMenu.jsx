@@ -26,23 +26,23 @@ function NavAccountMenu({ openNavAccountMenu, toggleNavAccountMenu, profileRef }
   }
 
   return (
-  <div id="dropdownInformation" className="z-10 absolute top-12 right-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+  <div id="dropdownInformation" className="z-10 absolute top-12 right-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
       <div className="px-4 py-3 text-white bg-orange-500 rounded-t-lg">
         <div className='text-md'>{userData.username}</div>
         <div className="text-md truncate">{user && user.email}</div>
       </div>
-      <ul className="py-2 text-md text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformationButton">
+      <ul className="py-2 text-md text-gray-700" aria-labelledby="dropdownInformationButton">
         <li>
-          <Link onClick={() => toggleNavAccountMenu()} to='/settings/profile' className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</Link>
+          <Link onClick={() => toggleNavAccountMenu()} to='/settings/profile' className="block px-4 py-2 hover:bg-gray-100">Settings</Link>
         </li>
       </ul>
-      <ul className="py-2 text-md text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformationButton">
+      <ul className="py-2 text-md text-gray-700" aria-labelledby="dropdownInformationButton">
         <li>
-          <Link onClick={() => toggleNavAccountMenu()} to='/saved/' className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My saved</Link>
+          <Link onClick={() => toggleNavAccountMenu()} to='/saved/' className="block px-4 py-2 hover:bg-gray-100">My saved</Link>
         </li>
       </ul>
       <div className="py-2">
-        <a onClick={handleLogout} className="block px-4 py-2 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+        <a onClick={handleLogout} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Sign out</a>
       </div>
   </div>
   )
