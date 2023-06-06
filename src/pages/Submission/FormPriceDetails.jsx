@@ -37,21 +37,28 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="">Shipping cost</label>
         <div className='flex flex-col'>
-            <input 
-            {...register("shippingCost", { min: 0, validate: {
+          <input 
+            {...register("shippingCost", { 
+              min: 0, 
+              validate: {
                 required: value => {
-                    if (!(value >= 0)) return "This is required"
+                  if (!(value >= 0)) return "This is required";
+                },
+                decimal: value => {
+                  if (!/^\d+(\.\d{1,2})?$/.test(value)) return "Invalid decimal value";
                 }
-            }  })} 
+              }
+            })} 
             name='shippingCost' 
             value={formDetails.freeShipping ? 0 : formDetails.shippingCost} 
             onChange={handleInputChange} 
             className='border rounded-md p-1 focus:outline-orange-500' 
             type="number"
+            step="0.01" // Specify step size to allow two decimal places
             min={0}
             disabled={formDetails.freeShipping ? true : false}
-            />
-            <span className='text-sm text-red-500 mt-1'>{errors.shippingCost?.message}</span>
+          />
+          <span className='text-sm text-red-500 mt-1'>{errors.shippingCost?.message}</span>
         </div>
 
 
