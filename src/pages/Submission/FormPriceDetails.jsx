@@ -6,6 +6,13 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
 
     const { register, formState: { errors } } = useFormContext();
 
+    // Decimal validation object
+    const decimalValidation = {
+      decimal: value => {
+        if (!/^\d+(\.\d{1,2})?$/.test(value)) return "Invalid decimal value";
+      }
+    };
+
     return (
     <div className='grid grid-cols-2 overflow-hidden items-center gap-2'>
                 
@@ -44,9 +51,7 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
                 required: value => {
                   if (!(value >= 0)) return "This is required";
                 },
-                decimal: value => {
-                  if (!/^\d+(\.\d{1,2})?$/.test(value)) return "Invalid decimal value";
-                }
+                ...decimalValidation
               }
             })} 
             name='shippingCost' 
