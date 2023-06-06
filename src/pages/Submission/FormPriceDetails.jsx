@@ -19,12 +19,21 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="price">Price </label>
         <Tooltip text={"Tell us the price"} subtext={"This should be the total price after any discounts"}>
         <input 
-            {...register("price", { required: "This is required." })} 
+            {...register("price", { 
+              min: 0, 
+              validate: {
+                required: value => {
+                  if (!(value >= 0)) return "This is required";
+                },
+                ...decimalValidation
+              }
+            })} 
             name='price' 
             value={formDetails.price} 
             onChange={handleInputChange} 
+            step="0.01" // Specify step size to allow two decimal places
             className='border rounded-md p-1 focus:outline-orange-500 w-full' 
-            type="text" 
+            type="number" 
         />
         <span className='text-sm text-red-500 mt-1'>{errors.price?.message}</span>
         </Tooltip>
@@ -32,12 +41,21 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="nextBestPrice">Next best price</label>
         <Tooltip text={"Tell us the price"} subtext={"This should be the total price before any discounts"}>
         <input 
-        {...register("nextBestPrice", { required: "This is required." })} 
+          {...register("nextBestPrice", { 
+            min: 0, 
+            validate: {
+              required: value => {
+                if (!(value >= 0)) return "This is required";
+              },
+              ...decimalValidation
+            }
+          })} 
         name='nextBestPrice' 
         value={formDetails.nextBestPrice} 
         onChange={handleInputChange} 
         className='border rounded-md p-1 focus:outline-orange-500 w-full'
-        type="text" 
+        step="0.01" // Specify step size to allow two decimal places
+        type="number" 
         />
         <span className='text-sm text-red-500 mt-1'>{errors.nextBestPrice?.message}</span>
         </Tooltip>
