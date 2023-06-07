@@ -5,6 +5,7 @@ import { BiUserCircle } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
 import NavAccountMenu from './NavAccountMenu'
+import NavSearchBar from './NavSearchBar'
 
 function Nav({toggleSignInModal, openNavAccountMenu, toggleNavAccountMenu}) {
 
@@ -21,6 +22,7 @@ function Nav({toggleSignInModal, openNavAccountMenu, toggleNavAccountMenu}) {
         <div className="flex items-center justify-between w-full flex-grow lg:flex lg:items-center lg:w-auto">
             <div className="text-sm lg:flex-grow">
             </div>
+            <NavSearchBar />
             <div className='flex gap-2'>
                 <div ref={profileRef} className='relative'>
                     <BiUserCircle size={45} onClick={user ? toggleNavAccountMenu : toggleSignInModal} className=' cursor-pointer' color='white' fontSize='2.5em' /> 
