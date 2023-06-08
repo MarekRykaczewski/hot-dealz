@@ -15,7 +15,9 @@ function NavSearchBar() {
     }, 100);
   };
 
-  // I wanted to do this in firebase however its not supported, solutions like Elastic search are paid
+  // I wanted to do this in firebase however its not supported, 
+  // solutions like Elastic search are premium only,
+  // a workaround with each possible search option for each title is not performant
   const handleSearch = async () => {
     const dealsRef = collection(db, 'deals');
     const lowercaseQuery = searchQuery.toLowerCase();
