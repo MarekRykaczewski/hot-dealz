@@ -65,8 +65,13 @@ function NavSearchBar() {
         {isFocused && searchResults.length > 0 ? (
           searchResults.map((result) => (
             <div className='p-3' key={result.id}>
-              <Link to={`/deal/${result.id}`}>
-                {result.data.title}
+              <Link className='flex flex-row justify-between' to={`/deal/${result.id}`}>
+                <p>{result.data.title}</p>
+                  <div className='flex gap-1'>
+                    <p className='font-bold text-orange-500'>{result.data.price}</p> 
+                    <p className='text-sm text-gray-500 line-through'>{result.data.nextBestPrice}</p> 
+                  </div> 
+                 
               </Link>
             </div>
           ))
