@@ -22,13 +22,21 @@ function NavSearchBar() {
   
     try {
       const querySnapshot = await getDocs(q);
-      const results = querySnapshot.docs
-        .map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }))
-        .filter((result) => result.data.title.toLowerCase().includes(lowercaseQuery))
-        .sort((a, b) => a.data.title.localeCompare(b.data.title));
+      let results = [];
+  
+      if (lowercaseQuery.trim() !== '') {
+        results = querySnapshot.docs
+          .map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+          .filter((result) =>
+            result.data.title.toLowerCase().includes(lowercaseQuery)
+          )
+          .sort((a, b) => a.data.title.localeCompare(b.data.title))
+          .slice(0, 5); // Extract only the first 5 results
+      }
+  
       setSearchResults(results);
     } catch (error) {
       console.error('Error searching for deals:', error);
