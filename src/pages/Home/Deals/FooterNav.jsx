@@ -43,10 +43,18 @@ function FooterNav({ dealsPerPage, totalDeals, paginate, currentPage }) {
             <div>
               <span> Follow us </span>
               <div className='flex items-center justify-center gap-3'>
-                <AiFillFacebook size={20} />
-                <AiFillYoutube size={20} />
-                <AiFillTwitterCircle size={20} />
-                <AiFillInstagram size={20} />
+                <button>
+                  <AiFillFacebook size={20} />
+                </button>
+                <button>
+                  <AiFillYoutube size={20} />
+                </button>
+                <button>
+                  <AiFillTwitterCircle size={20} />
+                </button>
+                <button>
+                  <AiFillInstagram size={20} />
+                </button>
               </div>
             </div>
           </div>
