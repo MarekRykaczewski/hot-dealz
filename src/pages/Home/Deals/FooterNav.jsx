@@ -25,7 +25,7 @@ function FooterNav({ dealsPerPage, totalDeals, paginate, currentPage }) {
             </ul>
             </nav>
           </div>
-          <button onClick={() => setShowFooter(!showFooter)}> Show footer </button>
+          <button onClick={() => setShowFooter(!showFooter)}> {showFooter ? "Hide footer" : "Show footer"} </button>
       </div>      
       {showFooter && 
         <div className='flex flex-col p-6 text-white bg-slate-700'> 
