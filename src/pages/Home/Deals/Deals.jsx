@@ -5,9 +5,9 @@ import FooterNav from './FooterNav'
 
 function Deals({ deals, setDeals, dealElements, dealsPerPage, totalDeals, paginate, currentPage, filterDealsByCategory }) {
   return (
-    <div>
+    <div className='h-screen flex flex-col justify-between'>
     <CategoryCarousel />
-    <div className="flex bg-gray-200 flex-col w-full h-full gap-3 justify-start items-center">
+    <div className="flex flex-col w-full h-full gap-3 items-center">
       <Tabs
         deals={deals}
         setDeals={setDeals} 

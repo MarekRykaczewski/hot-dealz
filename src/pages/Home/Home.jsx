@@ -97,7 +97,7 @@ const dealElements =
 )
 
   return (
-    <div className='bg-slate-200 h-screen'>
+    <div>
     <Routes>
       <Route path="/saved/*" element={<Saved 
         dealsPerPage={dealsPerPage} 
