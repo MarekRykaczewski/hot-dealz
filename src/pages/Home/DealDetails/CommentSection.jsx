@@ -29,7 +29,11 @@ function CommentSection({ postId, commentElements, commentInput }) {
         <div className='flex flex-col gap-4 p-6'>
             <div className='flex start gap-3'>
                 <span className='text-xl'>{commentElements.length} Comments</span>
-                <span className='text-xl'>Sorting: Newest first</span>
+                <label htmlFor='commentSort' className='text-xl'>Sorting: </label>
+                <select name="commentSort" >
+                  <option value="Newest first">Newest first </option>
+                  <option value="Newest first">Most liked </option>
+                </select>
             </div>
             <div className='flex items-center gap-3'>
                 <img className="self-start w-10 h-10 rounded-full mr-4" src={userData.profileUrl} />
