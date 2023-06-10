@@ -33,12 +33,14 @@ function FooterNav({ dealsPerPage, totalDeals, paginate, currentPage }) {
             <h1 className='text-xl font-bold'> 👋 Hey, welcome to the newest online shopping social media! </h1>
             <p> Join now to share your expertie, tips and advice </p>
           </div>
-          <div className='flex flex-row font-bold justify-between'>
+          <div className='flex flex-row font-bold justify-start gap-5'>
             <div>           
               <button> About </button>
             </div>
             <div>           
               <button> Contact us </button>
+            </div>
+            <div className='border'>
             </div>
             <div>
               <span> Follow us </span>
