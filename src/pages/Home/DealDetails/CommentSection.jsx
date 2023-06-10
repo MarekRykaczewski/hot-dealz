@@ -3,7 +3,7 @@ import { setDoc, serverTimestamp, collection, doc } from 'firebase/firestore'
 import { db } from '../../../config/firebase'
 import { UserAuth } from '../../../context/AuthContext'
 import Comment from './Comment'
-import { sortCommentsByNewest } from '../../../utils'
+import { sortCommentsByLikes, sortCommentsByNewest } from '../../../utils'
 
 function CommentSection({ postId, comments, setComments, commentInput }) {
 
@@ -47,7 +47,8 @@ function CommentSection({ postId, comments, setComments, commentInput }) {
     if (selectedSort === "Newest first") {
       sortCommentsByNewest(comments, setComments);
     } else if (selectedSort === "Most liked") {
-      // Todo
+      console.log("by likes")
+      sortCommentsByLikes(comments, setComments)
     }
   }
   

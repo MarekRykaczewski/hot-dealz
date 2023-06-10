@@ -51,18 +51,23 @@ function DealDetails() {
   };
 
   const fetchComments = async () => {
-    let list = []
     try {
-        const querySnapshot = await getDocs(collection(db, "deals", dealId, "comments"))
-        querySnapshot.forEach((doc) => {
-            list.push({ id: doc.id, ...doc.data() })
-        });
-        // setComments(list)
-        sortCommentsByNewest(list, setComments)
+      const querySnapshot = await getDocs(collection(db, "deals", dealId, "comments"));
+  
+      const comments = await Promise.all(
+        querySnapshot.docs.map(async (doc) => {
+          const commentData = doc.data();
+          const likesSnapshot = await getDocs(collection(db, "deals", dealId, "comments", doc.id, "likes"));
+          const likes = likesSnapshot.docs.map((likeDoc) => likeDoc.data());
+          return { id: doc.id, ...commentData, likes };
+        })
+      );
+  
+      sortCommentsByNewest(comments, setComments);
     } catch (err) {
-        console.log(err)
+      console.log(err);
     }
-}
+  };
 
   const getImages = async () => {
     const imageList = []

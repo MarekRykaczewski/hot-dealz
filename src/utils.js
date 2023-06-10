@@ -49,3 +49,14 @@ export const sortCommentsByNewest = (comments, setComments) => {
   commentsCopy.sort((a, b) => a.posted.toDate() - b.posted.toDate());
   setComments(commentsCopy);
 }
+
+export const sortCommentsByLikes = (comments, setComments) => {
+  const commentsCopy = [...comments];
+  console.log(commentsCopy)
+  commentsCopy.sort((a, b) => {
+    const numLikesA = a.likes ? a.likes.length : 0;
+    const numLikesB = b.likes ? b.likes.length : 0;
+    return numLikesB - numLikesA;
+  });
+  setComments(commentsCopy);
+};
