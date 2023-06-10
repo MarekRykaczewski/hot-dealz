@@ -24,6 +24,9 @@ function CommentSection({ postId, comments, setComments, commentInput }) {
       comment: comment,
       posted: serverTimestamp()
     });
+
+    location.reload()
+
   }
 
   const commentElements = 
