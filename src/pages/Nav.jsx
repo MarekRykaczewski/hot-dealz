@@ -14,7 +14,7 @@ function Nav({toggleSignInModal, openNavAccountMenu, toggleNavAccountMenu}) {
   const profileRef = useRef(null)
 
   return (
-    <nav className='relative flex sm:flex-row flex-row sm:items-center gap-3 items-center justify-between bg-slate-700 px-6 py-3'>
+    <nav className='relative h-[60px] flex sm:flex-row flex-row sm:items-center gap-3 items-center justify-between bg-slate-700 px-6 py-3'>
         <div className='flex flex-row flex-wrap gap-3 justify-between w-full'>
             <Link to='/' className="flex items-center flex-shrink-0 text-white gap-1">
                 <AiFillFire fontSize='2.5em' color='orange'/>
