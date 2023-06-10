@@ -6,13 +6,13 @@ import { FiExternalLink } from 'react-icons/fi'
 import DealCardVotes from '../DealCardVotes'
 import ImageSlider from '../ImageSlider'
 import CommentSection from './CommentSection'
-import Comment from './Comment'
 import { collection, getDoc, getDocs, doc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { toggleSaved, checkSavedDeal } from '../../../utils'
 import { auth, storage } from '../../../config/firebase'
 import { getDownloadURL, ref } from 'firebase/storage'
 import { MdOutlineLocalShipping } from 'react-icons/md'
+import { sortCommentsByNewest } from '../../../utils'
 
 function DealDetails() {
 
@@ -57,7 +57,8 @@ function DealDetails() {
         querySnapshot.forEach((doc) => {
             list.push({ id: doc.id, ...doc.data() })
         });
-        setComments(list)
+        // setComments(list)
+        sortCommentsByNewest(list, setComments)
     } catch (err) {
         console.log(err)
     }
@@ -86,24 +87,10 @@ function DealDetails() {
         console.log('Error fetching profile image:', error);
       }
     };
-
-  const commentElements = 
-    comments.map(comment => {
-        return (
-          <Comment
-            key={comment.id}
-            commentId={comment.id}
-            userId={comment.userId}
-            postId={dealId}
-            comment={comment.comment}
-            date={comment.posted.toDate().toDateString()}
-            time={comment.posted.toDate().toLocaleTimeString()}
-          />
-        )
-    })
       
   useEffect(() => {
     fetchData(dealId)
+    console.log(comments)
   }, [])
     
   useEffect(() => {
@@ -171,7 +158,7 @@ function DealDetails() {
             <button onClick={() => toggleSaved(hasSaved, setHasSaved, userId, dealId)} className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>Save for later {hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}</button>
           </div>
       </div>
-      <CommentSection commentInput={commentInput} postId={dealId} commentElements={commentElements}  />
+      <CommentSection commentInput={commentInput} postId={dealId} comments={comments} setComments={setComments} />
     </div>
   )
 }

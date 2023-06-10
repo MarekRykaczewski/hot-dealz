@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { setDoc, serverTimestamp, collection, doc } from 'firebase/firestore'
 import { db } from '../../../config/firebase'
 import { UserAuth } from '../../../context/AuthContext'
+import Comment from './Comment'
+import { sortCommentsByNewest } from '../../../utils'
 
-function CommentSection({ postId, commentElements, commentInput }) {
+function CommentSection({ postId, comments, setComments, commentInput }) {
 
   const { user, userData } = UserAuth()
 
@@ -23,6 +25,31 @@ function CommentSection({ postId, commentElements, commentInput }) {
       posted: serverTimestamp()
     });
   }
+
+  const commentElements = 
+  comments.map(comment => {
+      return (
+        <Comment
+          key={comment.id}
+          commentId={comment.id}
+          userId={comment.userId}
+          postId={postId}
+          comment={comment.comment}
+          date={comment.posted.toDate().toDateString()}
+          time={comment.posted.toDate().toLocaleTimeString()}
+        />
+      )
+  })
+
+  const handleCommentSort = (event) => {
+    const selectedSort = event.target.value;
+
+    if (selectedSort === "Newest first") {
+      sortCommentsByNewest(comments, setComments);
+    } else if (selectedSort === "Most liked") {
+      // Todo
+    }
+  }
   
   return (
     <div className='flex flex-col w-full h-full max-w-3xl bg-white mt-2 rounded-lg'>
@@ -30,9 +57,9 @@ function CommentSection({ postId, commentElements, commentInput }) {
             <div className='flex start gap-3'>
                 <span className='text-xl'>{commentElements.length} Comments</span>
                 <label htmlFor='commentSort' className='text-xl'>Sorting: </label>
-                <select name="commentSort" >
+                <select onChange={handleCommentSort} name="commentSort" >
                   <option value="Newest first">Newest first </option>
-                  <option value="Newest first">Most liked </option>
+                  <option value="Most liked">Most liked </option>
                 </select>
             </div>
             <div className='flex items-center gap-3'>

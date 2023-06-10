@@ -43,3 +43,9 @@ export const sortByComments = (deals, setDeals) => {
   });
   setDeals(dealsCopy);
 };
+
+export const sortCommentsByNewest = (comments, setComments) => {
+  const commentsCopy = [...comments];
+  commentsCopy.sort((a, b) => a.posted.toDate() - b.posted.toDate());
+  setComments(commentsCopy);
+}
