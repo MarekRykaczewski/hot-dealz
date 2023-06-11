@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { AiFillFacebook, AiFillYoutube, AiFillTwitterCircle, AiFillInstagram } from 'react-icons/ai'
+import { Link } from 'react-router-dom'
 
 function FooterNav({ dealsPerPage, totalDeals, paginate, currentPage }) {
 
@@ -34,8 +35,8 @@ function FooterNav({ dealsPerPage, totalDeals, paginate, currentPage }) {
             <p> Join now to share your expertie, tips and advice </p>
           </div>
           <div className='flex flex-row font-bold justify-start gap-5'>
-            <div>           
-              <button> About </button>
+            <div>
+              <Link to={'/about'}> About </Link>            
             </div>
             <div>           
               <button> Contact us </button>
