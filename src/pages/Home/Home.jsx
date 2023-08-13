@@ -65,6 +65,15 @@ function filterDealsByCategory(category, deals) {
 
 const dealElements = 
     currentDeals.map(item => {
+        const milliseconds = item.posted.seconds * 1000
+        const date = new Date(milliseconds)
+        const formattedDate = date.toDateString();
+        const formattedTime = date.toLocaleTimeString([], { timeStyle: "short" });
+
+      console.log(item.posted)
+      console.log(formattedDate)
+      console.log(formattedTime)
+
         return (
           <DealCard
             key={item.id}
@@ -76,8 +85,8 @@ const dealElements =
             price={item.price}
             nextBestPrice={item.nextBestPrice}
             description={item.description}
-            date={item.posted.toDate().toDateString()}
-            time={item.posted.toDate().toLocaleTimeString()}
+            date={formattedDate}
+            time={formattedTime}
             voucherCode={item.voucherCode}
             comments={item.comments}
             userId={item.userId}
