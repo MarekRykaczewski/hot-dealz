@@ -1,8 +1,8 @@
 import { useState } from "react"
 import Nav from "./pages/Nav/Nav"
 import Home from "./pages/Home/Home"
-import SignUpModal from './pages/SignUpModal'
-import SignInModal  from './pages/SignInModal'
+import SignUpModal from './pages/Auth/SignUpModal'
+import SignInModal  from './pages/Auth/SignInModal'
 import { AuthContextProvider } from "./context/AuthContext"
 import { Routes, Route } from "react-router-dom"
 import Settings from "./pages/Settings/Settings"

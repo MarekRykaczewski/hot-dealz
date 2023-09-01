@@ -1,8 +1,8 @@
 import { setDoc, doc } from 'firebase/firestore'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { db } from '../config/firebase'
-import { UserAuth } from '../context/AuthContext'
+import { db } from '../../config/firebase'
+import { UserAuth } from '../../context/AuthContext'
 
 function SignUpModal({toggleSignInModal, toggleSignUpModal}) {
 
