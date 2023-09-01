@@ -6,7 +6,7 @@ import { FiExternalLink } from 'react-icons/fi'
 import { MdOutlineLocalShipping } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import DealCardVotes from './DealCardVotes'
-import ImageSlider from './ImageSlider'
+import ImageSlider from '../Home/ImageSlider'
 import { ref, getDownloadURL } from "firebase/storage"
 import { auth, storage } from '../../config/firebase'
 import { UserAuth } from '../../context/AuthContext'

@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom'
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
-import DealCardVotes from '../DealCardVotes'
-import ImageSlider from '../ImageSlider'
+import DealCardVotes from '../../Deals/DealCardVotes'
+import ImageSlider from '../../Home/ImageSlider'
 import CommentSection from './CommentSection'
 import { collection, getDoc, getDocs, doc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
