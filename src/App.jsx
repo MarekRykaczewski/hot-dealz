@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Nav from "./pages/Nav"
+import Nav from "./pages/Nav/Nav"
 import Home from "./pages/Home/Home"
 import SignUpModal from './pages/SignUpModal'
 import SignInModal  from './pages/SignInModal'

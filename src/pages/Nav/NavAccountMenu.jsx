@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { UserAuth } from '../context/AuthContext'
+import { UserAuth } from '../../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 
 function NavAccountMenu({ openNavAccountMenu, toggleNavAccountMenu, profileRef }) {

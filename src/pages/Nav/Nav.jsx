@@ -3,7 +3,7 @@ import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { AiFillFire } from 'react-icons/ai'
 import { BiUserCircle } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
-import { UserAuth } from '../context/AuthContext'
+import { UserAuth } from '../../context/AuthContext'
 import NavAccountMenu from './NavAccountMenu'
 import NavSearchBar from './NavSearchBar'
 

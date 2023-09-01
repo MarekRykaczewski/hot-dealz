@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { collection, query, getDocs } from 'firebase/firestore'
 import { Link } from 'react-router-dom'
-import { db } from '../config/firebase'
+import { db } from '../../config/firebase'
 
 function NavSearchBar() {
 
