@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { UserAuth } from '../../context/AuthContext'
-import Modal from '../../components/Modal'
+import Modal from '../Modal'
 import { setDoc, doc } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 
