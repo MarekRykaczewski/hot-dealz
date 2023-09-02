@@ -17,7 +17,6 @@ function DealCard({ userId, postId, shippingCost, imageCount, title, date, time,
   const [hasSaved, setHasSaved] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
   const [profileUrl, setProfileUrl] = useState('')
-  const [slides, setSlides] = useState([""])
   const { user } = UserAuth()
   const currentUserId = auth.currentUser?.uid
 
@@ -41,35 +40,19 @@ function DealCard({ userId, postId, shippingCost, imageCount, title, date, time,
     }
   };
 
-  const getImages = async () => {
+  const copyToClipboard = (e) => {
+    navigator.clipboard.writeText(e.target.value)
+    setIsCopied(true)
 
-    const imageList = []
+    setTimeout(() => {
+      setIsCopied(false)
+    }, 2000)
+  }
 
-      for (let i = 0; i < imageCount; i++) {
-        const imageRef = ref(storage, `images/${postId}/${i}`)
-        const url = await getDownloadURL(imageRef)
-        imageList.push({url: url})
-      }  
-      setSlides(imageList)
-    }
-
-  useEffect(() => {
-      getImages()
-    }, [])
-
-    const copyToClipboard = (e) => {
-      navigator.clipboard.writeText(e.target.value)
-      setIsCopied(true)
-
-      setTimeout(() => {
-        setIsCopied(false)
-      }, 2000)
-    }
-  
   return (
 <div className="px-5 w-full max-h-96 sm:max-w-4xl sm:flex mb-32 sm:mb-1 justify-center">
   <div className="h-48 sm:h-auto sm:w-64 flex-none bg-cover text-center overflow-hidden bg-slate-500">
-  {imageCount > 0 && <ImageSlider slides={slides} />}
+  {imageCount > 0 && <ImageSlider dealId={postId} />}
   </div>
   <div className="bg-white p-4 h-80 flex flex-col gap-4 justify-between leading-normal w-full">
     <div className='flex flex-col gap-1'>

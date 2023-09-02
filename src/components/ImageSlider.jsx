@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 import { RxDotFilled } from 'react-icons/rx'
+import { storage } from '../config/firebase'
+import { getDownloadURL, ref } from 'firebase/storage'
+import { listAll } from 'firebase/storage'
 
-function ImageSlider({ slides }) {
+function ImageSlider({ dealId }) {
 
+    const [slides, setSlides] = useState([])
     const [currentIndex, setCurrentIndex] = useState(0)
+    const [loading, setLoading] = useState(true)
 
     const prevSlide = () => {
         const isFirstSlide = currentIndex === 0
@@ -22,9 +27,41 @@ function ImageSlider({ slides }) {
         setCurrentIndex(slideIndex)
     }
 
+		const getImages = async () => {
+			const imageList = [];
+			
+			try {
+					const listRef = ref(storage, `images/${dealId}`);
+					const listResult = await listAll(listRef);
+					
+					// Use the length of the listResult.items array to determine the number of images
+					const numImages = listResult.items.length;
+					
+					for (let i = 0; i < numImages; i++) {
+							const imageRef = listResult.items[i];
+							const url = await getDownloadURL(imageRef);
+							imageList.push({ url: url });
+					}
+	
+					setSlides(imageList);
+					setLoading(false);
+			} catch (error) {
+					console.error("Error fetching images:", error);
+					setLoading(false);
+			}
+	}
+
+    useEffect(() => {
+        getImages()
+    }, [dealId]);
+
+		if (loading) {
+			return <div> Loading </div>
+		}
+
   return (
     <div className='h-full w-max-full relative group'>
-        <div style={{backgroundImage: `url(${slides[currentIndex].url})`}} className='w-full h-full bg-center bg-cover duration-500'></div>
+        {slides.length > 0 && <div style={{backgroundImage: `url(${slides[currentIndex].url})`}} className='w-full h-full bg-center bg-cover duration-500'></div>}
         <div className='hidden group-hover:block absolute bottom-12 left-5 text-2xl rounded-full p-1 bg-orange-500 hover:bg-orange-400 transition text-white border-2 border-white shadow-lg cursor-pointer'>
             <BiChevronLeft onClick={prevSlide} size={25} />
         </div>

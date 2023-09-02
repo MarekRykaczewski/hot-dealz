@@ -1,27 +1,31 @@
+// React
 import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
+// Icons
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
 import { FiExternalLink } from 'react-icons/fi'
+import { MdOutlineLocalShipping } from 'react-icons/md'
+// Components
 import DealCardVotes from '../../../components/DealCard/DealCardVotes'
 import ImageSlider from '../../../components/ImageSlider'
 import CommentSection from '../../../components/CommentSection'
+// Firebase
 import { collection, getDoc, getDocs, doc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
-import { toggleSaved, checkSavedDeal } from '../../../utils'
 import { auth, storage } from '../../../config/firebase'
 import { getDownloadURL, ref } from 'firebase/storage'
-import { MdOutlineLocalShipping } from 'react-icons/md'
+// Utils
 import { sortCommentsByNewest } from '../../../utils'
+import { toggleSaved, checkSavedDeal } from '../../../utils'
 
 function DealDetails() {
 
   const userId = auth.currentUser?.uid
   const [hasSaved, setHasSaved] = useState(false)
   const [deal, setDeal] = useState([])
-  const { imageCount, title, date, time, owner, price, nextBestPrice, description, shippingCost, dealLink } = deal
+  const { title, date, time, owner, price, nextBestPrice, description, shippingCost, dealLink } = deal
   const { dealId } = useParams();
-  const [slides, setSlides] = useState([])
   const [comments, setComments] = useState([])
   const commentInput = useRef(null)
   const [profileUrl, setProfileUrl] = useState('')
@@ -69,41 +73,24 @@ function DealDetails() {
     }
   };
 
-  const getImages = async () => {
-    const imageList = []
-      for (let i = 0; i < imageCount; i++) {
-        const imageRef = ref(storage, `images/${dealId}/${i}`)
-        const url = await getDownloadURL(imageRef)
-        imageList.push({url: url})
-      }  
-      setSlides(imageList)
-    }
-
-    useEffect(() => {
-      fetchProfileImage();
-    }, [userId]);
-  
-    const fetchProfileImage = async () => {
-      try {
-        const imageRef = ref(storage, `profileImages/${userId}/image`);
-        const imageUrl = await getDownloadURL(imageRef);
-        setProfileUrl(imageUrl);
-      } catch (error) {
-        console.log('Error fetching profile image:', error);
-      }
-    };
-      
   useEffect(() => {
-    fetchData(dealId)
-    console.log(comments)
-  }, [])
+    fetchProfileImage();
+  }, [userId]);
+
+  const fetchProfileImage = async () => {
+    try {
+      const imageRef = ref(storage, `profileImages/${userId}/image`);
+      const imageUrl = await getDownloadURL(imageRef);
+      setProfileUrl(imageUrl);
+    } catch (error) {
+      console.log('Error fetching profile image:', error);
+    }
+  };
     
   useEffect(() => {
-    if (deal) {
-      getImages()
-    }
-  }, [deal]);
-
+    fetchData(dealId)
+  }, [])
+    
   useEffect(() => {
     if (userId) {
       checkSavedDeal(setHasSaved, userId, dealId);
@@ -118,7 +105,7 @@ function DealDetails() {
     <div className='bg-slate-200 w-full flex flex-col ml-auto mr-auto items-center justify-start'>
       <div className='bg-white flex justify-center items-center rounded-lg w-full max-w-3xl mt-3'>
           <div className='h-64 w-full bg-slate-500'>
-            {slides.length > 0 && <ImageSlider slides={slides} />}
+            <ImageSlider dealId={dealId} />
           </div>
           <div className="bg-white p-4 flex flex-col w-full max-w-3xl">
               <div className="text-sm text-gray-600 flex flex-col items-start gap-3">
