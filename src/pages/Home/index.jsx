@@ -3,9 +3,9 @@ import DealCard from '../../components/DealCard/DealCard';
 import { db } from "../../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
 import { Routes, Route, useLocation } from 'react-router-dom'
-import DealDetails from '../Deals/DealDetails/DealDetails';
+import DealDetails from './[id]/DealDetails';
 import Deals from '../Deals/Deals';
-import Saved from '../Deals/Saved';
+import Saved from './Saved';
 
 function Home() {
 

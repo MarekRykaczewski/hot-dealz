@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { setDoc, serverTimestamp, collection, doc } from 'firebase/firestore'
-import { db } from '../../../config/firebase'
-import { UserAuth } from '../../../context/AuthContext'
+import { db } from '../config/firebase'
+import { UserAuth } from '../context/AuthContext'
 import Comment from './Comment'
-import { sortCommentsByLikes, sortCommentsByNewest } from '../../../utils'
+import { sortCommentsByLikes, sortCommentsByNewest } from '../utils'
 
 function CommentSection({ postId, comments, setComments, commentInput }) {
 

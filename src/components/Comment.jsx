@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { collection, doc, getDoc, query, where, getDocs, addDoc, deleteDoc } from "firebase/firestore";
-import { db } from "../../../config/firebase";
+import { db } from "../config/firebase";
 import { FiThumbsUp } from 'react-icons/fi'
-import { storage } from '../../../config/firebase';
+import { storage } from '../config/firebase';
 import { ref, getDownloadURL } from 'firebase/storage';
 
 function Comment({ userId, postId, commentId, comment, date, time }) {
