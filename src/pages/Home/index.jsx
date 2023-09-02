@@ -5,7 +5,7 @@ import { getDocs, collection } from "firebase/firestore";
 import { Routes, Route, useLocation } from 'react-router-dom'
 import DealDetails from '../Deals/DealDetails/DealDetails';
 import Deals from '../Deals/Deals';
-import Saved from '../Deals/Saved/Saved';
+import Saved from '../Deals/Saved';
 
 function Home() {
 

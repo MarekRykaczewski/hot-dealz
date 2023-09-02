@@ -1,11 +1,11 @@
 import { useState } from "react"
 import Nav from "./pages/Nav/Nav"
-import Home from "./pages/Home/Home"
+import Home from "./pages/Home"
 import { AuthContextProvider } from "./context/AuthContext"
 import { Routes, Route } from "react-router-dom"
 import Settings from "./pages/Settings/Settings"
 import Profile from "./pages/Settings/Profile/Profile"
-import Submission from "./pages/Submission/Submission"
+import Submission from "./pages/Submission"
 import Preferences from "./pages/Settings/Preferences/Preferences"
 
 function App() {
