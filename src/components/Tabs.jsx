@@ -1,5 +1,5 @@
 import React from 'react'
-import { sortByNewest, sortByComments } from '../../utils'
+import { sortByNewest, sortByComments } from '../utils'
 
 function Tabs({ deals, setDeals }) {
   return (

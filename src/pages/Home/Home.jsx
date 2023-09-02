@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import DealCard from '../Deals/DealCard';
+import DealCard from '../../components/DealCard/DealCard';
 import { db } from "../../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
 import { Routes, Route, useLocation } from 'react-router-dom'

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import CategoryCarousel from '../CategoryCarousel'
-import Tabs from '../Tabs'
-import FooterNav from '../FooterNav'
-import DealCard from '../DealCard'
+import CategoryCarousel from '../../../components/CategoryCarousel'
+import Tabs from '../../../components/Tabs'
+import FooterNav from '../../../components/FooterNav'
+import DealCard from '../../../components/DealCard/DealCard'
 import { db } from '../../../config/firebase'
 import { getDocs, collection } from "firebase/firestore";
 import { auth } from '../../../config/firebase'
