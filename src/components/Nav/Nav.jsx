@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
 import NavAccountMenu from './NavAccountMenu'
 import NavSearchBar from './NavSearchBar'
-import AuthModal from '../../components/Auth/AuthModal'
+import AuthModal from '../Auth/AuthModal'
 
 function Nav({openNavAccountMenu, toggleNavAccountMenu}) {
 
