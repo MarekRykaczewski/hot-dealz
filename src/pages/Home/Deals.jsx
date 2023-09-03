@@ -7,7 +7,7 @@ function Deals({ deals, setDeals, dealElements, dealsPerPage, totalDeals, pagina
   return (
     <div className='h-screen flex flex-col justify-between'>
     <CategoryCarousel />
-    <div className="flex flex-col w-full h-full gap-3 items-center">
+    <div className="flex flex-col w-full h-full gap-2 items-center">
       <Tabs
         deals={deals}
         setDeals={setDeals} 
