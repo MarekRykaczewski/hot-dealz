@@ -50,30 +50,29 @@ function DealCard({ userId, postId, shippingCost, imageCount, title, date, time,
   }
 
   return (
-<div className="px-5 w-full max-h-96 sm:max-w-4xl sm:flex mb-32 sm:mb-1 justify-center">
-  <div className="h-48 sm:h-auto sm:w-64 flex-none bg-cover text-center overflow-hidden bg-slate-500">
-  {imageCount > 0 && <ImageSlider dealId={postId} />}
+<div className="w-full sm:max-w-4xl sm:flex justify-center bg-white p-5 rounded-xl">
+  <div className="h-full sm:w-64 rounded-xl flex-none bg-cover overflow-hidden bg-slate-500">
+    {imageCount > 0 && <ImageSlider dealId={postId} />}
   </div>
-  <div className="bg-white p-4 h-80 flex flex-col gap-4 justify-between leading-normal w-full">
+  <div className="bg-white h-[230px] px-4 flex flex-col justify-between w-full">
     <div className='flex flex-col gap-1'>
-      <div className="text-sm text-gray-600 flex items-center justify-between">
+      <div className="text-sm text-gray-600 flex justify-between">
         <DealCardVotes postId={postId} />
-        <div className='flex gap-2 items-center mb-2'>
-          <AiOutlineClockCircle size={"1.4em"} />
+        <div className='flex gap-2 items-center'>
+          <AiOutlineClockCircle size={"1.6em"} />
           <div className='flex flex-col items-center'>
-          <span className='text-xs'> {date} </span>
-          <span className='text-xs'> {time} </span>
+            <span > {date}, {time} </span>
           </div>
         </div>
       </div>
       <Link className='block' to={`/deal/${postId}`}>
-      <div className="text-gray-900 font-bold text-xl hover:text-orange-500 transition">{title}</div>
+        <div className="text-gray-900 font-bold text-xl hover:text-orange-500 transition">{title}</div>
       </Link>
-      <div className='flex gap-3'>
-        <p className='text-orange-500 font-bold'> {price}</p>
-        <del className=' text-gray-500 font-bold'> {nextBestPrice} </del>
+      <div className='flex gap-3 text-xl'>
+        <p className='text-orange-500 font-bold'> {price}zł</p>
+        <del className=' text-gray-500'> {nextBestPrice}zł</del>
         <p> -{Math.floor((nextBestPrice - price) / nextBestPrice * 100)}% </p> 
-        <p className='flex flex-row text-slate-700 gap-2 items-center ml-auto'> <MdOutlineLocalShipping size={20}/> {shippingCost} </p>
+        <p className='flex flex-row text-slate-500 gap-2 items-center text-sm'> <MdOutlineLocalShipping size={26}/> {shippingCost}zł </p>
       </div>
       {voucherCode && 
       <div className='mb-2 mt-2 flex gap-3 w-full text-gray-60'>
@@ -82,11 +81,11 @@ function DealCard({ userId, postId, shippingCost, imageCount, title, date, time,
          <a className='flex gap-2 items-center ' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
         </button>
       </div>}
-      <p className={`text-gray-700 ${voucherCode ? 'line-clamp-3' : 'line-clamp-5'} w-full overflow-hidden text-ellipsis`}>{description}</p>
+      <p className={`text-gray-700 ${voucherCode ? 'line-clamp-3' : 'line-clamp-5'} w-full overflow-hidden text-ellipsis mb-3`}>{description}</p>
     </div>
     <div className="flex items-center justify-between gap-5">
       <div className='flex justify-center items-center'>
-        <img className="w-10 h-10 rounded-full mr-4" src={profileUrl} />
+        <img className="w-8 h-8 rounded-full mr-2" src={profileUrl} />
         <div className="text-sm">
           <p className="text-gray-900 leading-none">{owner}</p>
         </div>      
@@ -94,7 +93,7 @@ function DealCard({ userId, postId, shippingCost, imageCount, title, date, time,
       <div className='flex flex-wrap gap-3 items-center justify-end text-gray-600'>
         <button onClick={() => toggleSaved(hasSaved, setHasSaved, user.uid, postId)} className='flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8'>{hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}</button>
         <Link to={`/deal/${postId}`} className='flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8'><BiCommentDetail /> {comments} </Link>
-        {!voucherCode && <button className='flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-32 h-8'>
+          {!voucherCode && <button className='flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-32 h-8'>
          <a className='flex gap-2 items-center' href={dealLink} target='_blank'>Go to deal<FiExternalLink /> </a> 
         </button>}
       </div>
