@@ -73,10 +73,6 @@ function DealDetails() {
     }
   };
 
-  useEffect(() => {
-    fetchProfileImage();
-  }, [userId]);
-
   const fetchProfileImage = async () => {
     try {
       const imageRef = ref(storage, `profileImages/${userId}/image`);
@@ -86,7 +82,11 @@ function DealDetails() {
       console.log('Error fetching profile image:', error);
     }
   };
-    
+
+  useEffect(() => {
+    fetchProfileImage();
+  }, [userId]);
+
   useEffect(() => {
     fetchData(dealId)
   }, [])
