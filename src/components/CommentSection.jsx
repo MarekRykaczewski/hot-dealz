@@ -11,6 +11,10 @@ function CommentSection({ postId, comments, setComments, commentInput }) {
 
   const [comment, setComment] = useState()
 
+  const formatDate = (date) => {
+    return new Date(date.seconds * 1000).toLocaleString()
+  }
+
   const handleInputChange = (e) => {
     setComment(e.target.value)
   }
@@ -22,12 +26,21 @@ function CommentSection({ postId, comments, setComments, commentInput }) {
     await setDoc(newCommentDocRef, {
       userId: user.uid,
       comment: comment,
-      posted: serverTimestamp()
+      posted: serverTimestamp(),
     });
-
-    location.reload()
-
-  }
+  
+    // Update local comments state with the new comment
+    const newComment = {
+      id: newCommentDocRef.id,
+      userId: user.uid,
+      comment: comment,
+      posted: {seconds: new Date().getTime() / 1000}
+    };
+    setComments([...comments, newComment]);
+  
+    // Clear the comment input
+    setComment('');
+  };
 
   const commentElements = 
   comments.map(comment => {
@@ -38,8 +51,7 @@ function CommentSection({ postId, comments, setComments, commentInput }) {
           userId={comment.userId}
           postId={postId}
           comment={comment.comment}
-          date={comment.posted.toDate().toDateString()}
-          time={comment.posted.toDate().toLocaleTimeString()}
+          date={formatDate(comment.posted)}
         />
       )
   })

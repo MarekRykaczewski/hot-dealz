@@ -5,7 +5,7 @@ import { FiThumbsUp } from 'react-icons/fi'
 import { storage } from '../config/firebase';
 import { ref, getDownloadURL } from 'firebase/storage';
 
-function Comment({ userId, postId, commentId, comment, date, time }) {
+function Comment({ userId, postId, commentId, comment, date }) {
 
     const [username, setUsername] = useState()
     const [profileUrl, setProfileUrl] = useState()
@@ -131,7 +131,7 @@ function Comment({ userId, postId, commentId, comment, date, time }) {
                     <img className="self-start w-10 h-10 rounded-full mr-4" src={profileUrl} alt="Avatar of Jonathan Reinink" />
                     <div className='flex flex-col'>
                         <span>{username}</span>
-                        <span>{date + " " + time}</span>
+                        <span>{date}</span>
                     </div>
                 </div>
                 <div>
