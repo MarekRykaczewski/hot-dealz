@@ -27,14 +27,16 @@ function Nav({openNavAccountMenu, toggleNavAccountMenu}) {
             <NavSearchBar />
         </div>
         <div className='flex flex-col sm:flex-row gap-2'>
-            <div ref={profileRef} className='relative'>
-                <BiUserCircle size={45} onClick={user ? toggleNavAccountMenu : () => setOpenAuthModal(true)} className=' cursor-pointer' color='white' fontSize='2.5em' /> 
+            <div ref={profileRef} className='relative flex items-center justify-center rounded-full bg-slate-500 transition-all text-white hover:bg-slate-400 duration-500 h-12 w-12'>
+                <BiUserCircle size={35} onClick={user ? toggleNavAccountMenu : () => setOpenAuthModal(true)} className='cursor-pointer'/> 
                 {openNavAccountMenu && <NavAccountMenu profileRef={profileRef} openNavAccountMenu={openNavAccountMenu} toggleNavAccountMenu={toggleNavAccountMenu} />}
             </div>
             
-            <Link to='/submission'>
-                <AiOutlinePlusCircle size={45} className=' cursor-pointer' color='white' fontSize='2.5em'/>  
-            </Link>
+            <div className='flex items-center justify-center rounded-full bg-slate-500 transition-all hover:bg-slate-400 duration-500 h-12 w-12 text-white'>
+                <Link to='/submission'>
+                    <AiOutlinePlusCircle size={35} className='cursor-pointer'/>  
+                </Link>
+            </div>
         </div>
     </nav>
 		<AuthModal open={openAuthModal} onClose={() => setOpenAuthModal(false)} />
