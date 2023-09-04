@@ -39,7 +39,7 @@ function CategoryCarousel() {
       
   return (
     <div className='bg-slate-900 py-3 w-full'>
-        <div className='flex items-center justify-center'>
+        <div className='flex items-center justify-center max-w-[80em] ml-auto mr-auto'>
             <button onClick={() => scroll(-150)} id='slideLeft' className='flex item-center justify-center p-2'>
                 <AiFillCaretLeft fontSize='1.5em' className=' text-slate-500'/>
             </button>

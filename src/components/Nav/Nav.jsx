@@ -18,24 +18,26 @@ function Nav({openNavAccountMenu, toggleNavAccountMenu}) {
 
   return (
 		<>
-    <nav className='relative h-[60px] flex sm:flex-row flex-row sm:items-center gap-3 items-center justify-between bg-slate-700 px-6 py-3'>
-        <div className='flex flex-row flex-wrap gap-3 items-center justify-between w-full'>
-            <Link to='/' className="flex items-center flex-shrink-0 text-white gap-1">
-                <AiFillFire fontSize='2.5em' color='orange'/>
-                <span className="font-semibold text-2xl tracking-tight">Hot Dealz</span>
-            </Link>
-            <NavSearchBar />
-        </div>
-        <div className='flex flex-col sm:flex-row gap-2'>
-            <div ref={profileRef} className='relative flex items-center justify-center rounded-full bg-slate-500 transition-all text-white hover:bg-slate-400 duration-500 h-10 w-10'>
-                <BiUserCircle size={35} onClick={user ? toggleNavAccountMenu : () => setOpenAuthModal(true)} className='cursor-pointer'/> 
-                {openNavAccountMenu && <NavAccountMenu profileRef={profileRef} openNavAccountMenu={openNavAccountMenu} toggleNavAccountMenu={toggleNavAccountMenu} />}
-            </div>
-            
-            <div className='flex items-center justify-center rounded-full bg-slate-500 transition-all hover:bg-slate-400 duration-500 h-10 w-10 text-white'>
-                <Link to='/submission'>
-                    <AiOutlinePlusCircle size={35} className='cursor-pointer'/>  
+    <nav className='relative h-[60px] bg-slate-700 px-6 py-3'>
+        <div className='max-w-[80em] ml-auto mr-auto flex sm:flex-row flex-row sm:items-center gap-3 items-center justify-between'>
+            <div className='flex flex-row flex-wrap gap-3 items-center justify-between w-full'>
+                <Link to='/' className="flex items-center flex-shrink-0 text-white gap-1">
+                    <AiFillFire fontSize='2.5em' color='orange'/>
+                    <span className="font-semibold text-2xl tracking-tight">Hot Dealz</span>
                 </Link>
+                <NavSearchBar />
+            </div>
+            <div className='flex flex-col sm:flex-row gap-2'>
+                <div ref={profileRef} className='relative flex items-center justify-center rounded-full bg-slate-500 transition-all text-white hover:bg-slate-400 duration-500 h-10 w-10'>
+                    <BiUserCircle size={35} onClick={user ? toggleNavAccountMenu : () => setOpenAuthModal(true)} className='cursor-pointer'/> 
+                    {openNavAccountMenu && <NavAccountMenu profileRef={profileRef} openNavAccountMenu={openNavAccountMenu} toggleNavAccountMenu={toggleNavAccountMenu} />}
+                </div>
+                
+                <div className='flex items-center justify-center rounded-full bg-slate-500 transition-all hover:bg-slate-400 duration-500 h-10 w-10 text-white'>
+                    <Link to='/submission'>
+                        <AiOutlinePlusCircle size={35} className='cursor-pointer'/>  
+                    </Link>
+                </div>
             </div>
         </div>
     </nav>
