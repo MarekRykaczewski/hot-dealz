@@ -53,9 +53,9 @@ function NavSearchBar() {
   }, [searchQuery, isFocused])
 
   return (
-    <div className='relative flex w-[250px]'>
+    <div className='relative h-8 flex min-w-[300px]'>
       <input
-        className='border w-full rounded-md p-1 pl-3 focus:outline-orange-500'
+        className='w-full rounded-full px-6 focus:outline-orange-500 focus:outline-4 focus:outline'
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
@@ -64,7 +64,7 @@ function NavSearchBar() {
         placeholder="Search deals..."
       />
 
-      <div className='bg-white rounded-lg absolute top-10 w-full'>
+      <div className='bg-white rounded-lg absolute top-10 w-full z-50'>
         {isFocused && searchResults.length > 0 ? (
           searchResults.map((result) => (
             <div className='p-3' key={result.id}>

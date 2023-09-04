@@ -19,7 +19,7 @@ function Nav({openNavAccountMenu, toggleNavAccountMenu}) {
   return (
 		<>
     <nav className='relative h-[60px] flex sm:flex-row flex-row sm:items-center gap-3 items-center justify-between bg-slate-700 px-6 py-3'>
-        <div className='flex flex-row flex-wrap gap-3 justify-between w-full'>
+        <div className='flex flex-row flex-wrap gap-3 items-center justify-between w-full'>
             <Link to='/' className="flex items-center flex-shrink-0 text-white gap-1">
                 <AiFillFire fontSize='2.5em' color='orange'/>
                 <span className="font-semibold text-2xl tracking-tight">Hot Dealz</span>
