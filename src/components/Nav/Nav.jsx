@@ -18,7 +18,7 @@ function Nav({openNavAccountMenu, toggleNavAccountMenu}) {
 
   return (
 		<>
-    <nav className='relative h-[60px] bg-slate-700 px-6 py-3'>
+    <nav className='relative bg-slate-700 px-6 py-3'>
         <div className='max-w-[80em] ml-auto mr-auto flex sm:flex-row flex-row sm:items-center gap-3 items-center justify-between'>
             <div className='flex flex-row flex-wrap gap-3 items-center justify-between w-full'>
                 <Link to='/' className="flex items-center flex-shrink-0 text-white gap-1">
