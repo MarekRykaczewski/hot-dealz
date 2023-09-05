@@ -12,7 +12,7 @@ import { auth, storage } from '../../config/firebase'
 import { UserAuth } from '../../context/AuthContext'
 import { toggleSaved, checkSavedDeal } from '../../utils'
 
-function DealCard({ userId, postId, shippingCost, imageCount, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode, comments }) {  
+function DealCard({ userId, postId, shippingCost, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode, comments }) {  
   
   const [hasSaved, setHasSaved] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
@@ -52,7 +52,7 @@ function DealCard({ userId, postId, shippingCost, imageCount, title, date, time,
   return (
 <div className="w-full sm:max-w-4xl sm:flex justify-center bg-white p-5 rounded-xl">
   <div className="h-full sm:w-64 rounded-xl flex-none bg-cover overflow-hidden bg-slate-500">
-    {imageCount > 0 && <ImageSlider dealId={postId} />}
+    <ImageSlider dealId={postId} />
   </div>
   <div className="bg-white h-[230px] px-4 flex flex-col justify-between w-full">
     <div className='flex flex-col gap-1'>

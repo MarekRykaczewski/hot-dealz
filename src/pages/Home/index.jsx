@@ -75,7 +75,6 @@ const dealElements =
             key={item.id}
             postId={item.id}
             title={item.title}
-            imageCount={item.imageCount}
             dealLink={item.dealLink}
             owner={item.owner}
             price={item.price}
