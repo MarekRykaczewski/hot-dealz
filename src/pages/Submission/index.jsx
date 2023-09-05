@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 
 import { UserAuth } from '../../context/AuthContext'
 import PreviewDealModal from './PreviewDealModal'
-import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore'
+import { collection, doc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
 import { db, storage } from '../../config/firebase'
-import { ref, uploadBytes } from 'firebase/storage'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { FormProvider, useForm } from 'react-hook-form'
 import FormDealLink from './FormDealLink'
 import FormImageUpload from './FormImageUpload'
@@ -62,9 +62,7 @@ function Submission() {
     // e.preventDefault()
 
     const dealsCollection = collection(db, "deals")
-
     const newDocRef = doc(dealsCollection)
-
     const newDocId = newDocRef.id
 
     await setDoc(newDocRef, {
@@ -85,16 +83,23 @@ function Submission() {
     navigate('/')
   }
   
-  const submitImages = (docId) => {
-    for (let i = 0; i < formDetails.images.length; i++) {
-      if (formDetails.images[i]) {
-        const imageRef = ref(storage, `images/${docId}/${i}`)
-        uploadBytes(imageRef, formDetails.images[i])
-      } else {
-        return
+  const submitImages = async (docId) => {
+    const images = formDetails.images;
+    const imageURLs = [];
+  
+    for (let i = 0; i < images.length; i++) {
+      if (images[i]) {
+        const imageRef = ref(storage, `images/${docId}/${i}`);
+        await uploadBytes(imageRef, images[i]);
+        const imageURL = await getDownloadURL(imageRef);
+        imageURLs.push(imageURL);
       }
     }
-  }
+  
+    // After uploading all images, update the deal document with imageURLs
+    const dealDocRef = doc(db, 'deals', docId);
+    await updateDoc(dealDocRef, { imageURLs });
+  };
 
   const toggleOpenDealPreview = () => {
     setOpenDealPreview(!openDealPreview)
