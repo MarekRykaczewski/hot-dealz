@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { collection, query, getDocs } from 'firebase/firestore'
+import { collection, query, getDocs, where } from 'firebase/firestore'
 import { Link } from 'react-router-dom'
 import { db } from '../../config/firebase'
 
@@ -28,14 +28,27 @@ function NavSearchBar() {
       let results = [];
   
       if (lowercaseQuery.trim() !== '') {
-        results = querySnapshot.docs
-          .map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-          .filter((result) =>
-            result.data.title.toLowerCase().includes(lowercaseQuery)
-          )
+        results = await Promise.all(
+          querySnapshot.docs.map(async (doc) => {
+            const dealData = doc.data();
+            const likesSnapshot = await getDocs(collection(dealsRef, doc.id, 'likes'));
+            const dislikesSnapshot = await getDocs(collection(dealsRef, doc.id, 'dislikes'));
+            const likesCount = likesSnapshot.size;
+            const dislikesCount = dislikesSnapshot.size;
+  
+            return {
+              id: doc.id,
+              data: {
+                ...dealData,
+                likesCount,
+                dislikesCount,
+              },
+            };
+          })
+        );
+  
+        results = results
+          .filter((result) => result.data.title.toLowerCase().includes(lowercaseQuery))
           .sort((a, b) => a.data.title.localeCompare(b.data.title))
           .slice(0, 5); // Extract only the first 5 results
       }
@@ -52,6 +65,8 @@ function NavSearchBar() {
     }
   }, [searchQuery, isFocused])
 
+  console.log(searchResults)
+
   return (
     <div className='relative h-8 flex min-w-[300px]'>
       <input
@@ -64,22 +79,30 @@ function NavSearchBar() {
         placeholder="Search deals..."
       />
 
-      <div className='bg-white rounded-lg absolute top-10 w-full z-50'>
+      <div className='bg-white rounded-lg overflow-hidden absolute top-10 w-full z-50'>
         {isFocused && searchResults.length > 0 ? (
           searchResults.map((result) => (
-            <div className='p-3' key={result.id}>
-              <Link className='flex flex-row justify-between' to={`/deal/${result.id}`}>
-                <p>{result.data.title}</p>
-                  <div className='flex gap-1'>
-                    <p className='font-bold text-orange-500'>{result.data.price}</p> 
-                    <p className='text-sm text-gray-500 line-through'>{result.data.nextBestPrice}</p> 
-                  </div> 
-                 
+            <div className='p-3 hover:bg-slate-200' key={result.id}>
+              <Link className='flex flex-row justify-start' to={`/deal/${result.id}`}>
+                <div className='flex gap-3'>
+                  {result.data.imageURLs && result.data.imageURLs[0] && (
+                    <img
+                      className='h-12 w-12 bg-white bg-center mr-3 border rounded-lg border-slate-500 object-contain'
+                      src={result.data.imageURLs[0]}
+                      alt='Deal Image'
+                    />
+                  )}
+                </div>
+                <div className='flex gap-2 items-center'>
+                  <p className='text-orange-500 font-bold'>{result.data.likesCount - result.data.dislikesCount}</p>
+                  <p className='font-bold text-slate-800'>{result.data.title}</p>
+                  <p className='font-bold text-orange-500'>{result.data.price}zł</p> 
+                </div> 
               </Link>
             </div>
           ))
         ) : null}
-      </div> 
+      </div>
     </div>
   );
 }
