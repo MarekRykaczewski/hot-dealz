@@ -65,8 +65,6 @@ function NavSearchBar() {
     }
   }, [searchQuery, isFocused])
 
-  console.log(searchResults)
-
   return (
     <div className='relative h-8 flex min-w-[300px]'>
       <input
