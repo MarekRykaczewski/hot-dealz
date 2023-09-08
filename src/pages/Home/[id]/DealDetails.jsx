@@ -4,11 +4,7 @@ import { useParams } from 'react-router-dom'
 // Icons
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
-import { FiExternalLink } from 'react-icons/fi'
-import { MdOutlineLocalShipping } from 'react-icons/md'
 // Components
-import DealCardVotes from '../../../components/DealCard/DealCardVotes'
-import ImageSlider from '../../../components/ImageSlider'
 import CommentSection from '../../../components/CommentSection'
 // Firebase
 import { collection, getDoc, getDocs, doc } from "firebase/firestore";
@@ -25,12 +21,18 @@ function DealDetails() {
   const userId = auth.currentUser?.uid
   const [hasSaved, setHasSaved] = useState(false)
   const [deal, setDeal] = useState([])
-  const { title, date, time, owner, price, nextBestPrice, description, shippingCost, dealLink } = deal
+  const { title, posted, owner, price, nextBestPrice, description, shippingCost, dealLink, voucherCode } = deal
   const { dealId } = useParams();
   const [comments, setComments] = useState([])
   const commentInput = useRef(null)
   const [profileUrl, setProfileUrl] = useState('')
 
+  const formatDate = (date) => {
+    return new Date(date.seconds * 1000).toLocaleString()
+  }
+
+  const formattedDateTime = posted && formatDate(posted)
+  
   const focusElement = () => {
     commentInput.current && commentInput.current.focus()
     commentInput.current.scrollIntoView({ behavior: "smooth", block: "start", inline: "start" })
@@ -112,10 +114,11 @@ function DealDetails() {
         price={price}
         nextBestPrice={nextBestPrice}
         description={description}
-        date={date}
-        time={time}
+        posted={formattedDateTime}
         userId={userId}
         shippingCost={shippingCost}
+        voucherCode={voucherCode}
+        profileUrl={profileUrl}
       />
       <div className='flex flex-col w-full max-w-3xl bg-white mt-2 rounded-lg overflow-hidden'>
           <div className='p-5'>
