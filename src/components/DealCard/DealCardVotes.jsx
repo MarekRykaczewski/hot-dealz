@@ -71,9 +71,6 @@ function DealCardVotes({ postId }) {
   const userLiked = likes.includes(user?.uid);
   const userDisliked = dislikes.includes(user?.uid);
 
-  console.log(dislikes, "dislikes")
-  console.log(likes, "likes")
-
   useEffect(() => {
     getLikes();
     getDislikes();
