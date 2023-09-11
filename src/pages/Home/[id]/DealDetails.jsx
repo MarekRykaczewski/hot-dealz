@@ -19,10 +19,10 @@ import DealCardControls from '../../../components/DealCard/DealCardControls';
 
 function DealDetails() {
 
-  const userId = auth.currentUser?.uid
+  const currentUserId = auth.currentUser?.uid
   const [hasSaved, setHasSaved] = useState(false)
   const [deal, setDeal] = useState([])
-  const { title, imageURLs, archived, posted, owner, price, nextBestPrice, description, shippingCost, dealLink, voucherCode } = deal
+  const { title, imageURLs, userId, archived, posted, owner, price, nextBestPrice, description, shippingCost, dealLink, voucherCode } = deal
   const { dealId } = useParams();
   const [comments, setComments] = useState([])
   const commentInput = useRef(null)
@@ -79,7 +79,7 @@ function DealDetails() {
 
   const fetchProfileImage = async () => {
     try {
-      const imageRef = ref(storage, `profileImages/${userId}/image`);
+      const imageRef = ref(storage, `profileImages/${currentUserId}/image`);
       const imageUrl = await getDownloadURL(imageRef);
       setProfileUrl(imageUrl);
     } catch (error) {
@@ -89,15 +89,15 @@ function DealDetails() {
 
   useEffect(() => {
     fetchProfileImage();
-  }, [userId]);
+  }, [currentUserId]);
 
   useEffect(() => {
     fetchData(dealId)
   }, [])
     
   useEffect(() => {
-    if (userId) {
-      checkSavedDeal(setHasSaved, userId, dealId);
+    if (currentUserId) {
+      checkSavedDeal(setHasSaved, currentUserId, dealId);
     }
   }, []);
 
@@ -105,9 +105,11 @@ function DealDetails() {
     fetchComments()
   }, [])
 
+  const isOwner = currentUserId === userId
+
   return (
     <div className='bg-slate-200 w-full flex flex-col ml-auto mr-auto items-center justify-start'>
-      <DealCardControls archived={archived} />
+      {isOwner && <DealCardControls archived={archived} />}
       <DealCardDetailed
         dealId={dealId}
         title={title}
@@ -117,7 +119,7 @@ function DealDetails() {
         nextBestPrice={nextBestPrice}
         description={description}
         posted={formattedDateTime}
-        userId={userId}
+        userId={currentUserId}
         shippingCost={shippingCost}
         voucherCode={voucherCode}
         profileUrl={profileUrl}
@@ -130,7 +132,7 @@ function DealDetails() {
           </div>
           <div className='bg-slate-300 flex gap-4 w-full px-6 py-3'>
             <button onClick={() => focusElement()} className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>New comment <BiCommentDetail /></button>
-            <button onClick={() => toggleSaved(hasSaved, setHasSaved, userId, dealId)} className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>Save for later {hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}</button>
+            <button onClick={() => toggleSaved(hasSaved, setHasSaved, currentUserId, dealId)} className='flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition'>Save for later {hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}</button>
           </div>
       </div>
       <CommentSection commentInput={commentInput} postId={dealId} comments={comments} setComments={setComments} />
