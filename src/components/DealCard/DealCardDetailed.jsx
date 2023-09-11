@@ -5,9 +5,7 @@ import { FiExternalLink } from 'react-icons/fi'
 import { MdOutlineLocalShipping } from 'react-icons/md'
 
 const DealCardDetailed = ({ dealId, imageURLs, posted, title, price, nextBestPrice, shippingCost, dealLink, profileUrl, owner, voucherCode}) => {
-	
-	console.log(imageURLs, "DealCardDetailed")
-	
+		
 	return (
 		<div className='bg-white p-5 flex justify-center items-center rounded-lg w-full max-w-3xl mt-3'>
 			<div className='h-64 w-full bg-slate-500 overflow-hidden rounded-xl'>
