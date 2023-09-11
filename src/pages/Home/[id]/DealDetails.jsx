@@ -15,13 +15,14 @@ import { getDownloadURL, ref } from 'firebase/storage'
 import { sortCommentsByNewest } from '../../../utils'
 import { toggleSaved, checkSavedDeal } from '../../../utils'
 import DealCardDetailed from '../../../components/DealCard/DealCardDetailed'
+import DealCardControls from '../../../components/DealCard/DealCardControls';
 
 function DealDetails() {
 
   const userId = auth.currentUser?.uid
   const [hasSaved, setHasSaved] = useState(false)
   const [deal, setDeal] = useState([])
-  const { title, imageURLs, posted, owner, price, nextBestPrice, description, shippingCost, dealLink, voucherCode } = deal
+  const { title, imageURLs, archived, posted, owner, price, nextBestPrice, description, shippingCost, dealLink, voucherCode } = deal
   const { dealId } = useParams();
   const [comments, setComments] = useState([])
   const commentInput = useRef(null)
@@ -106,6 +107,7 @@ function DealDetails() {
 
   return (
     <div className='bg-slate-200 w-full flex flex-col ml-auto mr-auto items-center justify-start'>
+      <DealCardControls archived={archived} />
       <DealCardDetailed
         dealId={dealId}
         title={title}
