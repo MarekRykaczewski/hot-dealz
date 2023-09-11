@@ -86,6 +86,7 @@ const dealElements =
             comments={item.comments}
             userId={item.userId}
             shippingCost={item.shippingCost}
+            imageURLs={item.imageURLs}
            />
         )
     })

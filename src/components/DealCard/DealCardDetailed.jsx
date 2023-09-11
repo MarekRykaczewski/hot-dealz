@@ -4,12 +4,14 @@ import DealCardVotes from './DealCardVotes'
 import { FiExternalLink } from 'react-icons/fi'
 import { MdOutlineLocalShipping } from 'react-icons/md'
 
-const DealCardDetailed = ({ dealId, posted, title, price, nextBestPrice, shippingCost, dealLink, profileUrl, owner, voucherCode}) => {
+const DealCardDetailed = ({ dealId, imageURLs, posted, title, price, nextBestPrice, shippingCost, dealLink, profileUrl, owner, voucherCode}) => {
+	
+	console.log(imageURLs, "DealCardDetailed")
 	
 	return (
 		<div className='bg-white p-5 flex justify-center items-center rounded-lg w-full max-w-3xl mt-3'>
 			<div className='h-64 w-full bg-slate-500 overflow-hidden rounded-xl'>
-				<ImageSlider dealId={dealId} />
+				<ImageSlider dealId={dealId} imageURLs={imageURLs} />
 			</div>
 			<div className="bg-white p-4 flex flex-col w-full max-w-3xl">
 				<div className="text-sm text-gray-600 flex flex-col items-start gap-3">

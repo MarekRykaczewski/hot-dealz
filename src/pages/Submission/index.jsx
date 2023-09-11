@@ -92,7 +92,7 @@ function Submission() {
       if (images[i]) {
         const imageRef = ref(storage, `images/${docId}/${i}`);
         await uploadBytes(imageRef, images[i]);
-        const imageURL = await getDownloadURL(imageRef);
+        const imageURL = `/images/${docId}/${i}`
         imageURLs.push(imageURL);
       }
     }

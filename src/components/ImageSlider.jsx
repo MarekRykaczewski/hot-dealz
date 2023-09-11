@@ -3,9 +3,8 @@ import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 import { RxDotFilled } from 'react-icons/rx'
 import { storage } from '../config/firebase'
 import { getDownloadURL, ref } from 'firebase/storage'
-import { listAll } from 'firebase/storage'
 
-function ImageSlider({ dealId }) {
+function ImageSlider({ dealId, imageURLs }) {
 
     const [slides, setSlides] = useState([])
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -27,33 +26,37 @@ function ImageSlider({ dealId }) {
         setCurrentIndex(slideIndex)
     }
 
-		const getImages = async () => {
-			const imageList = [];
-			
-			try {
-					const listRef = ref(storage, `images/${dealId}`);
-					const listResult = await listAll(listRef);
-					
-					// Use the length of the listResult.items array to determine the number of images
-					const numImages = listResult.items.length;
-					
-					for (let i = 0; i < numImages; i++) {
-							const imageRef = listResult.items[i];
-							const url = await getDownloadURL(imageRef);
-							imageList.push({ url: url });
-					}
-	
-					setSlides(imageList);
-					setLoading(false);
-			} catch (error) {
-					console.error("Error fetching images:", error);
-					setLoading(false);
-			}
-	}
-
+    const getImages = async (imageURLs) => {
+        const imageList = [];
+        const urlsToFetch = Array.isArray(imageURLs) ? imageURLs : [imageURLs]; // To handle both arrays and single images (strings)
+      
+        try {
+          for (const imageURL of urlsToFetch) {
+            // Create a reference to the image based on the provided imageURL
+            const imageRef = ref(storage, imageURL);
+      
+            try {
+              // Fetch the download URL for the image
+              const url = await getDownloadURL(imageRef);
+              imageList.push({ url }); // Wrap the URL in an object with a 'url' property
+            } catch (error) {
+              // Handle error for individual images
+              console.error(`Error fetching image at ${imageURL}:`, error);
+            }
+          }
+      
+          // Set the slides state with the fetched image URLs
+          setSlides(imageList);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching images:", error);
+          setLoading(false);
+        }
+      };
+    
     useEffect(() => {
-        getImages()
-    }, [dealId]);
+        getImages(imageURLs)
+    }, [dealId, imageURLs]);
 
 		if (loading) {
 			return <div> Loading </div>

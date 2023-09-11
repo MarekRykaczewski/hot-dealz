@@ -21,7 +21,7 @@ function DealDetails() {
   const userId = auth.currentUser?.uid
   const [hasSaved, setHasSaved] = useState(false)
   const [deal, setDeal] = useState([])
-  const { title, posted, owner, price, nextBestPrice, description, shippingCost, dealLink, voucherCode } = deal
+  const { title, imageURLs, posted, owner, price, nextBestPrice, description, shippingCost, dealLink, voucherCode } = deal
   const { dealId } = useParams();
   const [comments, setComments] = useState([])
   const commentInput = useRef(null)
@@ -119,6 +119,7 @@ function DealDetails() {
         shippingCost={shippingCost}
         voucherCode={voucherCode}
         profileUrl={profileUrl}
+        imageURLs={imageURLs}
       />
       <div className='flex flex-col w-full max-w-3xl bg-white mt-2 rounded-lg overflow-hidden'>
           <div className='p-5'>
