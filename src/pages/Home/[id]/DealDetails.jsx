@@ -119,7 +119,7 @@ function DealDetails() {
         nextBestPrice={nextBestPrice}
         description={description}
         posted={formattedDateTime}
-        userId={currentUserId}
+        userId={userId}
         shippingCost={shippingCost}
         voucherCode={voucherCode}
         profileUrl={profileUrl}
