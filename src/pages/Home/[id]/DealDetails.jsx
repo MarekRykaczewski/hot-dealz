@@ -7,7 +7,7 @@ import { BiCommentDetail } from 'react-icons/bi'
 // Components
 import CommentSection from '../../../components/CommentSection'
 // Firebase
-import { collection, getDoc, getDocs, doc } from "firebase/firestore";
+import { collection, getDoc, getDocs, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { auth, storage } from '../../../config/firebase'
 import { getDownloadURL, ref } from 'firebase/storage'
@@ -27,6 +27,24 @@ function DealDetails() {
   const [comments, setComments] = useState([])
   const commentInput = useRef(null)
   const [profileUrl, setProfileUrl] = useState('')
+  const [isArchived, setIsArchived] = useState(archived);
+
+  const handleArchiveClick = async () => {
+    try {
+      // Reference the specific deal document
+      const dealRef = doc(db, 'deals', dealId);
+
+      // Update the 'archived' status of the deal in Firebase Firestore
+      await updateDoc(dealRef, {
+        archived: !archived, // Set 'archived' to true
+      });
+
+      setIsArchived((prevIsArchived) => !prevIsArchived);
+
+    } catch (error) {
+      console.error('Error archiving deal:', error);
+    }
+  };
 
   const formatDate = (date) => {
     return new Date(date.seconds * 1000).toLocaleString()
@@ -105,11 +123,15 @@ function DealDetails() {
     fetchComments()
   }, [])
 
+  useEffect(() => {
+		setIsArchived(archived)
+	}, [archived])
+
   const isOwner = currentUserId === userId
 
   return (
     <div className='bg-slate-200 w-full flex flex-col ml-auto mr-auto items-center justify-start'>
-      {isOwner && <DealCardControls dealId={dealId} archived={archived} />}
+      {isOwner && <DealCardControls dealId={dealId} isArchived={isArchived} handleArchiveClick={handleArchiveClick} />}
       <DealCardDetailed
         dealId={dealId}
         title={title}
@@ -124,6 +146,7 @@ function DealDetails() {
         voucherCode={voucherCode}
         profileUrl={profileUrl}
         imageURLs={imageURLs}
+        isArchived={isArchived}
       />
       <div className='flex flex-col w-full max-w-3xl bg-white mt-2 rounded-lg overflow-hidden'>
           <div className='p-5'>

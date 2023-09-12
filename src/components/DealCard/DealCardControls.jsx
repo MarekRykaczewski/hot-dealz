@@ -1,28 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { BsHourglassBottom, BsPencil } from 'react-icons/bs'
-import { db } from '../../config/firebase';
-import { doc, updateDoc } from 'firebase/firestore';
 
-const DealCardControls = ({ archived, dealId }) => {
-
-  const [isArchived, setIsArchived] = useState(archived);
-
-  const handleArchiveClick = async () => {
-    try {
-      // Reference the specific deal document
-      const dealRef = doc(db, 'deals', dealId);
-
-      // Update the 'archived' status of the deal in Firebase Firestore
-      await updateDoc(dealRef, {
-        archived: !archived, // Set 'archived' to true
-      });
-
-      setIsArchived((prevIsArchived) => !prevIsArchived);
-
-    } catch (error) {
-      console.error('Error archiving deal:', error);
-    }
-  };
+const DealCardControls = ({ isArchived, handleArchiveClick }) => {
 
   return (
     <div className='p-6 flex justify-between w-full max-w-3xl bg-white rounded-lg mt-3'>

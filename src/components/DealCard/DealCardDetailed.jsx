@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ImageSlider from '../ImageSlider'
 import DealCardVotes from './DealCardVotes'
 import { FiExternalLink } from 'react-icons/fi'
 import { MdOutlineLocalShipping } from 'react-icons/md'
 import { BiCopyAlt } from 'react-icons/bi'
 
-const DealCardDetailed = ({ dealId, imageURLs, posted, title, price, nextBestPrice, shippingCost, dealLink, profileUrl, owner, voucherCode}) => {
-		
+const DealCardDetailed = ({ dealId, isArchived, imageURLs, posted, title, price, nextBestPrice, shippingCost, dealLink, profileUrl, owner, voucherCode}) => {
+	
 	const [isCopied, setIsCopied] = useState(false)
-
+	
 	const copyToClipboard = (e) => {
     navigator.clipboard.writeText(e.target.value)
     setIsCopied(true)
@@ -19,7 +19,7 @@ const DealCardDetailed = ({ dealId, imageURLs, posted, title, price, nextBestPri
   }
 
 	return (
-		<div className='bg-white p-5 flex justify-center items-center rounded-lg w-full max-w-3xl mt-3'>
+		<div className={`${isArchived && "filter grayscale"} transition-all duration-300 bg-white p-5 flex justify-center items-center rounded-lg w-full max-w-3xl mt-3`}>
 			<div className='h-72 w-full bg-slate-500 overflow-hidden rounded-xl'>
 				<ImageSlider dealId={dealId} imageURLs={imageURLs} />
 			</div>
