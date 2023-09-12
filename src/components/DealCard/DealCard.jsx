@@ -36,6 +36,9 @@ function DealCard({ userId, postId, imageURLs, shippingCost, title, date, time, 
       const imageUrl = await getDownloadURL(imageRef);
       setProfileUrl(imageUrl);
     } catch (error) {
+      const genericRef = ref(storage, "profileImages/avatar.png")
+      const genericUrl = await getDownloadURL(genericRef);
+      setProfileUrl(genericUrl);
       console.log('Error fetching profile image:', error);
     }
   };
