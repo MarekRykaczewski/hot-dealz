@@ -8,13 +8,13 @@ function NavSearchBar() {
 
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState(true);
 
-  const handleSearchBlur = () => {
-    setTimeout(() => {
-      setIsFocused(false);
-    }, 100);
-  };
+  // const handleSearchBlur = () => {
+  //   setTimeout(() => {
+  //     setIsFocused(false);
+  //   }, 100);
+  // };
 
   // I wanted to do this in firebase however its not supported, 
   // solutions like Elastic search are premium only,
@@ -95,29 +95,33 @@ function NavSearchBar() {
         placeholder="Search deals..."
       />
 
-      <div className='bg-white rounded-lg overflow-hidden absolute top-10 w-full z-50'>
+      <div className='flex flex-col items-center bg-white rounded-lg overflow-hidden absolute top-10 w-full z-50 shadow'>
         {isFocused && searchResults.length > 0 ? (
           searchResults.map((result) => (
-            <div className='p-3 hover:bg-slate-200' key={result.id}>
-              <Link className='flex flex-row justify-start' to={`/deal/${result.id}`}>
-                <div className='flex gap-3'>
+            <div className='w-full p-3 hover:bg-slate-200' key={result.id}>
+              <Link className='flex flex-row justify-start w-full' to={`/deal/${result.id}`}>
+                <div className='h-12 w-12 mr-3 border bg-white border-slate-500 p-1 rounded-lg flex items-center justify-center gap-3'>
                 {result.data.imageURL && (
                   <img
-                    className='h-12 w-12 bg-white bg-center mr-3 border rounded-lg border-slate-500 object-contain'
+                    className='w-full h-full bg-white bg-center object-contain'
                     src={result.data.imageURL}
                     alt='Deal Image'
                   />
                 )}
                 </div>
-                <div className='flex gap-2 items-center'>
-                  <p className='text-orange-500 font-bold'>{result.data.likesCount - result.data.dislikesCount}</p>
-                  <p className='font-bold text-slate-800'>{result.data.title}</p>
-                  <p className='font-bold text-orange-500'>{result.data.price}zł</p> 
+                <div className='flex w-full gap-2 items-center justify-between'>
+                  <p className='font-bold text-slate-800 text-ellipsis'> <span className='text-center text-orange-500 font-bold p-1'> {result.data.likesCount - result.data.dislikesCount} </span> {result.data.title}</p>
+                  <p className='font-bold text-sm text-orange-500'>{result.data.price}zł</p> 
                 </div> 
               </Link>
             </div>
           ))
         ) : null}
+        <div className='w-full flex justify-center mt-3 mb-3'>
+          <div className='w-2/3 h-8 rounded-full text-md font-bold text-white flex items-center justify-center p-3 bg-orange-500 overflow-hidden'>
+            <button> See all results </button>
+          </div>
+        </div>
       </div>
     </div>
   );
