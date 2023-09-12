@@ -1,17 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BsHourglassBottom, BsPencil } from 'react-icons/bs'
+import { db } from '../../config/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 
-const DealCardControls = ({ archived }) => {
+const DealCardControls = ({ archived, dealId }) => {
+
+  const [isArchived, setIsArchived] = useState(archived);
+
+  const handleArchiveClick = async () => {
+    try {
+      // Reference the specific deal document
+      const dealRef = doc(db, 'deals', dealId);
+
+      // Update the 'archived' status of the deal in Firebase Firestore
+      await updateDoc(dealRef, {
+        archived: !archived, // Set 'archived' to true
+      });
+
+      setIsArchived((prevIsArchived) => !prevIsArchived);
+
+    } catch (error) {
+      console.error('Error archiving deal:', error);
+    }
+  };
 
   return (
     <div className='p-6 flex justify-between w-full max-w-3xl bg-white rounded-lg mt-3'>
       <div className='flex gap-3 items-center'>
         <h1 className='text-xl font-bold'> Status </h1>
-        <span className={`${!archived ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"} px-3 rounded-full transition-all duration-300`}> {!archived ? "Active" : "Inactive"} </span>
+        <span className={`${!isArchived ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"} px-3 rounded-full transition-all duration-300`}> {!isArchived ? "Active" : "Inactive"} </span>
       </div>
       <div className='flex gap-3 items-center'>
         <button className='flex items-center gap-2 text-slate-800 hover:text-orange-600 transition-colors duration-300'> <BsPencil size={"1.2em"} /> Edit  </button>
-        <button className='flex items-center gap-2 text-slate-800 hover:text-orange-600 transition-colors duration-300'> <span className='rotate'> <BsHourglassBottom size={"1.2em"} /> </span> {!archived ? "Archive" : "Renew"} </button>
+        <button onClick={() => handleArchiveClick()} className='flex items-center gap-2 text-slate-800 hover:text-orange-600 transition-colors duration-300'> <span className='rotate'> <BsHourglassBottom size={"1.2em"} /> </span> {!isArchived ? "Archive" : "Renew"} </button>
       </div>
     </div>
   )

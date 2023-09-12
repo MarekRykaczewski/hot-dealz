@@ -109,7 +109,7 @@ function DealDetails() {
 
   return (
     <div className='bg-slate-200 w-full flex flex-col ml-auto mr-auto items-center justify-start'>
-      {isOwner && <DealCardControls archived={archived} />}
+      {isOwner && <DealCardControls dealId={dealId} archived={archived} />}
       <DealCardDetailed
         dealId={dealId}
         title={title}
