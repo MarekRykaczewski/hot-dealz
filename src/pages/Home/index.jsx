@@ -87,6 +87,7 @@ const dealElements =
             userId={item.userId}
             shippingCost={item.shippingCost}
             imageURLs={item.imageURLs}
+            archived={item.archived}
            />
         )
     })

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, where, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { UserAuth } from '../../context/AuthContext';
+import { BsHourglassBottom } from 'react-icons/bs'
 
-function DealCardVotes({ postId }) {
+function DealCardVotes({ postId, archived }) {
   const { user } = UserAuth();
   const likesCollection = collection(db, 'deals', postId, 'likes');
   const dislikesCollection = collection(db, 'deals', postId, 'dislikes');
@@ -75,6 +76,16 @@ function DealCardVotes({ postId }) {
     getLikes();
     getDislikes();
   }, []);
+
+  if (archived) return (
+    <div className='relative flex justify-center items-center gap-5 rounded-l-full rounded-r-full border w-36 h-8 py-4 mb-2'>
+      <span className='font-bold text-lg'> {likes.length - dislikes.length || 0} </span>
+      <div className='flex text-lg items-center gap-1'>
+        <BsHourglassBottom size={"1.2em"} /> 
+        <span> Ended </span>
+      </div>
+    </div>
+  )
 
   return (
     <div className='relative flex justify-between items-center gap-2 rounded-l-full rounded-r-full border w-28 h-8 py-4 mb-2'>
