@@ -8,13 +8,13 @@ function NavSearchBar() {
 
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
-  const [isFocused, setIsFocused] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
 
-  // const handleSearchBlur = () => {
-  //   setTimeout(() => {
-  //     setIsFocused(false);
-  //   }, 100);
-  // };
+  const handleSearchBlur = () => {
+    setTimeout(() => {
+      setIsFocused(false);
+    }, 100);
+  };
 
   // I wanted to do this in firebase however its not supported, 
   // solutions like Elastic search are premium only,
