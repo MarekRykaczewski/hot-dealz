@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { collection, query, getDocs, where } from 'firebase/firestore'
 import { Link } from 'react-router-dom'
-import { db } from '../../config/firebase'
+import { db, storage } from '../../config/firebase'
+import { ref, getDownloadURL } from 'firebase/storage'
 
 function NavSearchBar() {
 
@@ -35,13 +36,30 @@ function NavSearchBar() {
             const dislikesSnapshot = await getDocs(collection(dealsRef, doc.id, 'dislikes'));
             const likesCount = likesSnapshot.size;
             const dislikesCount = dislikesSnapshot.size;
-  
+            
+            let imageURL;
+
+            if (dealData.imageURLs) {
+              const imagePath = Array.isArray(dealData.imageURLs)
+                ? dealData.imageURLs[0] // First element of the array
+                : dealData.imageURLs;   // String value
+            
+              const storageRef = ref(storage, imagePath);
+              
+              try {
+                imageURL = await getDownloadURL(storageRef);
+              } catch (error) {
+                console.error('Error fetching image download URL:', error);
+              }
+            }
+          
             return {
               id: doc.id,
               data: {
                 ...dealData,
                 likesCount,
                 dislikesCount,
+                imageURL
               },
             };
           })
@@ -83,13 +101,13 @@ function NavSearchBar() {
             <div className='p-3 hover:bg-slate-200' key={result.id}>
               <Link className='flex flex-row justify-start' to={`/deal/${result.id}`}>
                 <div className='flex gap-3'>
-                  {result.data.imageURLs && result.data.imageURLs[0] && (
-                    <img
-                      className='h-12 w-12 bg-white bg-center mr-3 border rounded-lg border-slate-500 object-contain'
-                      src={result.data.imageURLs[0]}
-                      alt='Deal Image'
-                    />
-                  )}
+                {result.data.imageURL && (
+                  <img
+                    className='h-12 w-12 bg-white bg-center mr-3 border rounded-lg border-slate-500 object-contain'
+                    src={result.data.imageURL}
+                    alt='Deal Image'
+                  />
+                )}
                 </div>
                 <div className='flex gap-2 items-center'>
                   <p className='text-orange-500 font-bold'>{result.data.likesCount - result.data.dislikesCount}</p>
