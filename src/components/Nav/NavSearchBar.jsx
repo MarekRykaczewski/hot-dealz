@@ -117,11 +117,12 @@ function NavSearchBar() {
             </div>
           ))
         ) : null}
+        {isFocused && searchResults.length > 0 && 
         <div className='w-full flex justify-center mt-3 mb-3'>
           <div className='w-2/3 h-8 rounded-full text-md font-bold text-white flex items-center justify-center p-3 bg-orange-500 overflow-hidden'>
             <button> See all results </button>
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );
