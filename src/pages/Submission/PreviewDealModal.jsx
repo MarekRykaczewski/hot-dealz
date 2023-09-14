@@ -5,7 +5,7 @@ function PreviewDealModal({ title, link, images, category, shippingCost, price, 
 	const fileToURL = (file) => URL.createObjectURL(file);
 	
 	return (
-		<>
+		<div className='w-[50vw]'>
 			<h1 className='text-4xl font-bold mb-5'> Review your deal </h1>
 			<div className='flex flex-col gap-3'>
 				<div className="grid-rows-2 col-span-3 border-2 p-2 rounded-lg">
@@ -50,16 +50,16 @@ function PreviewDealModal({ title, link, images, category, shippingCost, price, 
 							))}
 						</div>
 				</div>
-				<div class="grid-rows-2 col-span-3 border-2 p-2 rounded-lg">
-					<p class="font-semibold">Description</p>
-					<p class="mt-1">{description}</p>
+				<div className="grid-rows-2 col-span-3 border-2 p-2 rounded-lg">
+					<p className="font-semibold">Description</p>
+					<p className="mt-1">{description}</p>
 				</div>
-				<div class="grid-rows-2 col-span-3 border-2 p-2 rounded-lg">
-					<p class="font-semibold">Category</p>
-					<p class="mt-1">{category}</p>
+				<div className="grid-rows-2 col-span-3 border-2 p-2 rounded-lg">
+					<p className="font-semibold">Category</p>
+					<p className="mt-1">{category}</p>
 				</div>
 			</div>
-		</>
+		</div>
   )
 }
 
