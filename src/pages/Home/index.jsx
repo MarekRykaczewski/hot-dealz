@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DealCard from '../../components/DealCard/DealCard';
 import { db } from "../../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, useParams } from 'react-router-dom'
 import DealDetails from './[id]/DealDetails';
 import Deals from './Deals';
 import Saved from './Saved';
@@ -18,6 +18,16 @@ function Home() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const category = searchParams.get('category');
+
+  const { query } = useParams();
+
+  function filterDealsByQuery(query, deals) {
+    const lowercaseQuery = query.toLowerCase();
+  
+    return deals.filter((deal) =>
+      deal.title.toLowerCase().includes(lowercaseQuery)
+    );
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +58,16 @@ function Home() {
       setFilteredDeals(deals); // Set to unfiltered deals when category is not present
     }
   }, [category, deals]);
+
+  useEffect(() => {
+    if (query) {
+      const filteredDeals = filterDealsByQuery(query, deals);
+      setFilteredDeals(filteredDeals);
+    } else {
+      // Reset to the default deals or unfiltered deals
+      setFilteredDeals(deals);
+    }
+  }, [query, deals]);
 
 const indexOfLastDeal = currentPage * dealsPerPage
 const indexOfFirstDeal = indexOfLastDeal - dealsPerPage
@@ -105,6 +125,7 @@ const dealElements =
   return (
     <div>
     <Routes>
+      <Route path="/search/:query" element={<Home />} />
       <Route path="/saved/*" element={<Saved 
         dealsPerPage={dealsPerPage} 
         paginate={paginate} 
