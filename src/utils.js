@@ -31,7 +31,9 @@ export const toggleSaved = async (hasSaved, setHasSaved, userId, postId) => {
 export const sortByNewest = (deals, setDeals) => {
   const dealsCopy = [...deals]
   dealsCopy.sort((a, b) => {
-    return b.posted.toDate() - a.posted.toDate()
+    const timestampA = a.posted.seconds * 1000
+    const timestampB = b.posted.seconds * 1000
+    return timestampB - timestampA;
   })
   setDeals(dealsCopy)
 }
