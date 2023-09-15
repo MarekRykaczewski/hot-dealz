@@ -16,6 +16,7 @@ import { sortCommentsByNewest } from '../../../utils'
 import { toggleSaved, checkSavedDeal } from '../../../utils'
 import DealCardDetailed from '../../../components/DealCard/DealCardDetailed'
 import DealCardControls from '../../../components/DealCard/DealCardControls';
+import EditDealFormModal from '../../../components/DealCard/EditDealFormModal'
 
 function DealDetails() {
 
@@ -28,6 +29,21 @@ function DealDetails() {
   const commentInput = useRef(null)
   const [profileUrl, setProfileUrl] = useState('')
   const [isArchived, setIsArchived] = useState(archived);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+
+  const handleSaveChanges = async (editedDealDetails) => {
+    try {
+      const dealRef = doc(db, "deals", dealId);
+  
+      // Update the deal details in Firebase Firestore
+      await updateDoc(dealRef, editedDealDetails);
+  
+      console.log('Deal details updated successfully.');
+      setIsEditModalOpen(false); // Close the modal after saving
+    } catch (error) {
+      console.error('Error updating deal details:', error);
+    }
+  };
 
   const handleArchiveClick = async () => {
     try {
@@ -131,7 +147,12 @@ function DealDetails() {
 
   return (
     <div className='bg-slate-200 w-full flex flex-col ml-auto mr-auto items-center justify-start'>
-      {isOwner && <DealCardControls dealId={dealId} isArchived={isArchived} handleArchiveClick={handleArchiveClick} />}
+      {isOwner && <DealCardControls 
+        onEditClick={() => setIsEditModalOpen(true)} dealId={dealId} 
+        isArchived={isArchived} 
+        handleArchiveClick={handleArchiveClick} 
+        />
+      }
       <DealCardDetailed
         dealId={dealId}
         title={title}
@@ -148,6 +169,17 @@ function DealDetails() {
         imageURLs={imageURLs}
         isArchived={isArchived}
       />
+      <EditDealFormModal 
+        isOpen={isEditModalOpen} 
+        onClose={() => setIsEditModalOpen(false)} 
+        initialTitle={title}
+        initialPrice={price}
+        initialNextBestPrice={nextBestPrice}
+        initialShippingCost={shippingCost}
+        initialDealLink={dealLink}
+        initialVoucherCode={voucherCode}
+        onSave={handleSaveChanges}
+        />
       <div className='flex flex-col w-full max-w-3xl bg-white mt-2 rounded-lg overflow-hidden'>
           <div className='p-5'>
             <h1 className='font-bold'>About this deal</h1>
