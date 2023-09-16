@@ -17,7 +17,7 @@ function Profile() {
 
   return (
     <div className='flex flex-col'>
-        {deleteAccountModal && <ProfileConfirmDeleteModal setDeleteAccountModal={setDeleteAccountModal} />}
+        <ProfileConfirmDeleteModal open={deleteAccountModal} onClose={() => setDeleteAccountModal(false)} />
         <span className='text-2xl mb-6'> Profile </span>
         <ProfileUploadImage 
             profilePicture={profilePicture} 
