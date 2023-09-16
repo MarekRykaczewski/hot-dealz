@@ -45,7 +45,7 @@ function Home() {
       }
     };
     fetchData();
-  }, []);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (deals.length > 0) setLoading(false)
