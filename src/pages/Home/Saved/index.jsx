@@ -47,6 +47,10 @@ function Saved({ dealsPerPage, paginate, currentPage, filterDealsByCategory }) {
       
       const dealElements = 
       deals.map(item => {
+        const milliseconds = item.posted.seconds * 1000
+        const date = new Date(milliseconds)
+        const formattedDate = date.toDateString();
+        const formattedTime = date.toLocaleTimeString([], { timeStyle: "short" });
           return (
             <DealCard
               key={item.id}
@@ -58,8 +62,8 @@ function Saved({ dealsPerPage, paginate, currentPage, filterDealsByCategory }) {
               price={item.price}
               nextBestPrice={item.nextBestPrice}
               description={item.description}
-              date={item.posted.toDate().toDateString()}
-              time={item.posted.toDate().toLocaleTimeString()}
+              date={formattedDate}
+              time={formattedTime}
               voucherCode={item.voucherCode}
               comments={item.comments}
              />

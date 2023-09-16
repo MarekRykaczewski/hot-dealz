@@ -126,27 +126,30 @@ const dealElements =
     <div>
     <Routes>
       <Route path="/search/:query" element={<Home />} />
-      <Route path="/saved/*" element={<Saved 
-        dealsPerPage={dealsPerPage} 
-        paginate={paginate} 
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        filterDealsByCategory={filterDealsByCategory}
-      />}
+      <Route path="/saved/*" element={
+        <Saved 
+          dealsPerPage={dealsPerPage} 
+          paginate={paginate} 
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          filterDealsByCategory={filterDealsByCategory}
+        />
+      }
       />
       <Route path="/deal/:dealId" element={<DealDetails />}/>
       <Route path="/" element={
-      <Deals 
-        deals={deals}
-        setDeals={setDeals}
-        dealElements={dealElements} 
-        dealsPerPage={dealsPerPage} 
-        totalDeals={deals.length} 
-        paginate={paginate} 
-        currentPage={currentPage}
-        filterDealsByCategory={filterDealsByCategory}
+        <Deals 
+          deals={deals}
+          setDeals={setDeals}
+          dealElements={dealElements} 
+          dealsPerPage={dealsPerPage} 
+          totalDeals={deals.length} 
+          paginate={paginate} 
+          currentPage={currentPage}
+          filterDealsByCategory={filterDealsByCategory}
         />
-      } />
+      } 
+      />
     </Routes>
     </div>
   )
