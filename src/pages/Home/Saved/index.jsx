@@ -71,6 +71,7 @@ function Saved({ dealsPerPage, paginate, currentPage }) {
               time={formattedTime}
               voucherCode={item.voucherCode}
               comments={item.comments}
+              imageURLs={item.imageURLs}
              />
           )
       })
