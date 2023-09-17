@@ -146,7 +146,7 @@ function DealDetails() {
   const isOwner = currentUserId === userId
 
   return (
-    <div className='bg-slate-200 w-full flex flex-col ml-auto mr-auto items-center justify-start'>
+    <div className='bg-slate-200 h-screen w-full flex flex-col ml-auto mr-auto items-center justify-start'>
       {isOwner && <DealCardControls 
         onEditClick={() => setIsEditModalOpen(true)} dealId={dealId} 
         isArchived={isArchived} 
@@ -180,7 +180,7 @@ function DealDetails() {
         initialVoucherCode={voucherCode}
         onSave={handleSaveChanges}
         />
-      <div className='flex flex-col w-full max-w-3xl bg-white mt-2 rounded-lg overflow-hidden'>
+      <div className='flex flex-col w-full max-w-3xl bg-white mt-2 rounded-lg'>
           <div className='p-5'>
             <h1 className='font-bold'>About this deal</h1>
             <p className="text-gray-700 text-base">{description}</p>
