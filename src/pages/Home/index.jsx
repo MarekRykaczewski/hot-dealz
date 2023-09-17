@@ -72,6 +72,7 @@ function Home() {
 const indexOfLastDeal = currentPage * dealsPerPage
 const indexOfFirstDeal = indexOfLastDeal - dealsPerPage
 const currentDeals = filteredDeals.slice(indexOfFirstDeal, indexOfLastDeal)
+const totalPages = Math.ceil(filteredDeals.length / dealsPerPage)
 
 const paginate = (pageNumber) => {
   setCurrentPage(pageNumber)
@@ -144,6 +145,7 @@ const dealElements =
           dealElements={dealElements} 
           dealsPerPage={dealsPerPage} 
           totalDeals={deals.length} 
+          totalPages={totalPages}
           paginate={paginate} 
           currentPage={currentPage}
           filterDealsByCategory={filterDealsByCategory}
