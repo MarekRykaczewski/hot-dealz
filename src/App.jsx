@@ -4,9 +4,8 @@ import Home from "./pages/Home"
 import { AuthContextProvider } from "./context/AuthContext"
 import { Routes, Route } from "react-router-dom"
 import Settings from "./pages/Settings"
-import Profile from "./pages/Settings/Profile/Profile"
+import Profile from "./pages/Settings/Profile"
 import Submission from "./pages/Submission"
-import Preferences from "./pages/Settings/Preferences"
 
 function App() {
 
@@ -28,7 +27,6 @@ function App() {
       <Route path='/submission' element={<Submission />}/>
       <Route path='/settings' element={<Settings />}>
         <Route path='/settings/profile' element={<Profile />}/>
-        <Route path='/settings/preferences' element={<Preferences />}/>
       </Route>
     </Routes>
   </AuthContextProvider>
