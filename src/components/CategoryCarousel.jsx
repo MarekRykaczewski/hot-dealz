@@ -29,9 +29,13 @@ function CategoryCarousel() {
         fetchData();
       }, []);
 
-      const items = categories.map(item => (
-        <Link className='w-fit' key={item.title} to={`/?category=${encodeURIComponent(item.title)}`}>
-          <button className='flex text-md leading-6 gap-1 h-10 min-w-fit w-[150px] px-2 items-center justify-center bg-slate-600 rounded-lg text-white font-semibold hover:bg-slate-500 transition'> 
+      const items = categories.map((item) => (
+        <Link
+          className='w-fit'
+          key={item.title}
+          to={`/category/${encodeURIComponent(item.title)}`}
+        >
+          <button className='flex text-md leading-6 gap-1 h-10 min-w-fit w-[150px] px-2 items-center justify-center bg-slate-600 rounded-lg text-white font-semibold hover:bg-slate-500 transition'>
             {item.title}
           </button>
         </Link>

@@ -2,72 +2,60 @@ import React, { useEffect, useState } from 'react'
 import DealCard from '../../components/DealCard/DealCard';
 import { db } from "../../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
-import { Routes, Route, useLocation, useParams } from 'react-router-dom'
+import { Routes, Route, useParams } from 'react-router-dom'
 import DealDetails from './[id]/DealDetails';
 import Deals from './Deals';
 import Saved from './Saved';
 
 function Home() {
 
-  const [deals, setDeals] = useState([])
-  const [filteredDeals, setFilteredDeals] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [dealsPerPage, setDealsPerPage] = useState(5)
-
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const category = searchParams.get('category');
-
-  const { query } = useParams();
-
-  function filterDealsByQuery(query, deals) {
-    const lowercaseQuery = query.toLowerCase();
-  
-    return deals.filter((deal) =>
-      deal.title.toLowerCase().includes(lowercaseQuery)
-    );
-  }
+  const [deals, setDeals] = useState([]);
+  const [filteredDeals, setFilteredDeals] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dealsPerPage, setDealsPerPage] = useState(5);
+  const { category } = useParams();
+  const [currentSorting, setCurrentSorting] = useState('default');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "deals"));
-        const dealList = await Promise.all(querySnapshot.docs.map(async (doc) => {
-          const dealData = doc.data();
-          const commentsSnapshot = await getDocs(collection(doc.ref, "comments"));
-          const commentsCount = commentsSnapshot.size;
-          return { id: doc.id, ...dealData, comments: commentsCount };
-        }));
+        const querySnapshot = await getDocs(collection(db, 'deals'));
+        const dealList = await Promise.all(
+          querySnapshot.docs.map(async (doc) => {
+            const dealData = doc.data();
+            const commentsSnapshot = await getDocs(collection(doc.ref, 'comments'));
+            const commentsCount = commentsSnapshot.size;
+            return { id: doc.id, ...dealData, comments: commentsCount };
+          })
+        );
         setDeals(dealList);
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
-  }, [location.pathname]);
+  }, []);
 
   useEffect(() => {
-    if (deals.length > 0) setLoading(false)
-  }, [deals])
+    let filteredDealsCopy = [...deals];
 
-  useEffect(() => {
     if (category) {
-      setFilteredDeals(filterDealsByCategory(category, deals));
-    } else {
-      setFilteredDeals(deals); // Set to unfiltered deals when category is not present
+      filteredDealsCopy = filteredDealsCopy.filter((deal) =>
+        deal.category.toLowerCase() === category.toLowerCase()
+      );
     }
-  }, [category, deals]);
 
-  useEffect(() => {
-    if (query) {
-      const filteredDeals = filterDealsByQuery(query, deals);
-      setFilteredDeals(filteredDeals);
-    } else {
-      // Reset to the default deals or unfiltered deals
-      setFilteredDeals(deals);
+    if (currentSorting === 'newest') {
+      filteredDealsCopy.sort((a, b) => b.posted.seconds - a.posted.seconds);
+    } else if (currentSorting === 'comments') {
+      filteredDealsCopy.sort((a, b) => b.comments - a.comments);
     }
-  }, [query, deals]);
+
+    setFilteredDeals(filteredDealsCopy);
+    setCurrentPage(1);
+  }, [category, deals, currentSorting]);
 
 const indexOfLastDeal = currentPage * dealsPerPage
 const indexOfFirstDeal = indexOfLastDeal - dealsPerPage
@@ -137,6 +125,7 @@ const dealElements =
         />
       }
       />
+      <Route path="/category/:category" element={<Home />} />
       <Route path="/deal/:dealId" element={<DealDetails />}/>
       <Route path="/" element={
         <Deals 
@@ -149,6 +138,8 @@ const dealElements =
           paginate={paginate} 
           currentPage={currentPage}
           filterDealsByCategory={filterDealsByCategory}
+          currentSorting={currentSorting}
+          setCurrentSorting={setCurrentSorting}
         />
       } 
       />
