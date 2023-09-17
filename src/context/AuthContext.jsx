@@ -3,7 +3,8 @@ import {
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, 
     signOut, 
-    onAuthStateChanged 
+    onAuthStateChanged,
+    deleteUser
 } from 'firebase/auth'
 import { auth, db } from "../config/firebase";
 import { doc, getDoc } from "firebase/firestore";
@@ -21,6 +22,17 @@ export const AuthContextProvider = ({ children }) => {
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
+    
+    const deleteUserAccount = async () => {
+        try {
+            // Delete the user's account
+            await deleteUser(auth.currentUser);
+            
+            console.log('User account deleted successfully.');
+        } catch (error) {
+            console.error('Error deleting user account:', error);
+        }
+    };
 
     const signIn = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password)
@@ -67,7 +79,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [user])
       
     return (
-        <UserContext.Provider value={{ createUser, user, userData, logout, signIn }}>
+        <UserContext.Provider value={{ createUser, deleteUserAccount, user, userData, logout, signIn }}>
             {children}
         </UserContext.Provider>
     )
