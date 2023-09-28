@@ -71,7 +71,7 @@ function DealCard({ userId, postId, archived, imageURLs, shippingCost, title, da
       <Link className='block' to={`/deal/${postId}`}>
         <div className="text-gray-900 font-bold text-xl hover:text-orange-500 transition">{title}</div>
       </Link>
-      <div className='flex gap-3 text-xl'>
+      <div className='flex flex-wrap gap-3 text-xl'>
         <p className='text-orange-500 font-bold'> {price}zł</p>
         <del className=' text-gray-500'> {nextBestPrice}zł</del>
         <p> -{Math.floor((nextBestPrice - price) / nextBestPrice * 100)}% </p> 
