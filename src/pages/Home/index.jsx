@@ -74,9 +74,14 @@ function filterDealsByCategory(category, deals) {
 
 const dealElements = 
     currentDeals.map(item => {
+        const options = {
+          month: 'short', // Abbreviated month name (e.g., Jan, Feb)
+          day: 'numeric', // Numeric day of the month
+        };
+
         const milliseconds = item.posted.seconds * 1000
         const date = new Date(milliseconds)
-        const formattedDate = date.toDateString();
+        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date)
         const formattedTime = date.toLocaleTimeString([], { timeStyle: "short" });
 
         return (
