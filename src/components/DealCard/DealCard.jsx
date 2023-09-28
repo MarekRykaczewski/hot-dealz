@@ -53,11 +53,11 @@ function DealCard({ userId, postId, archived, imageURLs, shippingCost, title, da
   }
 
   return (
-<div className={`${archived && "filter grayscale"} w-full sm:max-w-4xl sm:flex justify-center bg-white p-5 rounded-xl`}>
-  <div className="h-full sm:w-64 rounded-xl flex-none bg-cover overflow-hidden bg-slate-500">
+<div className={`w-full sm:max-w-4xl ${archived && "filter grayscale"} bg-white p-5 rounded-xl flex flex-col sm:flex-row sm:justify-between`}>
+  <div className="h-64 sm:w-64 rounded-xl overflow-hidden bg-slate-500">
     <ImageSlider dealId={postId} imageURLs={imageURLs} />
   </div>
-  <div className="bg-white h-[230px] px-4 flex flex-col justify-between w-full">
+  <div className="bg-white flex-grow p-4 flex flex-col justify-between">
     <div className='flex flex-col gap-1'>
       <div className="text-sm text-gray-600 flex justify-between">
         <DealCardVotes postId={postId} archived={archived} />
@@ -86,7 +86,7 @@ function DealCard({ userId, postId, archived, imageURLs, shippingCost, title, da
       </div>}
       <p className={`text-gray-700 ${voucherCode ? 'line-clamp-3' : 'line-clamp-5'} w-full overflow-hidden text-ellipsis mb-3`}>{description}</p>
     </div>
-    <div className="flex items-center justify-between gap-5">
+    <div className="flex items-center justify-between gap-5 mt-4">
       <div className='flex justify-center items-center'>
         <img className="w-8 h-8 rounded-full mr-2" src={profileUrl} />
         <div className="text-sm">
