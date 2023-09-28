@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Tooltip from './Tooltip';
 import { useFormContext } from "react-hook-form";
 
 function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) {
 
-    const { register, formState: { errors } } = useFormContext();
+    const { register, setValue, formState: { errors } } = useFormContext();
 
     // Decimal validation object
     const decimalValidation = {
@@ -12,6 +12,23 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
         if (!/^\d+(\.\d{1,2})?$/.test(value)) return "Invalid decimal value";
       }
     };
+
+    const handleFreeShippingChange = (e) => {
+      const isChecked = e.target.checked;
+      const shippingCostValue = isChecked ? 0 : formDetails.shippingCost;
+  
+      // Update the formDetails state using the provided function
+      handleCheckChange(e);
+  
+      // Set the value and trigger re-validation
+      setValue("shippingCost", shippingCostValue, {
+        shouldValidate: true,
+      });
+    };
+
+    useEffect(() => {
+      setValue("shippingCost", formDetails.freeShipping ? 0 : formDetails.shippingCost);
+    }, [formDetails, setValue]);
 
     return (
     <div className='grid grid-cols-2 overflow-hidden items-center gap-2'>
@@ -66,10 +83,10 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
             {...register("shippingCost", { 
               min: 0, 
               validate: {
-                required: value => {
-                  if (!(value >= 0)) return "This is required";
+                validValue: (value) => {
+                  if (value === 0 || /^(\d*\.\d{1,2}|\d+)$/.test(value)) return true;
+                  return "Invalid decimal value";
                 },
-                ...decimalValidation
               }
             })} 
             name='shippingCost' 
@@ -88,7 +105,7 @@ function FormPriceDetails({ formDetails, handleInputChange, handleCheckChange}) 
         <label className='text-sm font-bold text-gray-500 mt-1' htmlFor="">Free shipping?</label>
         <input 
         {...register("freeShipping")} 
-        onChange={(e) => handleCheckChange(e)} 
+        onChange={handleFreeShippingChange} 
         type="checkbox" 
         className='scale-150 overflow-hidden'
         />
