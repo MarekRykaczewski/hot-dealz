@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AiFillFacebook, AiFillYoutube, AiFillTwitterCircle, AiFillInstagram } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-function FooterNav({ dealsPerPage, totalDeals, paginate, currentPage, totalPages }) {
+function FooterNav({ paginate, currentPage, totalPages }) {
   const [showFooter, setShowFooter] = useState(false);
   const pageNumbers = [];
 
