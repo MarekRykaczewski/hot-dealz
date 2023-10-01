@@ -26,4 +26,9 @@ dist-ssr
 # Sample Data
 dataimport
 
+# Firebase
+.firebase
+.firebaserc
+firebase.json
+
 
