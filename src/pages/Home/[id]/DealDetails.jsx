@@ -13,7 +13,7 @@ import { auth, storage } from '../../../config/firebase'
 import { getDownloadURL, ref } from 'firebase/storage'
 // Utils
 import { sortCommentsByNewest } from '../../../utils'
-import { toggleSaved, checkSavedDeal } from '../../../utils'
+import { checkSavedDeal, toggleSaved } from '../../../api'
 import DealCardDetailed from '../../../components/DealCard/DealCardDetailed'
 import DealCardControls from '../../../components/DealCard/DealCardControls';
 import EditDealFormModal from '../../../components/DealCard/EditDealFormModal'

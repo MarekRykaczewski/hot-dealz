@@ -7,10 +7,9 @@ import { MdOutlineLocalShipping } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import DealCardVotes from './DealCardVotes'
 import ImageSlider from '../ImageSlider'
-import { ref, getDownloadURL } from "firebase/storage"
-import { auth, storage } from '../../config/firebase'
+import { auth } from '../../config/firebase'
 import { UserAuth } from '../../context/AuthContext'
-import { toggleSaved, checkSavedDeal } from '../../utils'
+import { fetchProfileImage, checkSavedDeal, toggleSaved } from '../../api'
 
 function DealCard({ userId, postId, archived, imageURLs, shippingCost, title, date, time, owner, price, nextBestPrice, description, dealLink, voucherCode, comments }) {  
   
@@ -27,21 +26,8 @@ function DealCard({ userId, postId, archived, imageURLs, shippingCost, title, da
   }, []);
 
   useEffect(() => {
-    fetchProfileImage();
+    fetchProfileImage(userId, setProfileUrl);
   }, [userId]);
-
-  const fetchProfileImage = async () => {
-    try {
-      const imageRef = ref(storage, `profileImages/${userId}/image`);
-      const imageUrl = await getDownloadURL(imageRef);
-      setProfileUrl(imageUrl);
-    } catch (error) {
-      const genericRef = ref(storage, "profileImages/avatar.png")
-      const genericUrl = await getDownloadURL(genericRef);
-      setProfileUrl(genericUrl);
-      console.log('Error fetching profile image:', error);
-    }
-  };
 
   const copyToClipboard = (e) => {
     navigator.clipboard.writeText(e.target.value)
