@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { collection, deleteDoc, doc, getDocs, setDoc } from 'firebase/firestore';
-import { db } from '../../config/firebase';
 import { UserAuth } from '../../context/AuthContext';
 import { BsHourglassBottom } from 'react-icons/bs';
+import { getLikesAndDislikes, handleVote } from '../../api';
 
 function VoteButton({ onClick, disabled, text }) {
   return (
@@ -18,66 +17,65 @@ function VoteButton({ onClick, disabled, text }) {
 
 function DealCardVotes({ postId, archived }) {
   const { user } = UserAuth();
-  const likesCollection = collection(db, 'deals', postId, 'likes');
-  const dislikesCollection = collection(db, 'deals', postId, 'dislikes');
   const [likes, setLikes] = useState([]);
   const [dislikes, setDislikes] = useState([]);
   const [userLiked, setUserLiked] = useState(false);
   const [userDisliked, setUserDisliked] = useState(false);
 
-  const getLikes = async () => {
-    const data = await getDocs(likesCollection);
-    setLikes(data.docs);
-    setUserLiked(data.docs.some(doc => doc.id === user?.uid));
-  };
-
-  const getDislikes = async () => {
-    const data = await getDocs(dislikesCollection);
-    setDislikes(data.docs);
-    setUserDisliked(data.docs.some(doc => doc.id === user?.uid));
-  };
-
-  const handleVote = async (voteType) => {
-    try {
-      const voteCollection = voteType === 'like' ? 'likes' : 'dislikes';
-      const oppositeVoteType = voteType === 'like' ? 'dislike' : 'like'; // Determine the opposite vote type
-  
-      const userHasVoted = likes.some(doc => doc.id === user?.uid) || dislikes.some(doc => doc.id === user?.uid);
-  
-      if (userHasVoted) {
-        // User has already voted, remove the opposite vote
-        await deleteVote(oppositeVoteType);
-      }
-  
-      const voteRef = doc(collection(db, 'deals', postId, voteCollection), user?.uid);
-      await setDoc(voteRef, {});
-  
-      // Update the vote counts and user vote status immediately after the vote is added
-      await getLikes();
-      await getDislikes();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const deleteVote = async (voteType) => {
-    try {
-      const voteCollection = voteType === 'like' ? 'likes' : 'dislikes';
-      const voteToDelete = doc(db, 'deals', postId, voteCollection, user?.uid);
-      await deleteDoc(voteToDelete);
-  
-      // Update the vote counts immediately after the vote is deleted
-      await getLikes();
-      await getDislikes();
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  async function fetchData() {
+    const { likes: likesData, dislikes: dislikesData } = await getLikesAndDislikes(postId);
+    setLikes(likesData);
+    setDislikes(dislikesData);
+    setUserLiked(likesData.some(doc => doc.id === user?.uid));
+    setUserDisliked(dislikesData.some(doc => doc.id === user?.uid));
+  }
 
   useEffect(() => {
-    getLikes();
-    getDislikes();
-  }, []);
+    fetchData(); // Fetch data when the component mounts or when postId/user changes
+  }, [postId, user]);
+
+  const optimisticRender = (voteType) => {
+    if (voteType === 'like') {
+      if (!userLiked) {
+        setLikes([...likes, { id: user?.uid }]);
+        setUserLiked(true);
+
+        // Remove the user's dislike if it exists
+        if (userDisliked) {
+          setDislikes(dislikes.filter(doc => doc.id !== user?.uid));
+          setUserDisliked(false);
+        }
+      } else {
+        setLikes(likes.filter(doc => doc.id !== user?.uid));
+        setUserLiked(false);
+      }
+    } else if (voteType === 'dislike') {
+      if (!userDisliked) {
+        setDislikes([...dislikes, { id: user?.uid }]);
+        setUserDisliked(true);
+
+        // Remove the user's like if it exists
+        if (userLiked) {
+          setLikes(likes.filter(doc => doc.id !== user?.uid));
+          setUserLiked(false);
+        }
+      } else {
+        setDislikes(dislikes.filter(doc => doc.id !== user?.uid));
+        setUserDisliked(false);
+      }
+    }
+  };
+
+  const handleVoteClick = async (voteType) => {
+    // Optimistic rendering
+    optimisticRender(voteType);
+
+    // Perform the Firebase operation in the background
+    const success = await handleVote(postId, voteType, user);
+    if (!success) {
+      // Handle error and potentially revert the UI update
+    }
+  };
 
   if (archived) {
     return (
@@ -91,16 +89,11 @@ function DealCardVotes({ postId, archived }) {
     );
   }
 
-  useEffect(() => {
-    setUserLiked(likes.some(doc => doc.id === user?.uid));
-    setUserDisliked(dislikes.some(doc => doc.id === user?.uid));
-  }, [likes, dislikes, user]);
-
   return (
     <div className='relative flex justify-between items-center gap-2 rounded-l-full rounded-r-full border w-28 h-8 py-4 mb-2'>
-      <VoteButton onClick={() => handleVote('dislike')} disabled={userDisliked} text="blue" />
+      <VoteButton onClick={() => handleVoteClick('dislike')} disabled={userDisliked} text="blue" />
       <span className='font-bold text-lg'> {likes.length - dislikes.length || 0} </span>
-      <VoteButton onClick={() => handleVote('like')} disabled={userLiked} text="orange" />
+      <VoteButton onClick={() => handleVoteClick('like')} disabled={userLiked} text="orange" />
     </div>
   );
 }
