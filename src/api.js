@@ -1,6 +1,6 @@
 import { ref, getDownloadURL } from "firebase/storage";
 import { storage } from './config/firebase';
-import { doc, collection, getDoc, getDocs, deleteDoc, setDoc, writeBatch } from "firebase/firestore";
+import { doc, query, collection, getDoc, getDocs, deleteDoc, setDoc, writeBatch } from "firebase/firestore";
 import { db } from "./config/firebase";
 
 export async function fetchProfileImage(userId, setProfileUrl) {
@@ -92,5 +92,64 @@ export async function handleVote(postId, voteType, user) {
   } catch (err) {
     console.error('Error in handleVote:', err);
     return false;
+  }
+}
+
+export async function fetchSearchResults(searchQuery) {
+  const dealsRef = collection(db, 'deals');
+  const lowercaseQuery = searchQuery.toLowerCase();
+  const q = query(dealsRef);
+
+  try {
+    const querySnapshot = await getDocs(q);
+    let results = [];
+
+    if (lowercaseQuery.trim() !== '') {
+      results = await Promise.all(
+        querySnapshot.docs.map(async (doc) => {
+          const dealData = doc.data();
+          const likesSnapshot = await getDocs(collection(dealsRef, doc.id, 'likes'));
+          const dislikesSnapshot = await getDocs(collection(dealsRef, doc.id, 'dislikes'));
+          const likesCount = likesSnapshot.size;
+          const dislikesCount = dislikesSnapshot.size;
+
+          let imageURL;
+
+          if (dealData.imageURLs) {
+            const imagePath = Array.isArray(dealData.imageURLs)
+              ? dealData.imageURLs[0] // First element of the array
+              : dealData.imageURLs;   // String value
+
+            const storageRef = ref(storage, imagePath);
+
+            try {
+              imageURL = await getDownloadURL(storageRef);
+            } catch (error) {
+              console.error('Error fetching image download URL:', error);
+            }
+          }
+
+          return {
+            id: doc.id,
+            data: {
+              ...dealData,
+              likesCount,
+              dislikesCount,
+              imageURL
+            },
+          };
+        })
+      );
+
+      results = results
+        .filter((result) => result.data.title.toLowerCase().includes(lowercaseQuery))
+        .sort((a, b) => a.data.title.localeCompare(b.data.title))
+        .slice(0, 5); // Extract only the first 5 results
+    }
+
+    return results;
+  } catch (error) {
+    console.error('Error searching for deals:', error);
+    return [];
   }
 }
