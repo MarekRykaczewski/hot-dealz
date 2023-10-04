@@ -1,6 +1,6 @@
 import { ref, getDownloadURL } from "firebase/storage";
 import { storage } from './config/firebase';
-import { doc, query, collection, getDoc, getDocs, deleteDoc, setDoc, writeBatch } from "firebase/firestore";
+import { doc, where, addDoc, query, collection, getDoc, getDocs, deleteDoc, setDoc, writeBatch } from "firebase/firestore";
 import { db } from "./config/firebase";
 
 export async function fetchProfileImage(userId, setProfileUrl) {
@@ -162,5 +162,85 @@ export async function fetchCategories() {
   } catch (error) {
     console.error('Error fetching categories:', error);
     return [];
+  }
+}
+
+// Function to fetch the profile URL of a user
+export async function getProfileUrlFromUserId(userId) {
+  const storageRef = ref(storage, `profileImages/${userId}/image`);
+  const profileImageUrl = await getDownloadURL(storageRef);
+  return profileImageUrl;
+}
+
+// Function to fetch a username from a comment
+export async function getUsernameFromComment(commentId, dealId) {
+  const commentRef = doc(collection(doc(db, `deals/${dealId}`), 'comments'), commentId);
+  const commentDoc = await getDoc(commentRef);
+
+  if (!commentDoc.exists()) {
+    throw new Error(`Comment not found with id ${commentId}`);
+  }
+
+  const userId = commentDoc.data().userId;
+  const userRef = doc(db, 'users', userId);
+  const userDoc = await getDoc(userRef);
+
+  if (!userDoc.exists()) {
+    throw new Error(`User not found with id ${userId}`);
+  }
+
+  const username = userDoc.data().username;
+  return username;
+}
+
+// Function to toggle like on a comment
+export async function toggleCommentLike(dealId, commentId, userId) {
+  const likesCollectionRef = collection(db, `deals/${dealId}/comments/${commentId}/likes`);
+
+  try {
+    // Check if the user has already liked the comment
+    const commentLikesQuery = query(likesCollectionRef, where('userId', '==', userId));
+    const commentLikesSnapshot = await getDocs(commentLikesQuery);
+    const userHasLiked = !commentLikesSnapshot.empty;
+
+    if (userHasLiked) {
+      // User has already liked the comment, so remove the like
+      const likeDoc = commentLikesSnapshot.docs[0];
+      await deleteDoc(doc(likesCollectionRef, likeDoc.id));
+    } else {
+      // User has not liked the comment, so add the like
+      await addDoc(likesCollectionRef, { userId });
+    }
+  } catch (error) {
+    console.error('Error toggling comment like:', error);
+  }
+}
+
+// Function to fetch the number of likes for a comment
+export async function fetchCommentLikeCount(dealId, commentId) {
+  const likesCollectionRef = collection(db, `deals/${dealId}/comments/${commentId}/likes`);
+
+  try {
+    const commentLikesSnapshot = await getDocs(likesCollectionRef);
+    const likeCount = commentLikesSnapshot.size;
+    return likeCount;
+  } catch (error) {
+    console.error('Error fetching comment like count:', error);
+    return 0; // Return 0 in case of an error
+  }
+}
+
+// Function to check if the current user has already liked the comment
+export async function checkUserLiked(postId, commentId, userId) {
+  const likesCollectionRef = collection(db, `deals/${postId}/comments/${commentId}/likes`);
+
+  try {
+    const commentLikesQuery = query(likesCollectionRef, where('userId', '==', userId));
+    const commentLikesSnapshot = await getDocs(commentLikesQuery);
+    const userHasLiked = !commentLikesSnapshot.empty;
+    return userHasLiked;
+  } catch (error) {
+    console.error('Error checking user liked status:', error);
+    return false; // Return false in case of an error
   }
 }
