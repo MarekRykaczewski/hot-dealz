@@ -2,9 +2,6 @@ import React, { useState } from 'react'
 
 import { UserAuth } from '../../context/AuthContext'
 import PreviewDealModal from './PreviewDealModal'
-import { collection, doc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
-import { db, storage } from '../../config/firebase'
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { FormProvider, useForm } from 'react-hook-form'
 import FormDealLink from './FormDealLink'
 import FormImageUpload from './FormImageUpload'
@@ -14,6 +11,7 @@ import FormPriceDetails from './FormPriceDetails'
 import FormFinalDetails from './FormFinalDetails'
 import { useNavigate } from 'react-router-dom'
 import Modal from '../../components/Modal'
+import { submitDeal } from '../../api'
 
 function Submission() {
 
@@ -60,46 +58,10 @@ function Submission() {
   }
 
   const submitData = async () => {
-    // e.preventDefault()
-
-    const dealsCollection = collection(db, "deals")
-    const newDocRef = doc(dealsCollection)
-    const newDocId = newDocRef.id
-
-    await setDoc(newDocRef, {
-      owner: userData.username || 'test',
-      dealLink: formDetails.dealLink,
-      title: formDetails.title,
-      description: formDetails.description,
-      price: formDetails.price,
-      nextBestPrice: formDetails.nextBestPrice,
-      posted: serverTimestamp(),
-      category: formDetails.category,
-      voucherCode: formDetails.voucherCode,
-      shippingCost: formDetails.shippingCost,
-      userId: user.uid
-    })
-    
-    submitImages(newDocId)
-    navigate('/')
-  }
-  
-  const submitImages = async (docId) => {
-    const images = formDetails.images;
-    const imageURLs = [];
-  
-    for (let i = 0; i < images.length; i++) {
-      if (images[i]) {
-        const imageRef = ref(storage, `images/${docId}/${i}`);
-        await uploadBytes(imageRef, images[i]);
-        const imageURL = `/images/${docId}/${i}`
-        imageURLs.push(imageURL);
-      }
+    const success = await submitDeal(formDetails, userData, user);
+    if (success) {
+      navigate('/');
     }
-  
-    // After uploading all images, update the deal document with imageURLs
-    const dealDocRef = doc(db, 'deals', docId);
-    await updateDoc(dealDocRef, { imageURLs });
   };
 
   return (
