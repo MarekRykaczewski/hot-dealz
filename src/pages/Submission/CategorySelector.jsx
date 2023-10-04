@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getDocs, collection } from 'firebase/firestore'
-import { db } from '../../config/firebase'
+import { fetchCategories } from '../../api';
 import { useFormContext } from "react-hook-form";
 
 function CategorySelector({ handleInputChange }) {
@@ -11,20 +10,13 @@ function CategorySelector({ handleInputChange }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            let list = []
-            try {
-                const querySnapshot = await getDocs(collection(db, "itemCategories"))
-                querySnapshot.forEach((doc) => {
-                    list.push(doc.data())
-                });
-                setCategories(list)
-            } catch (err) {
-                console.log(err)
-            }
-        }
-        fetchData()
-    }, [])
-
+          const categories = await fetchCategories();
+          setCategories(categories);
+        };
+      
+        fetchData();
+      }, []);
+  
     const n = categories.length
 
     const checkboxElements = [...Array(n)].map((e, i) => 
