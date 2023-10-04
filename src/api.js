@@ -1,6 +1,6 @@
 import { ref, getDownloadURL } from "firebase/storage";
 import { storage } from './config/firebase';
-import { doc, where, addDoc, query, collection, getDoc, getDocs, deleteDoc, setDoc, writeBatch } from "firebase/firestore";
+import { doc, serverTimestamp, where, addDoc, query, collection, getDoc, getDocs, deleteDoc, setDoc, writeBatch } from "firebase/firestore";
 import { db } from "./config/firebase";
 
 export async function fetchProfileImage(userId, setProfileUrl) {
@@ -244,3 +244,32 @@ export async function checkUserLiked(postId, commentId, userId) {
     return false; // Return false in case of an error
   }
 }
+
+// Function to post comment
+export const submitComment = async (postId, newComment) => {
+  try {
+    const postCommentsCollectionRef = collection(db, 'deals', postId, 'comments');
+    const newCommentDocRef = doc(postCommentsCollectionRef);
+
+    await setDoc(newCommentDocRef, {
+      userId: newComment.userId,
+      comment: newComment.comment,
+      posted: serverTimestamp(),
+    });
+
+    // Fetch the updated comments after submitting a new comment
+    const commentsSnapshot = await getDocs(collection(db, 'deals', postId, 'comments'));
+    const updatedComments = [];
+    commentsSnapshot.forEach((commentDoc) => {
+      updatedComments.push({
+        id: commentDoc.id,
+        ...commentDoc.data(),
+      });
+    });
+
+    return updatedComments;
+  } catch (error) {
+    console.error('Error submitting comment:', error);
+    throw error;
+  }
+};
