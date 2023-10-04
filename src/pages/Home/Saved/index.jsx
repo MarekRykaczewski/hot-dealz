@@ -3,9 +3,8 @@ import CategoryCarousel from '../../../components/CategoryCarousel'
 import Tabs from '../../../components/Tabs'
 import FooterNav from '../../../components/FooterNav'
 import DealCard from '../../../components/DealCard/DealCard'
-import { db } from '../../../config/firebase'
-import { getDocs, collection, query, where, getFirestore } from "firebase/firestore";
 import { auth } from '../../../config/firebase'
+import { fetchSavedDeals } from '../../../api'
 
 function Saved({ dealsPerPage, paginate, currentPage }) {
   
@@ -18,28 +17,7 @@ function Saved({ dealsPerPage, paginate, currentPage }) {
       const fetchData = async () => {
         try {
           if (userId) {
-            const firestore = getFirestore();
-            const savedRef = collection(firestore, 'users', userId, 'saved');
-            const savedSnapshot = await getDocs(savedRef);
-            const savedDealIds = savedSnapshot.docs.map((doc) => doc.id);
-  
-            if (savedDealIds.length === 0) {
-              // No saved deals, no need to query
-              setDeals([]);
-              return;
-            }
-  
-            const dealsQuery = query(collection(firestore, 'deals'), where('__name__', 'in', savedDealIds));
-            const querySnapshot = await getDocs(dealsQuery);
-  
-            const fetchedDeals = [];
-            querySnapshot.forEach((doc) => {
-              const dealData = doc.data();
-              const commentsSnapshot = getDocs(collection(doc.ref, 'comments'));
-              const commentsCount = commentsSnapshot.size;
-              fetchedDeals.push({ id: doc.id, ...dealData, comments: commentsCount });
-            });
-  
+            const fetchedDeals = await fetchSavedDeals(userId);
             setDeals(fetchedDeals);
           }
         } catch (err) {
