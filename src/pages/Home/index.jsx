@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import DealCard from '../../components/DealCard/DealCard';
-import { db } from "../../config/firebase";
-import { getDocs, collection } from "firebase/firestore";
 import { Routes, Route, useParams } from 'react-router-dom'
 import DealDetails from './[id]/DealDetails';
 import Deals from './Deals';
 import Saved from './Saved';
+import { fetchDeals } from '../../api';
 
 function Home() {
 
@@ -18,23 +17,15 @@ function Home() {
   const [currentSorting, setCurrentSorting] = useState('default');
 
   useEffect(() => {
-    const fetchData = async () => {
+    async function fetchData() {
       try {
-        const querySnapshot = await getDocs(collection(db, 'deals'));
-        const dealList = await Promise.all(
-          querySnapshot.docs.map(async (doc) => {
-            const dealData = doc.data();
-            const commentsSnapshot = await getDocs(collection(doc.ref, 'comments'));
-            const commentsCount = commentsSnapshot.size;
-            return { id: doc.id, ...dealData, comments: commentsCount };
-          })
-        );
+        const dealList = await fetchDeals();
         setDeals(dealList);
         setLoading(false);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
-    };
+    }
     fetchData();
   }, []);
 
