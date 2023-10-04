@@ -6,17 +6,16 @@ import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs'
 import { BiCommentDetail } from 'react-icons/bi'
 // Components
 import CommentSection from '../../../components/CommentSection'
-// Firebase
-import { collection, getDoc, getDocs, doc, updateDoc } from "firebase/firestore";
-import { db } from "../../../config/firebase";
-import { auth, storage } from '../../../config/firebase'
-import { getDownloadURL, ref } from 'firebase/storage'
-// Utils
-import { sortCommentsByNewest } from '../../../utils'
-import { checkSavedDeal, toggleSaved } from '../../../api'
 import DealCardDetailed from '../../../components/DealCard/DealCardDetailed'
 import DealCardControls from '../../../components/DealCard/DealCardControls';
 import EditDealFormModal from '../../../components/DealCard/EditDealFormModal'
+// Firebase
+import { auth } from '../../../config/firebase'
+// Utils
+import { sortCommentsByNewest } from '../../../utils'
+import { checkSavedDeal, toggleSaved } from '../../../api'
+// Api
+import { fetchDealData, fetchComments, fetchProfileImageById, archiveDeal, updateDealDetails } from '../../../api'
 
 function DealDetails() {
 
@@ -31,34 +30,38 @@ function DealDetails() {
   const [isArchived, setIsArchived] = useState(archived);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
+  const fetchData = async (dealId) => {
+    const specificDeal = await fetchDealData(dealId);
+    if (specificDeal) {
+      setDeal(specificDeal);
+    } else {
+      setDeal([]);
+    }
+  };
+
+  const fetchCommentsData = async () => {
+    const commentsData = await fetchComments(dealId);
+    sortCommentsByNewest(commentsData, setComments);
+  };
+
   const handleSaveChanges = async (editedDealDetails) => {
-    try {
-      const dealRef = doc(db, "deals", dealId);
-  
-      // Update the deal details in Firebase Firestore
-      await updateDoc(dealRef, editedDealDetails);
-  
-      console.log('Deal details updated successfully.');
+    const success = await updateDealDetails(dealId, editedDealDetails);
+    if (success) {
       setIsEditModalOpen(false); // Close the modal after saving
-    } catch (error) {
-      console.error('Error updating deal details:', error);
     }
   };
 
   const handleArchiveClick = async () => {
-    try {
-      // Reference the specific deal document
-      const dealRef = doc(db, 'deals', dealId);
-
-      // Update the 'archived' status of the deal in Firebase Firestore
-      await updateDoc(dealRef, {
-        archived: !archived, // Set 'archived' to true
-      });
-
+    const success = await archiveDeal(dealId, archived);
+    if (success) {
       setIsArchived((prevIsArchived) => !prevIsArchived);
+    }
+  };
 
-    } catch (error) {
-      console.error('Error archiving deal:', error);
+  const fetchProfileImageData = async () => {
+    const imageUrl = await fetchProfileImageById(currentUserId);
+    if (imageUrl) {
+      setProfileUrl(imageUrl);
     }
   };
 
@@ -67,62 +70,9 @@ function DealDetails() {
   }
 
   const formattedDateTime = posted && formatDate(posted)
-  
-  const focusElement = () => {
-    commentInput.current && commentInput.current.focus()
-    commentInput.current.scrollIntoView({ behavior: "smooth", block: "start", inline: "start" })
-  }
-
-  const fetchData = async (dealId) => {
-    try {
-      const dealRef = doc(db, "deals", dealId);
-      const dealSnapshot = await getDoc(dealRef);
-
-      if (dealSnapshot.exists()) {
-        const dealData = dealSnapshot.data();
-        const commentsSnapshot = await getDocs(collection(dealRef, "comments"));
-        const commentsCount = commentsSnapshot.size;
-        const specificDeal = { id: dealSnapshot.id, ...dealData, comments: commentsCount };
-        setDeal(specificDeal);
-      } else {
-        setDeal([]);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const fetchComments = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, "deals", dealId, "comments"));
-  
-      const comments = await Promise.all(
-        querySnapshot.docs.map(async (doc) => {
-          const commentData = doc.data();
-          const likesSnapshot = await getDocs(collection(db, "deals", dealId, "comments", doc.id, "likes"));
-          const likes = likesSnapshot.docs.map((likeDoc) => likeDoc.data());
-          return { id: doc.id, ...commentData, likes };
-        })
-      );
-  
-      sortCommentsByNewest(comments, setComments);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const fetchProfileImage = async () => {
-    try {
-      const imageRef = ref(storage, `profileImages/${currentUserId}/image`);
-      const imageUrl = await getDownloadURL(imageRef);
-      setProfileUrl(imageUrl);
-    } catch (error) {
-      console.log('Error fetching profile image:', error);
-    }
-  };
 
   useEffect(() => {
-    fetchProfileImage();
+    fetchProfileImageData();
   }, [currentUserId]);
 
   useEffect(() => {
@@ -136,8 +86,8 @@ function DealDetails() {
   }, []);
 
   useEffect(() => {
-    fetchComments()
-  }, [])
+    fetchCommentsData();
+  }, []);
 
   useEffect(() => {
 		setIsArchived(archived)

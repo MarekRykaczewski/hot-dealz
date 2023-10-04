@@ -1,6 +1,6 @@
 import { ref, getDownloadURL } from "firebase/storage";
 import { storage } from './config/firebase';
-import { doc, serverTimestamp, where, addDoc, query, collection, getDoc, getDocs, deleteDoc, setDoc, writeBatch } from "firebase/firestore";
+import { doc, updateDoc, serverTimestamp, where, addDoc, query, collection, getDoc, getDocs, deleteDoc, setDoc, writeBatch } from "firebase/firestore";
 import { db } from "./config/firebase";
 
 export async function fetchProfileImage(userId, setProfileUrl) {
@@ -348,3 +348,86 @@ export async function fetchSavedDeals(userId) {
     return [];
   }
 }
+
+export const fetchDealData = async (dealId) => {
+  try {
+    const dealRef = doc(db, "deals", dealId);
+    const dealSnapshot = await getDoc(dealRef);
+
+    if (dealSnapshot.exists()) {
+      const dealData = dealSnapshot.data();
+      const commentsSnapshot = await getDocs(collection(dealRef, "comments"));
+      const commentsCount = commentsSnapshot.size;
+      return { id: dealSnapshot.id, ...dealData, comments: commentsCount };
+    } else {
+      return null;
+    }
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+// Fetch deal comments
+
+export const fetchComments = async (dealId) => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "deals", dealId, "comments"));
+
+    const comments = await Promise.all(
+      querySnapshot.docs.map(async (doc) => {
+        const commentData = doc.data();
+        const likesSnapshot = await getDocs(collection(db, "deals", dealId, "comments", doc.id, "likes"));
+        const likes = likesSnapshot.docs.map((likeDoc) => likeDoc.data());
+        return { id: doc.id, ...commentData, likes };
+      })
+    );
+
+    return comments;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+// Fetch profile image
+
+export const fetchProfileImageById = async (currentUserId) => {
+  try {
+    const imageRef = ref(storage, `profileImages/${currentUserId}/image`);
+    const imageUrl = await getDownloadURL(imageRef);
+    return imageUrl;
+  } catch (error) {
+    console.log('Error fetching profile image:', error);
+    return null;
+  }
+};
+
+// Update deal details
+
+export const updateDealDetails = async (dealId, editedDealDetails) => {
+  try {
+    const dealRef = doc(db, "deals", dealId);
+    await updateDoc(dealRef, editedDealDetails);
+    console.log('Deal details updated successfully.');
+    return true;
+  } catch (error) {
+    console.error('Error updating deal details:', error);
+    return false;
+  }
+};
+
+// Set deal to archived
+
+export const archiveDeal = async (dealId, archived) => {
+  try {
+    const dealRef = doc(db, 'deals', dealId);
+    await updateDoc(dealRef, {
+      archived: !archived, // Set 'archived' to true
+    });
+    return true;
+  } catch (error) {
+    console.error('Error archiving deal:', error);
+    return false;
+  }
+};
