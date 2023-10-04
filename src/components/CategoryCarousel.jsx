@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
-import { db } from "../config/firebase";
-import { getDocs, collection } from "firebase/firestore";
 import { Link } from 'react-router-dom';
+import { fetchCategories } from '../api';
 
 function CategoryCarousel() {
 
@@ -12,22 +11,14 @@ function CategoryCarousel() {
 
     const scroll = (scrollOffset) => { ref.current.scrollLeft += scrollOffset }
     
-    const fetchData = async () => {
-        let list = [];
-        try {
-          const querySnapshot = await getDocs(collection(db, "itemCategories"));
-          querySnapshot.forEach((doc) => {
-            list.push(doc.data());
-          });
-          setCategories(list);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-
-      useEffect(() => {
-        fetchData();
-      }, []);
+    useEffect(() => {
+      const fetchData = async () => {
+        const categories = await fetchCategories();
+        setCategories(categories);
+      };
+    
+      fetchData();
+    }, []);
 
       const items = categories.map((item) => (
         <Link

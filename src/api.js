@@ -153,3 +153,14 @@ export async function fetchSearchResults(searchQuery) {
     return [];
   }
 }
+
+export async function fetchCategories() {
+  try {
+    const querySnapshot = await getDocs(collection(db, 'itemCategories'));
+    const categories = querySnapshot.docs.map((doc) => doc.data());
+    return categories;
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return [];
+  }
+}
