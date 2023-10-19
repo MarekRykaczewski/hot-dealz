@@ -1,41 +1,66 @@
-import React from 'react';
-import Modal from '../Modal';
-import { useForm, Controller } from 'react-hook-form';
+import React from "react";
+import Modal from "../Modal";
+import { useForm, Controller } from "react-hook-form";
 
-const EditDealFormModal = ({
+interface EditDealFormModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  initialTitle?: string;
+  initialPrice?: string;
+  initialNextBestPrice?: string;
+  initialShippingCost?: string;
+  initialDealLink?: string;
+  initialVoucherCode?: string;
+  onSave: (data: FormData) => void;
+}
+
+interface FormData {
+  [key: string]: string;
+  title: string;
+  price: string;
+  nextBestPrice: string;
+  shippingCost: string;
+  dealLink: string;
+  voucherCode: string;
+}
+
+const EditDealFormModal: React.FC<EditDealFormModalProps> = ({
   isOpen,
   onClose,
-  initialTitle,
-  initialPrice,
-  initialNextBestPrice,
-  initialShippingCost,
-  initialDealLink,
-  initialVoucherCode,
+  initialTitle = "",
+  initialPrice = "",
+  initialNextBestPrice = "",
+  initialShippingCost = "",
+  initialDealLink = "",
+  initialVoucherCode = "",
   onSave,
-}) => {
-  const { handleSubmit, control, formState: { errors } } = useForm({
+}: EditDealFormModalProps) => {
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormData>({
     defaultValues: {
-      title: initialTitle || '',
-      price: initialPrice || '',
-      nextBestPrice: initialNextBestPrice || '',
-      shippingCost: initialShippingCost || '',
-      dealLink: initialDealLink || '',
-      voucherCode: initialVoucherCode || '',
+      title: initialTitle,
+      price: initialPrice,
+      nextBestPrice: initialNextBestPrice,
+      shippingCost: initialShippingCost,
+      dealLink: initialDealLink,
+      voucherCode: initialVoucherCode,
     },
   });
 
-
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormData) => {
     // Filter out fields with empty values before calling onSave
-    const filteredData = Object.keys(data).reduce((acc, key) => {
-      if (data[key] !== '') {
+    const filteredData: FormData = Object.keys(data).reduce((acc, key) => {
+      if (data[key] !== "") {
         acc[key] = data[key];
       }
       return acc;
-    }, {});
+    }, {} as FormData);
 
     if (Object.keys(filteredData).length > 0) {
-      await onSave(filteredData);
+      onSave(filteredData);
       onClose();
       window.location.reload();
     } else {
@@ -46,10 +71,15 @@ const EditDealFormModal = ({
 
   return (
     <Modal open={isOpen} onClose={onClose}>
-      <div className="text-gray-900 font-bold text-3xl mb-2">Edit Deal Details</div>
+      <div className="text-gray-900 font-bold text-3xl mb-2">
+        Edit Deal Details
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700"
+          >
             Title (at most 100 characters)
           </label>
           <Controller
@@ -58,7 +88,7 @@ const EditDealFormModal = ({
             rules={{
               maxLength: {
                 value: 100,
-                message: 'Title must be at most 100 characters',
+                message: "Title must be at most 100 characters",
               },
             }}
             render={({ field }) => (
@@ -68,11 +98,13 @@ const EditDealFormModal = ({
                   id="title"
                   {...field}
                   className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500 ${
-                    errors.title ? 'border-red-500' : ''
+                    errors.title ? "border-red-500" : ""
                   }`}
                 />
                 {errors.title && (
-                  <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.title.message}
+                  </p>
                 )}
               </>
             )}
@@ -80,7 +112,10 @@ const EditDealFormModal = ({
         </div>
 
         <div className="mb-4">
-          <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="price"
+            className="block text-sm font-medium text-gray-700"
+          >
             Price (must be a valid number)
           </label>
           <Controller
@@ -89,7 +124,9 @@ const EditDealFormModal = ({
             rules={{
               validate: (value) => {
                 if (!value) return true; // Allow empty value
-                return !isNaN(parseFloat(value)) || 'Price must be a valid number';
+                return (
+                  !isNaN(parseFloat(value)) || "Price must be a valid number"
+                );
               },
             }}
             render={({ field }) => (
@@ -99,11 +136,13 @@ const EditDealFormModal = ({
                   id="price"
                   {...field}
                   className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500 ${
-                    errors.price ? 'border-red-500' : ''
+                    errors.price ? "border-red-500" : ""
                   }`}
                 />
                 {errors.price && (
-                  <p className="text-red-500 text-xs mt-1">{errors.price.message}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.price.message}
+                  </p>
                 )}
               </>
             )}
@@ -111,7 +150,10 @@ const EditDealFormModal = ({
         </div>
 
         <div className="mb-4">
-          <label htmlFor="nextBestPrice" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="nextBestPrice"
+            className="block text-sm font-medium text-gray-700"
+          >
             Next Best Price (optional)
           </label>
           <Controller
@@ -120,7 +162,10 @@ const EditDealFormModal = ({
             rules={{
               validate: (value) => {
                 if (!value) return true; // Allow empty value
-                return !isNaN(parseFloat(value)) || 'Next Best Price must be a valid number';
+                return (
+                  !isNaN(parseFloat(value)) ||
+                  "Next Best Price must be a valid number"
+                );
               },
             }}
             render={({ field }) => (
@@ -130,11 +175,13 @@ const EditDealFormModal = ({
                   id="nextBestPrice"
                   {...field}
                   className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500 ${
-                    errors.nextBestPrice ? 'border-red-500' : ''
+                    errors.nextBestPrice ? "border-red-500" : ""
                   }`}
                 />
                 {errors.nextBestPrice && (
-                  <p className="text-red-500 text-xs mt-1">{errors.nextBestPrice.message}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.nextBestPrice.message}
+                  </p>
                 )}
               </>
             )}
@@ -142,7 +189,10 @@ const EditDealFormModal = ({
         </div>
 
         <div className="mb-4">
-          <label htmlFor="shippingCost" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="shippingCost"
+            className="block text-sm font-medium text-gray-700"
+          >
             Shipping Cost (optional)
           </label>
           <Controller
@@ -151,7 +201,10 @@ const EditDealFormModal = ({
             rules={{
               validate: (value) => {
                 if (!value) return true; // Allow empty value
-                return !isNaN(parseFloat(value)) || 'Shipping Cost must be a valid number';
+                return (
+                  !isNaN(parseFloat(value)) ||
+                  "Shipping Cost must be a valid number"
+                );
               },
             }}
             render={({ field }) => (
@@ -161,11 +214,13 @@ const EditDealFormModal = ({
                   id="shippingCost"
                   {...field}
                   className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500 ${
-                    errors.shippingCost ? 'border-red-500' : ''
+                    errors.shippingCost ? "border-red-500" : ""
                   }`}
                 />
                 {errors.shippingCost && (
-                  <p className="text-red-500 text-xs mt-1">{errors.shippingCost.message}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.shippingCost.message}
+                  </p>
                 )}
               </>
             )}
@@ -173,7 +228,10 @@ const EditDealFormModal = ({
         </div>
 
         <div className="mb-4">
-          <label htmlFor="dealLink" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="dealLink"
+            className="block text-sm font-medium text-gray-700"
+          >
             Deal Link (optional)
           </label>
           <Controller
@@ -191,7 +249,10 @@ const EditDealFormModal = ({
         </div>
 
         <div className="mb-4">
-          <label htmlFor="voucherCode" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="voucherCode"
+            className="block text-sm font-medium text-gray-700"
+          >
             Voucher Code (optional)
           </label>
           <Controller
