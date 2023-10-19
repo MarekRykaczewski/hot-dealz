@@ -1,28 +1,47 @@
-import React, { useState } from 'react';
-import { UserAuth } from '../context/AuthContext';
-import Comment from './Comment';
-import { sortCommentsByLikes, sortCommentsByNewest } from '../utils';
-import { submitComment } from '../api';
+import React, { useState, ChangeEvent, RefObject } from "react";
+import { UserAuth } from "../context/AuthContext";
+import Comment from "./Comment";
+import { sortCommentsByLikes, sortCommentsByNewest } from "../utils";
+import { submitComment } from "../api";
 
-function CommentSection({ postId, comments, setComments, commentInput }) {
+interface CommentData {
+  id: string;
+  userId: string;
+  comment: string;
+  posted: { seconds: number };
+}
+
+interface CommentSectionProps {
+  postId: string;
+  comments: CommentData[];
+  setComments: React.Dispatch<React.SetStateAction<CommentData[]>>;
+  commentInput: RefObject<HTMLTextAreaElement>;
+}
+
+function CommentSection({
+  postId,
+  comments,
+  setComments,
+  commentInput,
+}: CommentSectionProps) {
   const { user, userData } = UserAuth();
 
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState<string>("");
 
-  const formatDate = (date) => {
+  const formatDate = (date: { seconds: number }) => {
     return new Date(date.seconds * 1000).toLocaleString();
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
 
-  const handleCommentSort = (event) => {
+  const handleCommentSort = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedSort = event.target.value;
 
-    if (selectedSort === 'Newest first') {
+    if (selectedSort === "Newest first") {
       sortCommentsByNewest(comments, setComments);
-    } else if (selectedSort === 'Most liked') {
+    } else if (selectedSort === "Most liked") {
       sortCommentsByLikes(comments, setComments);
     }
   };
@@ -41,19 +60,19 @@ function CommentSection({ postId, comments, setComments, commentInput }) {
   });
 
   const handleSubmitComment = async () => {
-    if (comment.trim() === '') {
+    if (comment.trim() === "") {
       return;
     }
 
     const newComment = {
-      userId: user.uid,
+      userId: user?.uid,
       comment: comment,
     };
 
     const updatedComments = await submitComment(postId, newComment);
 
     setComments(updatedComments);
-    setComment('');
+    setComment("");
   };
 
   return (
@@ -62,7 +81,7 @@ function CommentSection({ postId, comments, setComments, commentInput }) {
         <div className="flex start gap-3">
           <span className="text-xl">{commentElements.length} Comments</span>
           <label htmlFor="commentSort" className="text-xl">
-            Sorting:{' '}
+            Sorting:{" "}
           </label>
           <select onChange={handleCommentSort} name="commentSort">
             <option value="Newest first">Newest first</option>
@@ -78,9 +97,8 @@ function CommentSection({ postId, comments, setComments, commentInput }) {
           <textarea
             ref={commentInput}
             onChange={(e) => handleInputChange(e)}
-            maxLength="350"
+            maxLength={350}
             className="p-4 resize-none w-full h-48 border border-gray-300 rounded-md"
-            type="textarea"
             placeholder="What do you think?"
             name="comment"
             value={comment}
