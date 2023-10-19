@@ -1,12 +1,17 @@
-import React from 'react';
+import React from "react";
 
-function Tabs({ currentSorting, setCurrentSorting }) {
+interface TabsProps {
+  currentSorting: "newest" | "comments";
+  setCurrentSorting: (sorting: "newest" | "comments") => void;
+}
+
+const Tabs: React.FC<TabsProps> = ({ currentSorting, setCurrentSorting }) => {
   const handleSortByNewest = () => {
-    setCurrentSorting('newest');
+    setCurrentSorting("newest");
   };
 
   const handleSortByComments = () => {
-    setCurrentSorting('comments');
+    setCurrentSorting("comments");
   };
 
   return (
@@ -14,7 +19,7 @@ function Tabs({ currentSorting, setCurrentSorting }) {
       <div className="flex justify-start gap-3 max-w-[80em] ml-auto mr-auto">
         <button
           className={`text-lg text-slate-800 font-bold p-2 hover:text-orange-600 transition ${
-            currentSorting === 'newest' && 'text-orange-600'
+            currentSorting === "newest" && "text-orange-600"
           }`}
           onClick={handleSortByNewest}
         >
@@ -22,7 +27,7 @@ function Tabs({ currentSorting, setCurrentSorting }) {
         </button>
         <button
           className={`text-lg text-slate-800 font-bold p-2 hover:text-orange-600 transition ${
-            currentSorting === 'comments' && 'text-orange-600'
+            currentSorting === "comments" && "text-orange-600"
           }`}
           onClick={handleSortByComments}
         >
@@ -31,6 +36,6 @@ function Tabs({ currentSorting, setCurrentSorting }) {
       </div>
     </div>
   );
-}
+};
 
 export default Tabs;
