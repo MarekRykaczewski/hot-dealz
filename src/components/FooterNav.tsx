@@ -1,8 +1,23 @@
-import React, { useState } from 'react';
-import { AiFillFacebook, AiFillYoutube, AiFillTwitterCircle, AiFillInstagram } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import {
+  AiFillFacebook,
+  AiFillYoutube,
+  AiFillTwitterCircle,
+  AiFillInstagram,
+} from "react-icons/ai";
+import { Link } from "react-router-dom";
 
-function FooterNav({ paginate, currentPage, totalPages }) {
+type FooterNavProps = {
+  paginate: (page: number) => void,
+  currentPage: number,
+  totalPages: number,
+};
+
+const FooterNav: React.FC<FooterNavProps> = ({
+  paginate,
+  currentPage,
+  totalPages,
+}) => {
   const [showFooter, setShowFooter] = useState(false);
 
   const toggleFooter = () => {
@@ -12,7 +27,10 @@ function FooterNav({ paginate, currentPage, totalPages }) {
   return (
     <div className="sticky item mt-auto bottom-0 w-full bg-white border-t-2 border-gray-300">
       <div className="flex text-lg font-semibold text-slate-600 items-center justify-between py-4 px-8">
-        <button className="hover:text-orange-500 transition" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        <button
+          className="hover:text-orange-500 transition"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
           Go to top
         </button>
         <div>
@@ -66,19 +84,19 @@ function FooterNav({ paginate, currentPage, totalPages }) {
             </ul>
           </nav>
         </div>
-        <button onClick={toggleFooter}>
-          {showFooter ? 'Hide' : 'Show'}
-        </button>
+        <button onClick={toggleFooter}>{showFooter ? "Hide" : "Show"}</button>
       </div>
       {showFooter && (
         <div className="flex flex-col items-center p-4 text-white bg-slate-700">
           <div className="mb-4">
-            <h1 className="text-xl font-bold">👋 Hey, welcome to the newest online shopping social media!</h1>
+            <h1 className="text-xl font-bold">
+              👋 Hey, welcome to the newest online shopping social media!
+            </h1>
             <p>Join now to share your expertise, tips, and advice</p>
           </div>
           <div className="flex flex-row font-bold justify-start gap-5">
             <div>
-              <Link to={'/'}>About</Link>
+              <Link to={"/"}>About</Link>
             </div>
             <div>
               <button>Contact us</button>
@@ -106,6 +124,6 @@ function FooterNav({ paginate, currentPage, totalPages }) {
       )}
     </div>
   );
-}
+};
 
 export default FooterNav;
