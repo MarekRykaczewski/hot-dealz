@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { FiThumbsUp } from 'react-icons/fi';
+import { useEffect, useState } from "react";
+import { FiThumbsUp } from "react-icons/fi";
 import {
   getProfileUrlFromUserId,
   getUsernameFromComment,
   toggleCommentLike,
   fetchCommentLikeCount,
   checkUserLiked,
-} from '../api';
+} from "../api";
 
-function Comment({ userId, postId, commentId, comment, date }) {
-  const [username, setUsername] = useState();
-  const [profileUrl, setProfileUrl] = useState();
-  const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(0);
+interface CommentProps {
+  userId: string;
+  postId: string;
+  commentId: string;
+  comment: string;
+  date: string;
+}
+
+function Comment({ userId, postId, commentId, comment, date }: CommentProps) {
+  const [username, setUsername] = useState<string | null>(null);
+  const [profileUrl, setProfileUrl] = useState<string | null>(null);
+  const [liked, setLiked] = useState<boolean>(false);
+  const [likes, setLikes] = useState<number>(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -30,7 +38,7 @@ function Comment({ userId, postId, commentId, comment, date }) {
         const userHasLiked = await checkUserLiked(postId, commentId, userId);
         setLiked(userHasLiked);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     }
 
@@ -54,7 +62,7 @@ function Comment({ userId, postId, commentId, comment, date }) {
       }
     } catch (error) {
       // Handle any errors that occurred
-      console.error('Error toggling comment like:', error);
+      console.error("Error toggling comment like:", error);
     }
   };
 
@@ -63,29 +71,37 @@ function Comment({ userId, postId, commentId, comment, date }) {
       <div className="flex flex-col p-6">
         <div className="flex mb-3 justify-between">
           <div className="flex">
-            <img
-              className="self-start w-10 h-10 rounded-full mr-4"
-              src={profileUrl}
-              alt="Avatar of Jonathan Reinink"
-            />
+            {profileUrl && (
+              <img
+                className="self-start w-10 h-10 rounded-full mr-4"
+                src={profileUrl}
+                alt={`Avatar of ${username || "Anonymous"}`}
+              />
+            )}
             <div className="flex flex-col">
-              <span>{username}</span>
+              <span>{username || "Anonymous"}</span>
               <span>{date}</span>
             </div>
           </div>
           <div>
             <button
               onClick={handleToggleCommentLike}
-              className={`hover:text-orange-500 ${liked && 'text-orange-500 font-bold'} cursor-pointer transition flex flex-row-reverse gap-2 items-center`}
+              className={`hover:text-orange-500 ${
+                liked && "text-orange-500 font-bold"
+              } cursor-pointer transition flex flex-row-reverse gap-2 items-center`}
             >
-              <div> {liked ? 'Liked' : 'Like'}</div>
-              <FiThumbsUp color={liked ? 'orange' : 'gray'} />
+              <div> {liked ? "Liked" : "Like"}</div>
+              <FiThumbsUp color={liked ? "orange" : "gray"} />
             </button>
           </div>
         </div>
-        <div className="flex flex-col">{comment}
-          <div className={`mt-5 ${likes > 0 && 'border-t'} text-sm text-gray-500`}>
-            {likes > 0 && `${likes} User${likes > 1 ? 's' : ''} have liked this`}
+        <div className="flex flex-col">
+          {comment}
+          <div
+            className={`mt-5 ${likes > 0 && "border-t"} text-sm text-gray-500`}
+          >
+            {likes > 0 &&
+              `${likes} User${likes > 1 ? "s" : ""} have liked this`}
           </div>
         </div>
       </div>
