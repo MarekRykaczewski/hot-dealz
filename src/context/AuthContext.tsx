@@ -19,7 +19,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { storage } from "../config/firebase";
 import { getDownloadURL, ref } from "firebase/storage";
 
-interface UserData {
+export interface UserData {
   profileUrl: string | undefined;
   username: string;
   saved?: string[];
