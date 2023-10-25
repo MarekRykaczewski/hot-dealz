@@ -11,9 +11,9 @@ interface DealCardDetailedProps {
   imageURLs: string[];
   posted: string;
   title: string;
-  price: string;
-  nextBestPrice: string;
-  shippingCost: string;
+  price: number;
+  nextBestPrice: number;
+  shippingCost: number;
   dealLink: string;
   profileUrl: string;
   owner: string;

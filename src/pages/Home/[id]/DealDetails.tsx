@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { BiCommentDetail } from "react-icons/bi";
@@ -16,11 +16,12 @@ import {
   archiveDeal,
   updateDealDetails,
 } from "../../../api";
+import { Deal } from "../../../types";
 
 function DealDetails() {
   const currentUserId = auth.currentUser?.uid;
   const [hasSaved, setHasSaved] = useState(false);
-  const [deal, setDeal] = useState<any>([]);
+  const [deal, setDeal] = useState<Deal>([]);
   const {
     title,
     imageURLs,

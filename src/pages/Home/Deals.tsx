@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import CategoryCarousel from "../../components/CategoryCarousel";
 import Tabs from "../../components/Tabs";
 import FooterNav from "../../components/FooterNav";
-import { Deal } from "./index";
+import { Deal } from "../../types";
 
 interface DealsProps {
   deals: Deal[];

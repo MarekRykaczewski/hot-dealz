@@ -5,26 +5,7 @@ import DealDetails from "./[id]/DealDetails";
 import Deals from "./Deals";
 import Saved from "./Saved";
 import { fetchDeals } from "../../api";
-
-export interface Deal {
-  id: string;
-  title: string;
-  dealLink: string;
-  owner: string;
-  price: number;
-  nextBestPrice: number;
-  description: string;
-  posted: {
-    seconds: number;
-  };
-  userId: string;
-  comments: number;
-  shippingCost: number;
-  imageURLs: string[];
-  archived: boolean;
-  category: string;
-  voucherCode: string;
-}
+import { Deal } from "../../types";
 
 function Home() {
   const [deals, setDeals] = useState<Deal[]>([]);

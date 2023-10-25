@@ -5,7 +5,7 @@ import FooterNav from "../../../components/FooterNav";
 import DealCard from "../../../components/DealCard/DealCard";
 import { auth } from "../../../config/firebase";
 import { fetchSavedDeals } from "../../../api";
-import { Deal } from "..";
+import { Deal } from "../../../types";
 
 interface SavedProps {
   paginate: (pageNumber: number) => void;
