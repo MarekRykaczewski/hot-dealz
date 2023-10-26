@@ -64,7 +64,7 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
                 {posted && <span> {posted} </span>}
               </div>
             </div>
-            <DealCardVotes postId={dealId} />
+            <DealCardVotes postId={dealId} archived={isArchived} />
           </div>
           <div className="text-gray-900 font-bold text-3xl mb-2">{title}</div>
           <div className="flex gap-3 items-center w-full">
