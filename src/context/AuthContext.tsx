@@ -20,8 +20,8 @@ import { storage } from "../config/firebase";
 import { getDownloadURL, ref } from "firebase/storage";
 
 export interface UserData {
-  profileUrl: string | undefined;
-  username: string;
+  profileUrl?: string;
+  username?: string;
   saved?: string[];
 }
 
@@ -44,13 +44,14 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
   const [user, setUser] = useState<FirebaseUser | null>(null);
-  const [userData, setUserData] = useState<UserData>({});
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   const createUser = (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const deleteUserAccount = async () => {
+    if (!auth.currentUser) return;
     try {
       // Delete the user's account
       await deleteUser(auth.currentUser);
