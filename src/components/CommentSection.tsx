@@ -4,7 +4,7 @@ import Comment from "./Comment";
 import { sortCommentsByLikes, sortCommentsByNewest } from "../utils";
 import { submitComment } from "../api";
 
-interface CommentData {
+interface Comment {
   id: string;
   userId: string;
   comment: string;
@@ -13,8 +13,8 @@ interface CommentData {
 
 interface CommentSectionProps {
   postId: string;
-  comments: CommentData[];
-  setComments: React.Dispatch<React.SetStateAction<CommentData[]>>;
+  comments: Comment[];
+  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
   commentInput: RefObject<HTMLTextAreaElement>;
 }
 
