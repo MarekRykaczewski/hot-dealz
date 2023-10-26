@@ -8,7 +8,7 @@ import {
   checkUserLiked,
 } from "../api";
 
-interface CommentProps {
+interface CommentCardProps {
   userId: string;
   postId: string;
   commentId: string;
@@ -16,7 +16,13 @@ interface CommentProps {
   date: string;
 }
 
-function Comment({ userId, postId, commentId, comment, date }: CommentProps) {
+function CommentCard({
+  userId,
+  postId,
+  commentId,
+  comment,
+  date,
+}: CommentCardProps) {
   const [username, setUsername] = useState<string | null>(null);
   const [profileUrl, setProfileUrl] = useState<string | null>(null);
   const [liked, setLiked] = useState<boolean>(false);
@@ -109,4 +115,4 @@ function Comment({ userId, postId, commentId, comment, date }: CommentProps) {
   );
 }
 
-export default Comment;
+export default CommentCard;

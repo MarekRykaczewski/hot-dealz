@@ -18,6 +18,13 @@ export type Deal = {
   voucherCode: string;
 };
 
+export type Comment = {
+  id: string;
+  userId: string;
+  comment: string;
+  posted: { seconds: number };
+};
+
 export type FormDetails = {
   dealLink: string;
   images: File[];

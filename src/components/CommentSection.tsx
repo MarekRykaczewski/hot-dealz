@@ -1,15 +1,9 @@
 import React, { useState, ChangeEvent, RefObject } from "react";
 import { UserAuth } from "../context/AuthContext";
-import Comment from "./Comment";
+import CommentCard from "./CommentCard";
 import { sortCommentsByLikes, sortCommentsByNewest } from "../utils";
 import { submitComment } from "../api";
-
-interface Comment {
-  id: string;
-  userId: string;
-  comment: string;
-  posted: { seconds: number };
-}
+import { Comment } from "../types";
 
 interface CommentSectionProps {
   postId: string;
@@ -48,7 +42,7 @@ function CommentSection({
 
   const commentElements = comments.map((comment) => {
     return (
-      <Comment
+      <CommentCard
         key={comment.id}
         commentId={comment.id}
         userId={comment.userId}
