@@ -23,6 +23,7 @@ export type Comment = {
   userId: string;
   comment: string;
   posted: { seconds: number };
+  likes?: string[] | undefined;
 };
 
 export type FormDetails = {
