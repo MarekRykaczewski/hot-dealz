@@ -1,5 +1,5 @@
+import { doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
-import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { UserAuth } from "../../../context/AuthContext";
 

@@ -1,6 +1,6 @@
 import React from "react";
-import CategorySelector from "./CategorySelector";
 import { FormDetails } from "../../types";
+import CategorySelector from "./CategorySelector";
 
 interface FormFinalDetailsProps {
   formDetails: FormDetails;

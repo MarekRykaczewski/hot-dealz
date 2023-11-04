@@ -1,9 +1,9 @@
-import React, { useState, ChangeEvent, RefObject } from "react";
+import React, { ChangeEvent, RefObject, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
-import CommentCard from "./CommentCard";
-import { sortCommentsByLikes, sortCommentsByNewest } from "../utils";
-import { submitComment } from "../api/api";
 import { Comment } from "../types";
+import { sortCommentsByLikes, sortCommentsByNewest } from "../utils";
+import CommentCard from "./CommentCard";
+import { submitComment } from "../api/firebase/comments";
 
 interface CommentSectionProps {
   postId: string;

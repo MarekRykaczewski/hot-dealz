@@ -1,5 +1,5 @@
-import { useState, FormEvent } from "react";
 import { updateEmail } from "firebase/auth";
+import { FormEvent, useState } from "react";
 import { UserAuth } from "../../../context/AuthContext";
 
 function ProfileEmail() {

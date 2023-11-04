@@ -1,6 +1,6 @@
 import React from "react";
-import { AiOutlineLink } from "react-icons/ai";
 import { useFormContext } from "react-hook-form";
+import { AiOutlineLink } from "react-icons/ai";
 import { FormDetails } from "./index";
 
 interface FormDealLinkProps {

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
+import { Route, Routes, useParams } from "react-router-dom";
+import { fetchDeals } from "../../api/firebase/deals";
 import DealCard from "../../components/DealCard/DealCard";
-import { Routes, Route, useParams } from "react-router-dom";
-import DealDetails from "./[id]/DealDetails";
+import { Deal } from "../../types";
 import Deals from "./Deals";
 import Saved from "./Saved";
-import { fetchDeals } from "../../api/api";
-import { Deal } from "../../types";
+import DealDetails from "./[id]/DealDetails";
 
 function Home() {
   const [deals, setDeals] = useState<Deal[]>([]);

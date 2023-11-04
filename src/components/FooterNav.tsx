@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import {
   AiFillFacebook,
-  AiFillYoutube,
-  AiFillTwitterCircle,
   AiFillInstagram,
+  AiFillTwitterCircle,
+  AiFillYoutube,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 type FooterNavProps = {
-  paginate: (page: number) => void,
-  currentPage: number,
-  totalPages: number,
+  paginate: (page: number) => void;
+  currentPage: number;
+  totalPages: number;
 };
 
 const FooterNav: React.FC<FooterNavProps> = ({

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import ImageSlider from "../ImageSlider";
-import DealCardVotes from "./DealCardVotes";
+import { BiCopyAlt } from "react-icons/bi";
 import { FiExternalLink } from "react-icons/fi";
 import { MdOutlineLocalShipping } from "react-icons/md";
-import { BiCopyAlt } from "react-icons/bi";
+import ImageSlider from "../ImageSlider";
+import DealCardVotes from "./DealCardVotes";
 
 interface DealCardDetailedProps {
   dealId: string;

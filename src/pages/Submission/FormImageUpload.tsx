@@ -1,6 +1,6 @@
 import React from "react";
-import ImagesUpload from "./ImagesUpload";
 import { FormDetails } from "../../types";
+import ImagesUpload from "./ImagesUpload";
 
 interface FormImageUploadProps {
   formDetails: FormDetails;

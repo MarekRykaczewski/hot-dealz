@@ -1,10 +1,10 @@
-import { useEffect, useState, ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
+import { fetchSavedDeals } from "../../../api/firebase/deals";
 import CategoryCarousel from "../../../components/CategoryCarousel";
-import Tabs from "../../../components/Tabs";
-import FooterNav from "../../../components/FooterNav";
 import DealCard from "../../../components/DealCard/DealCard";
+import FooterNav from "../../../components/FooterNav";
+import Tabs from "../../../components/Tabs";
 import { auth } from "../../../config/firebase";
-import { fetchSavedDeals } from "../../../api/api";
 import { Deal } from "../../../types";
 
 interface SavedProps {

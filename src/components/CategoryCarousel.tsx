@@ -1,7 +1,7 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { fetchCategories } from "../api/api";
+import { fetchCategories } from "../api/firebase/firestore";
 
 interface Category {
   title: string;

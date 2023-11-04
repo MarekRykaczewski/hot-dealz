@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import Nav from "./components/Nav/Nav";
-import Home from "./pages/Home";
 import { AuthContextProvider } from "./context/AuthContext";
-import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Settings/Profile";
 import Submission from "./pages/Submission";
@@ -12,7 +12,7 @@ function App() {
 
   const toggleNavAccountMenu = () => {
     setOpenNavAccountMenu(!openNavAccountMenu);
-  }
+  };
 
   return (
     <div>
@@ -22,10 +22,10 @@ function App() {
           toggleNavAccountMenu={toggleNavAccountMenu}
         />
         <Routes>
-          <Route path='*' element={<Home />} />
-          <Route path='/submission' element={<Submission />} />
-          <Route path='/settings' element={<Settings />}>
-            <Route path='/settings/profile' element={<Profile />} />
+          <Route path="*" element={<Home />} />
+          <Route path="/submission" element={<Submission />} />
+          <Route path="/settings" element={<Settings />}>
+            <Route path="/settings/profile" element={<Profile />} />
           </Route>
         </Routes>
       </AuthContextProvider>

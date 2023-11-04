@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { UserAuth } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "../../context/AuthContext";
 
 interface NavAccountMenuProps {
   openNavAccountMenu: boolean;

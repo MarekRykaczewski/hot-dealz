@@ -1,12 +1,11 @@
-import { useRef, useState, FunctionComponent } from "react";
-import { AiOutlinePlusCircle } from "react-icons/ai";
-import { AiFillFire } from "react-icons/ai";
+import { FunctionComponent, useRef, useState } from "react";
+import { AiFillFire, AiOutlinePlusCircle } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import { UserAuth, User } from "../../context/AuthContext";
+import { User, UserAuth } from "../../context/AuthContext";
+import AuthModal from "../Auth/AuthModal";
 import NavAccountMenu from "./NavAccountMenu";
 import NavSearchBar from "./NavSearchBar";
-import AuthModal from "../Auth/AuthModal";
 
 interface NavProps {
   openNavAccountMenu: boolean;

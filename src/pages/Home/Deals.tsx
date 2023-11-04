@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import CategoryCarousel from "../../components/CategoryCarousel";
-import Tabs from "../../components/Tabs";
 import FooterNav from "../../components/FooterNav";
+import Tabs from "../../components/Tabs";
 import { Deal } from "../../types";
 
 interface DealsProps {

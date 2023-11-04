@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 * {
-    font-family: 'Space Grotesk';
+  font-family: "Space Grotesk";
 }
 
 html {
-    background-color: rgb(215, 220, 225);
+  background-color: rgb(215, 220, 225);
 }

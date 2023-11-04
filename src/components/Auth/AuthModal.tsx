@@ -1,8 +1,8 @@
+import { doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { db } from "../../config/firebase";
 import { UserAuth } from "../../context/AuthContext";
 import Modal from "../Modal";
-import { setDoc, doc } from "firebase/firestore";
-import { db } from "../../config/firebase";
 
 interface AuthModalProps {
   open: boolean;

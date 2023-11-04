@@ -1,9 +1,9 @@
-import React, { useState, ChangeEvent } from "react";
-import ProfileUsername from "./ProfileUsername";
+import { ChangeEvent, useState } from "react";
+import ProfileConfirmDeleteModal from "./ProfileConfirmDeleteModal";
 import ProfileEmail from "./ProfileEmail";
 import ProfilePassword from "./ProfilePassword";
-import ProfileConfirmDeleteModal from "./ProfileConfirmDeleteModal";
 import ProfileUploadImage from "./ProfileUploadImage";
+import ProfileUsername from "./ProfileUsername";
 
 function Profile() {
   const [profilePicture, setProfilePicture] = useState<File | null>(null);

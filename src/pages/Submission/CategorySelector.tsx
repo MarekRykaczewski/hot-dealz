@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchCategories } from "../../api/api";
 import { useFormContext } from "react-hook-form";
+import { fetchCategories } from "../../api/firebase/firestore";
 
 function CategorySelector({ handleInputChange }) {
   const [categories, setCategories] = useState([]);

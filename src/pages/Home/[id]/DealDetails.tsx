@@ -1,23 +1,23 @@
-import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
+import { useEffect, useRef, useState } from "react";
 import { BiCommentDetail } from "react-icons/bi";
-import CommentSection from "../../../components/CommentSection";
-import DealCardDetailed from "../../../components/DealCard/DealCardDetailed";
-import DealCardControls from "../../../components/DealCard/DealCardControls";
-import EditDealFormModal from "../../../components/DealCard/EditDealFormModal";
-import { auth } from "../../../config/firebase";
-import { sortCommentsByNewest } from "../../../utils";
+import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
+import { useParams } from "react-router-dom";
+
+import { fetchComments, fetchDealData } from "../../../api/firebase/deals";
 import {
-  fetchDealData,
-  fetchComments,
-  fetchProfileImageById,
   archiveDeal,
-  updateDealDetails,
   checkSavedDeal,
   toggleSaved,
-} from "../../../api/api";
+  updateDealDetails,
+} from "../../../api/firebase/firestore";
+import { fetchProfileImageById } from "../../../api/firebase/users";
+import CommentSection from "../../../components/CommentSection";
+import DealCardControls from "../../../components/DealCard/DealCardControls";
+import DealCardDetailed from "../../../components/DealCard/DealCardDetailed";
+import EditDealFormModal from "../../../components/DealCard/EditDealFormModal";
+import { auth } from "../../../config/firebase";
 import { Deal } from "../../../types";
+import { sortCommentsByNewest } from "../../../utils";
 
 function DealDetails() {
   const currentUserId = auth.currentUser?.uid;

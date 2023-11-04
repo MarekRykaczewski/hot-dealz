@@ -1,7 +1,7 @@
-import { useState, FormEvent } from "react";
 import { updatePassword } from "firebase/auth";
+import { FormEvent, useState } from "react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { auth } from "../../../config/firebase";
-import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 
 function ProfilePassword() {
   const {

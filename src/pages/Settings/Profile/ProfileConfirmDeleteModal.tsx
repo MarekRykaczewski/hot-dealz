@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiFillWarning } from "react-icons/ai";
-import { UserAuth } from "../../../context/AuthContext";
 import Modal from "../../../components/Modal";
+import { UserAuth } from "../../../context/AuthContext";
 
 interface ProfileConfirmDeleteModalProps {
   open: boolean;

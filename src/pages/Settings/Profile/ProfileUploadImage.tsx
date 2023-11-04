@@ -1,7 +1,7 @@
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { storage } from "../../../config/firebase";
 import { UserAuth } from "../../../context/AuthContext";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 interface ProfileUploadImageProps {
   profilePicture: File | null;

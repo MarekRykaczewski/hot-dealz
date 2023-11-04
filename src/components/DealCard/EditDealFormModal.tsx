@@ -1,6 +1,6 @@
 import React from "react";
+import { Controller, useForm } from "react-hook-form";
 import Modal from "../Modal";
-import { useForm, Controller } from "react-hook-form";
 
 interface EditDealFormModalProps {
   isOpen: boolean;

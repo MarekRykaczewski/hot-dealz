@@ -1,23 +1,22 @@
 import {
+  User as FirebaseUser,
+  UserCredential,
+  createUserWithEmailAndPassword,
+  deleteUser,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { getDownloadURL, ref } from "firebase/storage";
+import {
+  ReactNode,
   createContext,
   useContext,
   useEffect,
   useState,
-  ReactNode,
 } from "react";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  deleteUser,
-  User as FirebaseUser,
-  UserCredential,
-} from "firebase/auth";
-import { auth, db } from "../config/firebase";
-import { doc, getDoc } from "firebase/firestore";
-import { storage } from "../config/firebase";
-import { getDownloadURL, ref } from "firebase/storage";
+import { auth, db, storage } from "../config/firebase";
 
 export interface UserData {
   profileUrl?: string;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import Tooltip from "./Tooltip";
 import { FormDetails } from "../../types";
+import Tooltip from "./Tooltip";
 
 interface FormDescriptionProps {
   formDetails: FormDetails;
