@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { RxDotFilled } from "react-icons/rx";
-import { getImages } from "../api";
+import { getImages } from "../api/api";
 
 type Slide = {
   url: string;

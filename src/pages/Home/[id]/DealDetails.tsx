@@ -16,7 +16,7 @@ import {
   updateDealDetails,
   checkSavedDeal,
   toggleSaved,
-} from "../../../api";
+} from "../../../api/api";
 import { Deal } from "../../../types";
 
 function DealDetails() {

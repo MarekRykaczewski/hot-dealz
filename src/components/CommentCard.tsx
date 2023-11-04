@@ -6,7 +6,7 @@ import {
   toggleCommentLike,
   fetchCommentLikeCount,
   checkUserLiked,
-} from "../api";
+} from "../api/api";
 
 interface CommentCardProps {
   userId: string;

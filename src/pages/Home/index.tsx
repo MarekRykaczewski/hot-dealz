@@ -4,7 +4,7 @@ import { Routes, Route, useParams } from "react-router-dom";
 import DealDetails from "./[id]/DealDetails";
 import Deals from "./Deals";
 import Saved from "./Saved";
-import { fetchDeals } from "../../api";
+import { fetchDeals } from "../../api/api";
 import { Deal } from "../../types";
 
 function Home() {

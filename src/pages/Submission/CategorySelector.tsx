@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchCategories } from "../../api";
+import { fetchCategories } from "../../api/api";
 import { useFormContext } from "react-hook-form";
 
 function CategorySelector({ handleInputChange }) {

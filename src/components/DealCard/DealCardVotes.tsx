@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { UserAuth } from "../../context/AuthContext";
 import { BsHourglassBottom } from "react-icons/bs";
-import { getLikesAndDislikes, handleVote } from "../../api";
+import { getLikesAndDislikes, handleVote } from "../../api/api";
 
 interface VoteButtonProps {
   onClick: () => void;

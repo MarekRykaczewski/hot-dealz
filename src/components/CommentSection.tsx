@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, RefObject } from "react";
 import { UserAuth } from "../context/AuthContext";
 import CommentCard from "./CommentCard";
 import { sortCommentsByLikes, sortCommentsByNewest } from "../utils";
-import { submitComment } from "../api";
+import { submitComment } from "../api/api";
 import { Comment } from "../types";
 
 interface CommentSectionProps {

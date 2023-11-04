@@ -9,7 +9,7 @@ import DealCardVotes from "./DealCardVotes";
 import ImageSlider from "../ImageSlider";
 import { auth } from "../../config/firebase";
 import { UserAuth } from "../../context/AuthContext";
-import { fetchProfileImage, checkSavedDeal, toggleSaved } from "../../api";
+import { fetchProfileImage, checkSavedDeal, toggleSaved } from "../../api/api";
 
 interface DealCardProps {
   userId: string;

@@ -4,7 +4,7 @@ import Tabs from "../../../components/Tabs";
 import FooterNav from "../../../components/FooterNav";
 import DealCard from "../../../components/DealCard/DealCard";
 import { auth } from "../../../config/firebase";
-import { fetchSavedDeals } from "../../../api";
+import { fetchSavedDeals } from "../../../api/api";
 import { Deal } from "../../../types";
 
 interface SavedProps {

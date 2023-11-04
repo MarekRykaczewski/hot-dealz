@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { fetchCategories } from "../api";
+import { fetchCategories } from "../api/api";
 
 interface Category {
   title: string;

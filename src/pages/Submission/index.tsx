@@ -11,7 +11,7 @@ import FormPriceDetails from "./FormPriceDetails";
 import FormFinalDetails from "./FormFinalDetails";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
-import { submitDeal } from "../../api";
+import { submitDeal } from "../../api/api";
 import { FormDetails } from "../../types";
 
 function Submission() {

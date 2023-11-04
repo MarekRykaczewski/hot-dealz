@@ -1,7 +1,20 @@
 import { ref, getDownloadURL } from "firebase/storage";
-import { storage } from './config/firebase';
-import { doc, updateDoc, serverTimestamp, where, addDoc, query, collection, getDoc, getDocs, deleteDoc, setDoc, writeBatch } from "firebase/firestore";
-import { db } from "./config/firebase";
+import { storage } from "../config/firebase";
+import {
+  doc,
+  updateDoc,
+  serverTimestamp,
+  where,
+  addDoc,
+  query,
+  collection,
+  getDoc,
+  getDocs,
+  deleteDoc,
+  setDoc,
+  writeBatch,
+} from "firebase/firestore";
+import { db } from "../config/firebase";
 
 export async function fetchProfileImage(userId, setProfileUrl) {
   try {
@@ -9,10 +22,10 @@ export async function fetchProfileImage(userId, setProfileUrl) {
     const imageUrl = await getDownloadURL(imageRef);
     setProfileUrl(imageUrl);
   } catch (error) {
-    const genericRef = ref(storage, "profileImages/avatar.png")
+    const genericRef = ref(storage, "profileImages/avatar.png");
     const genericUrl = await getDownloadURL(genericRef);
     setProfileUrl(genericUrl);
-    console.log('Error fetching profile image:', error);
+    console.log("Error fetching profile image:", error);
   }
 }
 
@@ -35,21 +48,21 @@ export const toggleSaved = async (hasSaved, setHasSaved, userId, postId) => {
   if (savedPost.exists()) {
     // post is already saved, so remove it
     await deleteDoc(savedPostRef);
-    if (hasSaved) setHasSaved(false)
+    if (hasSaved) setHasSaved(false);
   } else {
     // post is not saved, so add it
     await setDoc(savedPostRef, {});
-    if (!hasSaved) setHasSaved(true)
+    if (!hasSaved) setHasSaved(true);
   }
 };
 
 export async function getLikesAndDislikes(postId) {
-  const likesCollection = collection(db, 'deals', postId, 'likes');
-  const dislikesCollection = collection(db, 'deals', postId, 'dislikes');
-  
+  const likesCollection = collection(db, "deals", postId, "likes");
+  const dislikesCollection = collection(db, "deals", postId, "dislikes");
+
   const likesData = await getDocs(likesCollection);
   const dislikesData = await getDocs(dislikesCollection);
-  
+
   return {
     likes: likesData.docs,
     dislikes: dislikesData.docs,
@@ -58,16 +71,22 @@ export async function getLikesAndDislikes(postId) {
 
 export async function handleVote(postId, voteType, user) {
   try {
-    const collectionName = voteType === 'like' ? 'likes' : 'dislikes';
-    const oppositeCollectionName = voteType === 'like' ? 'dislikes' : 'likes';
+    const collectionName = voteType === "like" ? "likes" : "dislikes";
+    const oppositeCollectionName = voteType === "like" ? "dislikes" : "likes";
 
-    const voteRef = doc(collection(db, 'deals', postId, collectionName), user?.uid);
+    const voteRef = doc(
+      collection(db, "deals", postId, collectionName),
+      user?.uid
+    );
 
     // Check if the document exists before trying to delete it
     const docSnapshot = await getDoc(voteRef);
 
     // Remove the user's vote from the opposite collection if it exists
-    const oppositeVoteRef = doc(collection(db, 'deals', postId, oppositeCollectionName), user?.uid);
+    const oppositeVoteRef = doc(
+      collection(db, "deals", postId, oppositeCollectionName),
+      user?.uid
+    );
     const oppositeDocSnapshot = await getDoc(oppositeVoteRef);
 
     const batch = writeBatch(db);
@@ -90,13 +109,13 @@ export async function handleVote(postId, voteType, user) {
 
     return true;
   } catch (err) {
-    console.error('Error in handleVote:', err);
+    console.error("Error in handleVote:", err);
     return false;
   }
 }
 
 export async function fetchSearchResults(searchQuery) {
-  const dealsRef = collection(db, 'deals');
+  const dealsRef = collection(db, "deals");
   const lowercaseQuery = searchQuery.toLowerCase();
   const q = query(dealsRef);
 
@@ -104,12 +123,16 @@ export async function fetchSearchResults(searchQuery) {
     const querySnapshot = await getDocs(q);
     let results = [];
 
-    if (lowercaseQuery.trim() !== '') {
+    if (lowercaseQuery.trim() !== "") {
       results = await Promise.all(
         querySnapshot.docs.map(async (doc) => {
           const dealData = doc.data();
-          const likesSnapshot = await getDocs(collection(dealsRef, doc.id, 'likes'));
-          const dislikesSnapshot = await getDocs(collection(dealsRef, doc.id, 'dislikes'));
+          const likesSnapshot = await getDocs(
+            collection(dealsRef, doc.id, "likes")
+          );
+          const dislikesSnapshot = await getDocs(
+            collection(dealsRef, doc.id, "dislikes")
+          );
           const likesCount = likesSnapshot.size;
           const dislikesCount = dislikesSnapshot.size;
 
@@ -118,14 +141,14 @@ export async function fetchSearchResults(searchQuery) {
           if (dealData.imageURLs) {
             const imagePath = Array.isArray(dealData.imageURLs)
               ? dealData.imageURLs[0] // First element of the array
-              : dealData.imageURLs;   // String value
+              : dealData.imageURLs; // String value
 
             const storageRef = ref(storage, imagePath);
 
             try {
               imageURL = await getDownloadURL(storageRef);
             } catch (error) {
-              console.error('Error fetching image download URL:', error);
+              console.error("Error fetching image download URL:", error);
             }
           }
 
@@ -135,32 +158,34 @@ export async function fetchSearchResults(searchQuery) {
               ...dealData,
               likesCount,
               dislikesCount,
-              imageURL
+              imageURL,
             },
           };
         })
       );
 
       results = results
-        .filter((result) => result.data.title.toLowerCase().includes(lowercaseQuery))
+        .filter((result) =>
+          result.data.title.toLowerCase().includes(lowercaseQuery)
+        )
         .sort((a, b) => a.data.title.localeCompare(b.data.title))
         .slice(0, 5); // Extract only the first 5 results
     }
 
     return results;
   } catch (error) {
-    console.error('Error searching for deals:', error);
+    console.error("Error searching for deals:", error);
     return [];
   }
 }
 
 export async function fetchCategories() {
   try {
-    const querySnapshot = await getDocs(collection(db, 'itemCategories'));
+    const querySnapshot = await getDocs(collection(db, "itemCategories"));
     const categories = querySnapshot.docs.map((doc) => doc.data());
     return categories;
   } catch (error) {
-    console.error('Error fetching categories:', error);
+    console.error("Error fetching categories:", error);
     return [];
   }
 }
@@ -174,7 +199,10 @@ export async function getProfileUrlFromUserId(userId) {
 
 // Function to fetch a username from a comment
 export async function getUsernameFromComment(commentId, dealId) {
-  const commentRef = doc(collection(doc(db, `deals/${dealId}`), 'comments'), commentId);
+  const commentRef = doc(
+    collection(doc(db, `deals/${dealId}`), "comments"),
+    commentId
+  );
   const commentDoc = await getDoc(commentRef);
 
   if (!commentDoc.exists()) {
@@ -182,7 +210,7 @@ export async function getUsernameFromComment(commentId, dealId) {
   }
 
   const userId = commentDoc.data().userId;
-  const userRef = doc(db, 'users', userId);
+  const userRef = doc(db, "users", userId);
   const userDoc = await getDoc(userRef);
 
   if (!userDoc.exists()) {
@@ -195,11 +223,17 @@ export async function getUsernameFromComment(commentId, dealId) {
 
 // Function to toggle like on a comment
 export async function toggleCommentLike(dealId, commentId, userId) {
-  const likesCollectionRef = collection(db, `deals/${dealId}/comments/${commentId}/likes`);
+  const likesCollectionRef = collection(
+    db,
+    `deals/${dealId}/comments/${commentId}/likes`
+  );
 
   try {
     // Check if the user has already liked the comment
-    const commentLikesQuery = query(likesCollectionRef, where('userId', '==', userId));
+    const commentLikesQuery = query(
+      likesCollectionRef,
+      where("userId", "==", userId)
+    );
     const commentLikesSnapshot = await getDocs(commentLikesQuery);
     const userHasLiked = !commentLikesSnapshot.empty;
 
@@ -212,35 +246,44 @@ export async function toggleCommentLike(dealId, commentId, userId) {
       await addDoc(likesCollectionRef, { userId });
     }
   } catch (error) {
-    console.error('Error toggling comment like:', error);
+    console.error("Error toggling comment like:", error);
   }
 }
 
 // Function to fetch the number of likes for a comment
 export async function fetchCommentLikeCount(dealId, commentId) {
-  const likesCollectionRef = collection(db, `deals/${dealId}/comments/${commentId}/likes`);
+  const likesCollectionRef = collection(
+    db,
+    `deals/${dealId}/comments/${commentId}/likes`
+  );
 
   try {
     const commentLikesSnapshot = await getDocs(likesCollectionRef);
     const likeCount = commentLikesSnapshot.size;
     return likeCount;
   } catch (error) {
-    console.error('Error fetching comment like count:', error);
+    console.error("Error fetching comment like count:", error);
     return 0; // Return 0 in case of an error
   }
 }
 
 // Function to check if the current user has already liked the comment
 export async function checkUserLiked(postId, commentId, userId) {
-  const likesCollectionRef = collection(db, `deals/${postId}/comments/${commentId}/likes`);
+  const likesCollectionRef = collection(
+    db,
+    `deals/${postId}/comments/${commentId}/likes`
+  );
 
   try {
-    const commentLikesQuery = query(likesCollectionRef, where('userId', '==', userId));
+    const commentLikesQuery = query(
+      likesCollectionRef,
+      where("userId", "==", userId)
+    );
     const commentLikesSnapshot = await getDocs(commentLikesQuery);
     const userHasLiked = !commentLikesSnapshot.empty;
     return userHasLiked;
   } catch (error) {
-    console.error('Error checking user liked status:', error);
+    console.error("Error checking user liked status:", error);
     return false; // Return false in case of an error
   }
 }
@@ -248,7 +291,12 @@ export async function checkUserLiked(postId, commentId, userId) {
 // Function to post comment
 export const submitComment = async (postId, newComment) => {
   try {
-    const postCommentsCollectionRef = collection(db, 'deals', postId, 'comments');
+    const postCommentsCollectionRef = collection(
+      db,
+      "deals",
+      postId,
+      "comments"
+    );
     const newCommentDocRef = doc(postCommentsCollectionRef);
 
     await setDoc(newCommentDocRef, {
@@ -258,7 +306,9 @@ export const submitComment = async (postId, newComment) => {
     });
 
     // Fetch the updated comments after submitting a new comment
-    const commentsSnapshot = await getDocs(collection(db, 'deals', postId, 'comments'));
+    const commentsSnapshot = await getDocs(
+      collection(db, "deals", postId, "comments")
+    );
     const updatedComments = [];
     commentsSnapshot.forEach((commentDoc) => {
       updatedComments.push({
@@ -269,7 +319,7 @@ export const submitComment = async (postId, newComment) => {
 
     return updatedComments;
   } catch (error) {
-    console.error('Error submitting comment:', error);
+    console.error("Error submitting comment:", error);
     throw error;
   }
 };
@@ -304,25 +354,25 @@ export const getImages = async (imageURLs) => {
 // Function to fetch deals
 export async function fetchDeals() {
   try {
-    const querySnapshot = await getDocs(collection(db, 'deals'));
+    const querySnapshot = await getDocs(collection(db, "deals"));
     const dealList = await Promise.all(
       querySnapshot.docs.map(async (doc) => {
         const dealData = doc.data();
-        const commentsSnapshot = await getDocs(collection(doc.ref, 'comments'));
+        const commentsSnapshot = await getDocs(collection(doc.ref, "comments"));
         const commentsCount = commentsSnapshot.size;
         return { id: doc.id, ...dealData, comments: commentsCount };
       })
     );
     return dealList;
   } catch (err) {
-    console.error('Error fetching deals:', err);
+    console.error("Error fetching deals:", err);
     throw err;
   }
 }
 
 export async function fetchSavedDeals(userId) {
   try {
-    const savedRef = collection(db, 'users', userId, 'saved');
+    const savedRef = collection(db, "users", userId, "saved");
     const savedSnapshot = await getDocs(savedRef);
     const savedDealIds = savedSnapshot.docs.map((doc) => doc.id);
 
@@ -331,20 +381,23 @@ export async function fetchSavedDeals(userId) {
       return [];
     }
 
-    const dealsQuery = query(collection(db, 'deals'), where('__name__', 'in', savedDealIds));
+    const dealsQuery = query(
+      collection(db, "deals"),
+      where("__name__", "in", savedDealIds)
+    );
     const querySnapshot = await getDocs(dealsQuery);
 
     const fetchedDeals = [];
     querySnapshot.forEach((doc) => {
       const dealData = doc.data();
-      const commentsSnapshot = getDocs(collection(doc.ref, 'comments'));
+      const commentsSnapshot = getDocs(collection(doc.ref, "comments"));
       const commentsCount = commentsSnapshot.size;
       fetchedDeals.push({ id: doc.id, ...dealData, comments: commentsCount });
     });
 
     return fetchedDeals;
   } catch (err) {
-    console.error('Error fetching saved deals:', err);
+    console.error("Error fetching saved deals:", err);
     return [];
   }
 }
@@ -372,12 +425,16 @@ export const fetchDealData = async (dealId) => {
 
 export const fetchComments = async (dealId) => {
   try {
-    const querySnapshot = await getDocs(collection(db, "deals", dealId, "comments"));
+    const querySnapshot = await getDocs(
+      collection(db, "deals", dealId, "comments")
+    );
 
     const comments = await Promise.all(
       querySnapshot.docs.map(async (doc) => {
         const commentData = doc.data();
-        const likesSnapshot = await getDocs(collection(db, "deals", dealId, "comments", doc.id, "likes"));
+        const likesSnapshot = await getDocs(
+          collection(db, "deals", dealId, "comments", doc.id, "likes")
+        );
         const likes = likesSnapshot.docs.map((likeDoc) => likeDoc.data());
         return { id: doc.id, ...commentData, likes };
       })
@@ -398,7 +455,7 @@ export const fetchProfileImageById = async (currentUserId) => {
     const imageUrl = await getDownloadURL(imageRef);
     return imageUrl;
   } catch (error) {
-    console.log('Error fetching profile image:', error);
+    console.log("Error fetching profile image:", error);
     return null;
   }
 };
@@ -409,10 +466,10 @@ export const updateDealDetails = async (dealId, editedDealDetails) => {
   try {
     const dealRef = doc(db, "deals", dealId);
     await updateDoc(dealRef, editedDealDetails);
-    console.log('Deal details updated successfully.');
+    console.log("Deal details updated successfully.");
     return true;
   } catch (error) {
-    console.error('Error updating deal details:', error);
+    console.error("Error updating deal details:", error);
     return false;
   }
 };
@@ -421,13 +478,13 @@ export const updateDealDetails = async (dealId, editedDealDetails) => {
 
 export const archiveDeal = async (dealId, archived) => {
   try {
-    const dealRef = doc(db, 'deals', dealId);
+    const dealRef = doc(db, "deals", dealId);
     await updateDoc(dealRef, {
       archived: !archived, // Set 'archived' to true
     });
     return true;
   } catch (error) {
-    console.error('Error archiving deal:', error);
+    console.error("Error archiving deal:", error);
     return false;
   }
 };
@@ -441,7 +498,7 @@ export const submitDeal = async (formData, userData, user) => {
     const newDocId = newDocRef.id;
 
     await setDoc(newDocRef, {
-      owner: userData.username || 'test',
+      owner: userData.username || "test",
       dealLink: formData.dealLink,
       title: formData.title,
       description: formData.description,
@@ -455,10 +512,10 @@ export const submitDeal = async (formData, userData, user) => {
     });
 
     await submitImages(newDocId, formData.images);
-    
+
     return true; // Submission successful
   } catch (error) {
-    console.error('Error submitting deal:', error);
+    console.error("Error submitting deal:", error);
     return false; // Submission failed
   }
 };
@@ -478,6 +535,6 @@ const submitImages = async (docId, images) => {
   }
 
   // After uploading all images, update the deal document with imageURLs
-  const dealDocRef = doc(db, 'deals', docId);
+  const dealDocRef = doc(db, "deals", docId);
   await updateDoc(dealDocRef, { imageURLs });
 };
