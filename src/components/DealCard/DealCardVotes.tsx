@@ -81,6 +81,7 @@ function DealCardVotes({ postId, archived }: DealCardVotesProps) {
   };
 
   const handleVoteClick = async (voteType: "like" | "dislike") => {
+    if (!user) return;
     // Optimistic rendering
     optimisticRender(voteType);
 
