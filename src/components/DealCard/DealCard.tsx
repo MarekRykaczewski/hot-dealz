@@ -154,9 +154,10 @@ function DealCard({
           </div>
           <div className="flex flex-wrap gap-3 items-center justify-end text-gray-600">
             <button
-              onClick={() =>
-                toggleSaved(hasSaved, setHasSaved, user?.uid, postId)
-              }
+              onClick={() => {
+                if (!user) return;
+                toggleSaved(hasSaved, setHasSaved, user.uid, postId);
+              }}
               className="flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8"
             >
               {hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}
