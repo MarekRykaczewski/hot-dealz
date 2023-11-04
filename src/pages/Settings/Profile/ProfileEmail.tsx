@@ -47,7 +47,7 @@ function ProfileEmail() {
           <input
             onChange={(e) => setNewEmail(e.target.value)}
             className="border p-1 rounded-lg"
-            placeholder={authUser?.email}
+            placeholder={authUser?.email!}
             type="text"
             name=""
             id=""

@@ -8,7 +8,10 @@ function ProfileUsername() {
   const [editUsername, setEditUsername] = useState(false);
   const [newUsername, setNewUsername] = useState("");
 
-  const handleUsernameChange = async (event) => {
+  const handleUsernameChange = async (event: {
+    preventDefault: () => void;
+  }) => {
+    if (!user) return;
     event.preventDefault();
 
     try {

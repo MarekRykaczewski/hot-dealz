@@ -1,9 +1,9 @@
 import React, { ChangeEvent, RefObject, useState } from "react";
+import { submitComment } from "../api/firebase/comments";
 import { UserAuth } from "../context/AuthContext";
 import { Comment } from "../types";
 import { sortCommentsByLikes, sortCommentsByNewest } from "../utils";
 import CommentCard from "./CommentCard";
-import { submitComment } from "../api/firebase/comments";
 
 interface CommentSectionProps {
   postId: string;
@@ -54,12 +54,13 @@ function CommentSection({
   });
 
   const handleSubmitComment = async () => {
+    if (!user) return;
     if (comment.trim() === "") {
       return;
     }
 
     const newComment = {
-      userId: user?.uid,
+      userId: user.uid,
       comment: comment,
     };
 
