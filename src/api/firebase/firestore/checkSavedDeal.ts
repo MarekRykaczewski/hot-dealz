@@ -9,7 +9,7 @@ export const checkSavedDeal = async (
     (arg0: boolean): void;
   },
   userId: string,
-  postId: string | undefined
+  postId: string
 ) => {
   const userRef = doc(db, "users", userId);
   const savedRef = collection(userRef, "saved");
