@@ -1,8 +1,11 @@
-import { doc, collection, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
 // Function to fetch a username from a comment
-export async function getUsernameFromComment(commentId, dealId) {
+export async function getUsernameFromComment(
+  commentId: string,
+  dealId: string
+) {
   const commentRef = doc(
     collection(doc(db, `deals/${dealId}`), "comments"),
     commentId

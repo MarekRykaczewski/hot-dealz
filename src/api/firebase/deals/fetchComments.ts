@@ -1,9 +1,9 @@
 // Fetch deal comments
 
-import { getDocs, collection } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
-export const fetchComments = async (dealId) => {
+export const fetchComments = async (dealId: string) => {
   try {
     const querySnapshot = await getDocs(
       collection(db, "deals", dealId, "comments")

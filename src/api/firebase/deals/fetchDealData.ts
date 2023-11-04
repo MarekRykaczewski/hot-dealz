@@ -1,7 +1,7 @@
-import { doc, getDoc, getDocs, collection } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
-export const fetchDealData = async (dealId) => {
+export const fetchDealData = async (dealId: string) => {
   try {
     const dealRef = doc(db, "deals", dealId);
     const dealSnapshot = await getDoc(dealRef);

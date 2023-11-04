@@ -1,9 +1,26 @@
 // Submit deal
 
+import { User } from "firebase/auth";
 import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
+import { UserData } from "../../../context/AuthContext";
 
-export const submitDeal = async (formData, userData, user) => {
+export const submitDeal = async (
+  formData: {
+    dealLink: any;
+    images: any;
+    title: any;
+    description: any;
+    price: any;
+    nextBestPrice: any;
+    freeShipping?: boolean;
+    shippingCost: any;
+    voucherCode: any;
+    category: any;
+  },
+  userData: UserData,
+  user: User | null
+) => {
   try {
     const dealsCollection = collection(db, "deals");
     const newDocRef = doc(dealsCollection);

@@ -1,15 +1,15 @@
-import { collection, query, getDocs } from "firebase/firestore";
-import { ref, getDownloadURL } from "firebase/storage";
+import { collection, getDocs, query } from "firebase/firestore";
+import { getDownloadURL, ref } from "firebase/storage";
 import { db, storage } from "../../../config/firebase";
 
-export async function fetchSearchResults(searchQuery) {
+export async function fetchSearchResults(searchQuery: string) {
   const dealsRef = collection(db, "deals");
   const lowercaseQuery = searchQuery.toLowerCase();
   const q = query(dealsRef);
 
   try {
     const querySnapshot = await getDocs(q);
-    let results = [];
+    let results: any[] = [];
 
     if (lowercaseQuery.trim() !== "") {
       results = await Promise.all(

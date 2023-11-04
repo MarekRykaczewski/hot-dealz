@@ -1,16 +1,20 @@
 import {
+  addDoc,
   collection,
-  query,
-  where,
-  getDocs,
   deleteDoc,
   doc,
-  addDoc,
+  getDocs,
+  query,
+  where,
 } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
 // Function to toggle like on a comment
-export async function toggleCommentLike(dealId, commentId, userId) {
+export async function toggleCommentLike(
+  dealId: string,
+  commentId: string,
+  userId: string
+) {
   const likesCollectionRef = collection(
     db,
     `deals/${dealId}/comments/${commentId}/likes`

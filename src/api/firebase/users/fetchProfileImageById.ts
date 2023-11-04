@@ -1,9 +1,9 @@
 // Fetch profile image
 
-import { ref, getDownloadURL } from "firebase/storage";
+import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../../config/firebase";
 
-export const fetchProfileImageById = async (currentUserId) => {
+export const fetchProfileImageById = async (currentUserId: string) => {
   try {
     const imageRef = ref(storage, `profileImages/${currentUserId}/image`);
     const imageUrl = await getDownloadURL(imageRef);

@@ -1,7 +1,12 @@
-import { doc, collection, getDoc, writeBatch } from "firebase/firestore";
+import { User } from "firebase/auth";
+import { collection, doc, getDoc, writeBatch } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
-export async function handleVote(postId, voteType, user) {
+export async function handleVote(
+  postId: string,
+  voteType: "like" | "dislike",
+  user: User
+) {
   try {
     const collectionName = voteType === "like" ? "likes" : "dislikes";
     const oppositeCollectionName = voteType === "like" ? "dislikes" : "likes";

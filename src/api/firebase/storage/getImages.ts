@@ -1,8 +1,8 @@
-import { ref, getDownloadURL } from "firebase/storage";
+import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../../config/firebase";
 
 // Function to get imges for slider
-export const getImages = async (imageURLs) => {
+export const getImages = async (imageURLs: string[]) => {
   const imageList = [];
   const urlsToFetch = Array.isArray(imageURLs) ? imageURLs : [imageURLs]; // To handle both arrays and single images (strings)
 

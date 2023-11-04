@@ -1,7 +1,12 @@
-import { doc, collection, getDoc, deleteDoc, setDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
-export const toggleSaved = async (hasSaved, setHasSaved, userId, postId) => {
+export const toggleSaved = async (
+  hasSaved: boolean,
+  setHasSaved: (arg0: boolean) => void,
+  userId: string | undefined,
+  postId: string | undefined
+) => {
   const userRef = doc(db, "users", userId);
   const savedRef = collection(userRef, "saved");
   const savedPostRef = doc(savedRef, postId);

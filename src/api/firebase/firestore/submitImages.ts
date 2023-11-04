@@ -2,9 +2,9 @@
 
 import { doc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
-import { storage, db } from "../../../config/firebase";
+import { db, storage } from "../../../config/firebase";
 
-const submitImages = async (docId, images) => {
+const submitImages = async (docId: string, images: any[]) => {
   const imageURLs = [];
 
   for (let i = 0; i < images.length; i++) {

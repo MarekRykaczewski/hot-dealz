@@ -1,14 +1,17 @@
 import {
   collection,
   doc,
-  setDoc,
-  serverTimestamp,
   getDocs,
+  serverTimestamp,
+  setDoc,
 } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
 // Function to post comment
-export const submitComment = async (postId, newComment) => {
+export const submitComment = async (
+  postId: string,
+  newComment: { userId: string; comment: string }
+) => {
   try {
     const postCommentsCollectionRef = collection(
       db,
@@ -28,7 +31,7 @@ export const submitComment = async (postId, newComment) => {
     const commentsSnapshot = await getDocs(
       collection(db, "deals", postId, "comments")
     );
-    const updatedComments = [];
+    const updatedComments: { id: string }[] = [];
     commentsSnapshot.forEach((commentDoc) => {
       updatedComments.push({
         id: commentDoc.id,

@@ -3,7 +3,7 @@
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
-export const archiveDeal = async (dealId, archived) => {
+export const archiveDeal = async (dealId: string, archived: boolean) => {
   try {
     const dealRef = doc(db, "deals", dealId);
     await updateDoc(dealRef, {

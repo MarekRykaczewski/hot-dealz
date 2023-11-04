@@ -1,7 +1,11 @@
-import { ref, getDownloadURL } from "firebase/storage";
+import { getDownloadURL, ref } from "firebase/storage";
+import { SetStateAction } from "react";
 import { storage } from "../../../config/firebase";
 
-export async function fetchProfileImage(userId, setProfileUrl) {
+export async function fetchProfileImage(
+  userId: string,
+  setProfileUrl: { (value: SetStateAction<string>): void; (arg0: string): void }
+) {
   try {
     const imageRef = ref(storage, `profileImages/${userId}/image`);
     const imageUrl = await getDownloadURL(imageRef);

@@ -2,7 +2,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
 // Function to fetch the number of likes for a comment
-export async function fetchCommentLikeCount(dealId, commentId) {
+export async function fetchCommentLikeCount(dealId: string, commentId: string) {
   const likesCollectionRef = collection(
     db,
     `deals/${dealId}/comments/${commentId}/likes`
