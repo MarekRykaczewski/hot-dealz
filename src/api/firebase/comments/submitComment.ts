@@ -11,7 +11,7 @@ import { db } from "../../../config/firebase";
 export const submitComment = async (
   postId: string,
   newComment: { userId: string; comment: string }
-) => {
+): Promise<Comment[]> => {
   try {
     const postCommentsCollectionRef = collection(
       db,
@@ -31,12 +31,16 @@ export const submitComment = async (
     const commentsSnapshot = await getDocs(
       collection(db, "deals", postId, "comments")
     );
-    const updatedComments: { id: string }[] = [];
+    const updatedComments: Comment[] = [];
     commentsSnapshot.forEach((commentDoc) => {
-      updatedComments.push({
+      const commentData = commentDoc.data();
+      const comment: Comment = {
         id: commentDoc.id,
-        ...commentDoc.data(),
-      });
+        userId: commentData.userId,
+        comment: commentData.comment,
+        posted: commentData.posted,
+      };
+      updatedComments.push(comment);
     });
 
     return updatedComments;

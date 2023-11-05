@@ -66,7 +66,7 @@ function CommentSection({
 
     const updatedComments = await submitComment(postId, newComment);
 
-    setComments(updatedComments);
+    setComments(updatedComments as any);
     setComment("");
   };
 

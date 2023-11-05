@@ -43,7 +43,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
   const [user, setUser] = useState<FirebaseUser | null>(null);
-  const [userData, setUserData] = useState<UserData | null>(null);
+  const [userData, setUserData] = useState<UserData>({});
 
   const createUser = (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -80,27 +80,24 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!user) {
+        setUserData({});
+        return;
+      }
       try {
-        if (user) {
-          const docRef = doc(db, "users", user.uid);
-          const docSnap = await getDoc(docRef);
-          setUserData(docSnap.data() as UserData);
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+        const userDataFromFirestore = docSnap.data() as UserData;
 
-          // Load the image here
-          const imageRef = ref(storage, `profileImages/${user.uid}/image`);
-          const imageUrl = await getDownloadURL(imageRef);
+        // Load the image here
+        const imageRef = ref(storage, `profileImages/${user.uid}/image`);
+        const imageUrl = await getDownloadURL(imageRef);
 
-          setUserData((prevUserData) => ({
-            ...prevUserData,
-            profileUrl: imageUrl,
-          }));
-        }
+        // Update userData with the image URL
+        setUserData({ ...userDataFromFirestore, profileUrl: imageUrl });
       } catch (err) {
-        if (userData) {
-          return;
-        } else {
-          console.log(err);
-        }
+        console.log(err);
+        setUserData({});
       }
     };
     fetchData();
