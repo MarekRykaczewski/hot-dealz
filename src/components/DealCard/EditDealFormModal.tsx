@@ -6,20 +6,20 @@ interface EditDealFormModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialTitle?: string;
-  initialPrice?: string;
-  initialNextBestPrice?: string;
-  initialShippingCost?: string;
+  initialPrice?: number;
+  initialNextBestPrice?: number;
+  initialShippingCost?: number;
   initialDealLink?: string;
   initialVoucherCode?: string;
   onSave: (data: FormData) => void;
 }
 
 interface FormData {
-  [key: string]: string;
+  [key: string]: string | number;
   title: string;
-  price: string;
-  nextBestPrice: string;
-  shippingCost: string;
+  price: number;
+  nextBestPrice: number;
+  shippingCost: number;
   dealLink: string;
   voucherCode: string;
 }
@@ -28,9 +28,9 @@ const EditDealFormModal: React.FC<EditDealFormModalProps> = ({
   isOpen,
   onClose,
   initialTitle = "",
-  initialPrice = "",
-  initialNextBestPrice = "",
-  initialShippingCost = "",
+  initialPrice = 0,
+  initialNextBestPrice = 0,
+  initialShippingCost = 0,
   initialDealLink = "",
   initialVoucherCode = "",
   onSave,
@@ -124,15 +124,17 @@ const EditDealFormModal: React.FC<EditDealFormModalProps> = ({
             rules={{
               validate: (value) => {
                 if (!value) return true; // Allow empty value
+                const valueString = value.toString();
                 return (
-                  !isNaN(parseFloat(value)) || "Price must be a valid number"
+                  !isNaN(parseFloat(valueString)) ||
+                  "Price must be a valid number"
                 );
               },
             }}
             render={({ field }) => (
               <>
                 <input
-                  type="text"
+                  type="number"
                   id="price"
                   {...field}
                   className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500 ${
@@ -162,8 +164,9 @@ const EditDealFormModal: React.FC<EditDealFormModalProps> = ({
             rules={{
               validate: (value) => {
                 if (!value) return true; // Allow empty value
+                const valueString = value.toString();
                 return (
-                  !isNaN(parseFloat(value)) ||
+                  !isNaN(parseFloat(valueString)) ||
                   "Next Best Price must be a valid number"
                 );
               },
@@ -171,7 +174,7 @@ const EditDealFormModal: React.FC<EditDealFormModalProps> = ({
             render={({ field }) => (
               <>
                 <input
-                  type="text"
+                  type="number"
                   id="nextBestPrice"
                   {...field}
                   className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500 ${
@@ -201,8 +204,9 @@ const EditDealFormModal: React.FC<EditDealFormModalProps> = ({
             rules={{
               validate: (value) => {
                 if (!value) return true; // Allow empty value
+                const valueString = value.toString();
                 return (
-                  !isNaN(parseFloat(value)) ||
+                  !isNaN(parseFloat(valueString)) ||
                   "Shipping Cost must be a valid number"
                 );
               },
@@ -210,7 +214,7 @@ const EditDealFormModal: React.FC<EditDealFormModalProps> = ({
             render={({ field }) => (
               <>
                 <input
-                  type="text"
+                  type="number"
                   id="shippingCost"
                   {...field}
                   className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500 ${

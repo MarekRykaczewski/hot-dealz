@@ -1,3 +1,5 @@
+import { DocumentData } from "firebase/firestore";
+
 export type Deal = {
   id: string;
   title: string;
@@ -22,8 +24,8 @@ export type Comment = {
   id: string;
   userId: string;
   comment: string;
-  posted: { seconds: number };
-  likes?: string[] | undefined;
+  posted: { seconds: number; nanoseconds?: number };
+  likes?: DocumentData[];
 };
 
 export type FormDetails = {

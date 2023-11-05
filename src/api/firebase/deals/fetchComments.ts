@@ -2,8 +2,9 @@
 
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../config/firebase";
+import { Comment } from "../../../types";
 
-export const fetchComments = async (dealId: string) => {
+export const fetchComments = async (dealId: string): Promise<Comment[]> => {
   try {
     const querySnapshot = await getDocs(
       collection(db, "deals", dealId, "comments")
@@ -16,7 +17,7 @@ export const fetchComments = async (dealId: string) => {
           collection(db, "deals", dealId, "comments", doc.id, "likes")
         );
         const likes = likesSnapshot.docs.map((likeDoc) => likeDoc.data());
-        return { id: doc.id, ...commentData, likes };
+        return { id: doc.id, ...commentData, likes } as Comment;
       })
     );
 

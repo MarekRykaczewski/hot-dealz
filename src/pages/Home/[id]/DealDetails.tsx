@@ -14,7 +14,7 @@ import CommentSection from "../../../components/CommentSection";
 import DealCardControls from "../../../components/DealCard/DealCardControls";
 import DealCardDetailed from "../../../components/DealCard/DealCardDetailed";
 import EditDealFormModal from "../../../components/DealCard/EditDealFormModal";
-import { Deal } from "../../../types";
+import { Comment, Deal } from "../../../types";
 import { sortCommentsByNewest } from "../../../utils";
 
 interface Props {
@@ -25,7 +25,7 @@ function DealDetails({ currentUserId }: Props) {
   const [hasSaved, setHasSaved] = useState(false);
   const [deal, setDeal] = useState<Deal | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
-  const commentInput = useRef<HTMLInputElement | null>(null);
+  const commentInput = useRef<HTMLTextAreaElement | null>(null);
   const [profileUrl, setProfileUrl] = useState<string>("");
   const [isArchived, setIsArchived] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -33,17 +33,19 @@ function DealDetails({ currentUserId }: Props) {
   const { dealId } = useParams<{ dealId: string }>();
 
   const fetchData = async (dealId: string) => {
-    const specificDeal = await fetchDealData(dealId);
+    const specificDeal = (await fetchDealData(dealId)) as Deal;
     if (specificDeal) {
       setDeal(specificDeal);
-      setIsArchived(specificDeal.archived || false);
+      setIsArchived(specificDeal.archived);
     } else {
       setDeal(null);
     }
   };
 
   const fetchCommentsData = async () => {
+    if (!dealId) return;
     const commentsData = await fetchComments(dealId);
+    console.log(commentsData);
     const sortedComments = sortCommentsByNewest(commentsData);
     setComments(sortedComments);
   };
@@ -88,6 +90,7 @@ function DealDetails({ currentUserId }: Props) {
   }, [dealId]);
 
   useEffect(() => {
+    if (!dealId) return;
     if (currentUserId) {
       checkSavedDeal(setHasSaved, currentUserId, dealId);
     }
@@ -99,11 +102,15 @@ function DealDetails({ currentUserId }: Props) {
     }
   }, [deal]);
 
+  useEffect(() => {
+    fetchCommentsData();
+  }, [dealId]);
+
   const isOwner = currentUserId === deal?.userId;
 
   return (
     <div className="bg-slate-200 h-screen w-full flex flex-col ml-auto mr-auto items-center justify-start">
-      {isOwner && (
+      {!isOwner && (
         <DealCardControls
           onEditClick={() => setIsEditModalOpen(true)}
           isArchived={isArchived}
@@ -150,9 +157,10 @@ function DealDetails({ currentUserId }: Props) {
             New comment <BiCommentDetail />
           </button>
           <button
-            onClick={() =>
-              toggleSaved(hasSaved, setHasSaved, currentUserId, dealId || "")
-            }
+            onClick={() => {
+              if (!currentUserId) return;
+              toggleSaved(hasSaved, setHasSaved, currentUserId, dealId || "");
+            }}
             className="flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition"
           >
             Save for later {hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}

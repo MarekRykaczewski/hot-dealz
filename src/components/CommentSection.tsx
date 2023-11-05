@@ -34,7 +34,8 @@ function CommentSection({
     const selectedSort = event.target.value;
 
     if (selectedSort === "Newest first") {
-      sortCommentsByNewest(comments, setComments);
+      const sortedComments = sortCommentsByNewest(comments);
+      setComments(sortedComments);
     } else if (selectedSort === "Most liked") {
       sortCommentsByLikes(comments, setComments);
     }
@@ -105,7 +106,7 @@ function CommentSection({
             Submit
           </button>
         </div>
-        {commentElements}
+        {comments.length > 0 && commentElements}
       </div>
     </div>
   );

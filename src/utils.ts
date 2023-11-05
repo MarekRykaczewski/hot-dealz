@@ -1,4 +1,4 @@
-import { Deal, Comment } from "./types";
+import { Comment, Deal } from "./types";
 
 export const sortByNewest = (
   deals: Deal[],
@@ -24,15 +24,12 @@ export const sortByComments = (
   setDeals(dealsCopy);
 };
 
-export const sortCommentsByNewest = (
-  comments: Comment[],
-  setComments: (comments: Comment[]) => void
-) => {
+export const sortCommentsByNewest = (comments: Comment[]) => {
   const commentsCopy = [...comments];
   commentsCopy.sort(
     (a, b) => b.posted.seconds * 1000 - a.posted.seconds * 1000
   );
-  setComments(commentsCopy);
+  return commentsCopy;
 };
 
 export const sortCommentsByLikes = (
