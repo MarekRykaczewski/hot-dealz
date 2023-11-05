@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { BiCommentDetail } from "react-icons/bi";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
-
 import { fetchComments, fetchDealData } from "../../../api/firebase/deals";
 import {
   archiveDeal,
@@ -15,17 +14,19 @@ import CommentSection from "../../../components/CommentSection";
 import DealCardControls from "../../../components/DealCard/DealCardControls";
 import DealCardDetailed from "../../../components/DealCard/DealCardDetailed";
 import EditDealFormModal from "../../../components/DealCard/EditDealFormModal";
-import { auth } from "../../../config/firebase";
 import { Deal } from "../../../types";
 import { sortCommentsByNewest } from "../../../utils";
 
-function DealDetails() {
-  const currentUserId = auth.currentUser?.uid;
+interface Props {
+  currentUserId: string | null;
+}
+
+function DealDetails({ currentUserId }: Props) {
   const [hasSaved, setHasSaved] = useState(false);
   const [deal, setDeal] = useState<Deal | null>(null);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const commentInput = useRef<HTMLInputElement | null>(null);
-  const [profileUrl, setProfileUrl] = useState("");
+  const [profileUrl, setProfileUrl] = useState<string>("");
   const [isArchived, setIsArchived] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -43,7 +44,8 @@ function DealDetails() {
 
   const fetchCommentsData = async () => {
     const commentsData = await fetchComments(dealId);
-    sortCommentsByNewest(commentsData, setComments);
+    const sortedComments = sortCommentsByNewest(commentsData);
+    setComments(sortedComments);
   };
 
   const handleSaveChanges = async (editedDealDetails: Partial<Deal>) => {
@@ -76,8 +78,6 @@ function DealDetails() {
   const formatDate = (date: any) => {
     return new Date(date.seconds * 1000).toLocaleString();
   };
-
-  const formattedDateTime = deal?.posted ? formatDate(deal.posted) : "";
 
   useEffect(() => {
     fetchProfileImageData();
@@ -118,7 +118,7 @@ function DealDetails() {
           owner={deal.owner || ""}
           price={deal.price || 0}
           nextBestPrice={deal.nextBestPrice || 0}
-          posted={formattedDateTime}
+          posted={formatDate(deal.posted)}
           shippingCost={deal.shippingCost || 0}
           voucherCode={deal.voucherCode || ""}
           profileUrl={profileUrl}

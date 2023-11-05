@@ -6,6 +6,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "../../../config/firebase";
+import { Comment } from "../../../types";
 
 // Function to post comment
 export const submitComment = async (
