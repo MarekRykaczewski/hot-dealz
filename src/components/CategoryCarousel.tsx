@@ -20,8 +20,11 @@ function CategoryCarousel() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const categories = await fetchCategories();
-      setCategories(categories);
+      const data = await fetchCategories();
+      const transformedCategories: Category[] = data.map((doc) => ({
+        title: doc.title,
+      }));
+      setCategories(transformedCategories);
     };
 
     fetchData();
