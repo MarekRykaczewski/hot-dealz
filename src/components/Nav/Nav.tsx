@@ -1,8 +1,9 @@
+import { User } from "firebase/auth";
 import { FunctionComponent, useRef, useState } from "react";
 import { AiFillFire, AiOutlinePlusCircle } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import { User, UserAuth } from "../../context/AuthContext";
+import { UserAuth } from "../../context/AuthContext";
 import AuthModal from "../Auth/AuthModal";
 import NavAccountMenu from "./NavAccountMenu";
 import NavSearchBar from "./NavSearchBar";
@@ -17,7 +18,7 @@ const Nav: FunctionComponent<NavProps> = ({
   toggleNavAccountMenu,
 }) => {
   const [openAuthModal, setOpenAuthModal] = useState<boolean>(false);
-  const { user }: { user: User } = UserAuth();
+  const { user }: { user: User | null } = UserAuth();
 
   const profileRef = useRef<HTMLDivElement | null>(null);
 
