@@ -54,8 +54,6 @@ function DealCard({
   const { user } = UserAuth();
   const currentUserId = auth.currentUser?.uid;
 
-  console.log("postid", postId);
-
   useEffect(() => {
     if (currentUserId) {
       checkSavedDeal(setHasSaved, currentUserId, postId);
