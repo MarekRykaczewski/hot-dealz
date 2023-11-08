@@ -11,7 +11,7 @@ export async function fetchDeals(): Promise<Deal[]> {
         const dealData = doc.data() as Deal;
         const commentsSnapshot = await getDocs(collection(doc.ref, "comments"));
         const commentsCount = commentsSnapshot.size;
-        return { ...dealData, comments: commentsCount };
+        return { ...dealData, comments: commentsCount, id: doc.id };
       })
     );
     return dealList;
