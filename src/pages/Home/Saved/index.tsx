@@ -3,7 +3,6 @@ import { fetchSavedDeals } from "../../../api/firebase/deals";
 import CategoryCarousel from "../../../components/CategoryCarousel";
 import DealCard from "../../../components/DealCard/DealCard";
 import FooterNav from "../../../components/FooterNav";
-import Tabs from "../../../components/Tabs";
 import { auth } from "../../../config/firebase";
 import { Deal } from "../../../types";
 
@@ -53,7 +52,7 @@ function Saved({ paginate, currentPage }: SavedProps): ReactElement {
         date={formattedDate}
         time={formattedTime}
         voucherCode={item.voucherCode}
-        comments={item.comments}
+        commentsCount={item.comments}
         imageURLs={item.imageURLs}
         userId={item.userId}
         archived={item.archived}
@@ -66,7 +65,6 @@ function Saved({ paginate, currentPage }: SavedProps): ReactElement {
     <div>
       <CategoryCarousel />
       <div className="flex bg-gray-200 flex-col w-full h-screen gap-3 justify-start items-center">
-        <Tabs deals={deals} setDeals={setDeals} />
         {deals.length > 0 ? dealElements : <div> Nothing here! </div>}
         <FooterNav
           paginate={paginate}

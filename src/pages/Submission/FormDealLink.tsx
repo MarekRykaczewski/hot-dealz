@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { AiOutlineLink } from "react-icons/ai";
-import { FormDetails } from "./index";
+import { FormDetails } from "../../types";
 
 interface FormDealLinkProps {
   formDetails: FormDetails;
@@ -32,7 +32,7 @@ function FormDealLink({ formDetails, handleInputChange }: FormDealLinkProps) {
         type="text"
       />
       <span className="text-sm text-red-500 mt-1">
-        {errors.dealLink?.message}
+        {errors.dealLink?.message as any}
       </span>
     </div>
   );

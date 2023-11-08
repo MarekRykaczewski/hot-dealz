@@ -80,7 +80,7 @@ function ProfilePassword() {
               type="password"
             />
             <span className="text-sm text-red-500 mt-1">
-              {errors.confirm_password?.message}
+              {errors.confirm_password?.message as any}
             </span>
           </div>
         )}

@@ -37,7 +37,7 @@ const ProfileUploadImage: React.FC<ProfileUploadImageProps> = ({
       setProfileURL(url);
 
       setProfilePicture(null);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.message);
     }
   };

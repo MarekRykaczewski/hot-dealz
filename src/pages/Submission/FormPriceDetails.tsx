@@ -74,7 +74,7 @@ function FormPriceDetails({
           type="number"
         />
         <span className="text-sm text-red-500 mt-1">
-          {errors.price?.message}
+          {errors.price?.message as any}
         </span>
       </Tooltip>
 
@@ -106,7 +106,7 @@ function FormPriceDetails({
           type="number"
         />
         <span className="text-sm text-red-500 mt-1">
-          {errors.nextBestPrice?.message}
+          {errors.nextBestPrice?.message as any}
         </span>
       </Tooltip>
 
@@ -118,9 +118,10 @@ function FormPriceDetails({
           {...register("shippingCost", {
             min: 0,
             validate: {
-              validValue: (value: number) => {
-                if (value === 0 || /^(\d*\.\d{1,2}|\d+)$/.test(value))
-                  return true;
+              validValue: (value: string) => {
+                const numericValue = parseFloat(value);
+                if (!/^\d+(\.\d{1,2})?$/.test(numericValue.toString()))
+                  return "Invalid decimal value";
                 return "Invalid decimal value";
               },
             },
@@ -135,7 +136,7 @@ function FormPriceDetails({
           disabled={formDetails.freeShipping ? true : false}
         />
         <span className="text-sm text-red-500 mt-1">
-          {errors.shippingCost?.message}
+          {errors.shippingCost?.message as any}
         </span>
       </div>
 

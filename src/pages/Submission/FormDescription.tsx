@@ -51,7 +51,7 @@ function FormDescription({
           placeholder="Here you can describe the deal in your own words and explain to other users why it is a good deal!"
         />
         <span className="text-sm text-red-500 mt-1">
-          {errors.description?.message}
+          {errors.description?.message as any}
         </span>
       </Tooltip>
     </div>

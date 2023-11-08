@@ -1,5 +1,6 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../config/firebase";
+import { Deal } from "../../../types";
 
 export async function fetchSavedDeals(userId: string) {
   try {
@@ -18,12 +19,12 @@ export async function fetchSavedDeals(userId: string) {
     );
     const querySnapshot = await getDocs(dealsQuery);
 
-    const fetchedDeals: { comments: number; id: string }[] = [];
+    const fetchedDeals: Deal[] = [];
     querySnapshot.forEach(async (doc) => {
-      const dealData = doc.data();
+      const dealData = doc.data() as Deal;
       const commentsSnapshot = await getDocs(collection(doc.ref, "comments"));
       const commentsCount = commentsSnapshot.size;
-      fetchedDeals.push({ id: doc.id, ...dealData, comments: commentsCount });
+      fetchedDeals.push({ ...dealData, comments: commentsCount, id: doc.id });
     });
 
     return fetchedDeals;

@@ -49,7 +49,7 @@ function FormTitle({
           type="text"
         />
         <span className="text-sm text-red-500 mt-1">
-          {errors.title?.message}
+          {errors.title?.message as any}
         </span>
       </Tooltip>
     </div>

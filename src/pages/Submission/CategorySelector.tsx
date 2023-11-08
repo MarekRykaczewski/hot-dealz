@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { fetchCategories } from "../../api/firebase/firestore";
+import { Category } from "../../types";
 
-function CategorySelector({ handleInputChange }) {
-  const [categories, setCategories] = useState([]);
+function CategorySelector({
+  handleInputChange,
+}: {
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+  const [categories, setCategories] = useState<Category[]>([]);
   const { register, formState } = useFormContext();
   const { errors } = formState;
 
@@ -21,7 +26,7 @@ function CategorySelector({ handleInputChange }) {
       <input
         {...register("category", { required: "This is required." })}
         value={category.title}
-        onClick={(e) => handleInputChange(e)}
+        onClick={(e) => handleInputChange(e as any)}
         name="category"
         className="peer hidden"
         id={`category-${index}`}
@@ -43,7 +48,7 @@ function CategorySelector({ handleInputChange }) {
       </fieldset>
       {errors.category && (
         <span className="text-sm text-red-500 mt-1">
-          {errors.category.message}
+          {errors.category.message as any}
         </span>
       )}
     </div>

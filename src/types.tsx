@@ -40,3 +40,8 @@ export type FormDetails = {
   voucherCode: string;
   category: string;
 };
+
+export type Category = {
+  id: string;
+  title: string;
+};
