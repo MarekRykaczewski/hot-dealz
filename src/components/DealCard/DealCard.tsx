@@ -27,8 +27,8 @@ interface DealCardProps {
   nextBestPrice: number;
   description: string;
   dealLink: string;
-  voucherCode: string | null;
-  comments: number;
+  voucherCode?: string;
+  commentsCount?: number;
 }
 
 function DealCard({
@@ -46,13 +46,15 @@ function DealCard({
   description,
   dealLink,
   voucherCode,
-  comments,
+  commentsCount,
 }: DealCardProps) {
   const [hasSaved, setHasSaved] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [profileUrl, setProfileUrl] = useState("");
   const { user } = UserAuth();
   const currentUserId = auth.currentUser?.uid;
+
+  console.log("postid", postId);
 
   useEffect(() => {
     if (currentUserId) {
@@ -90,8 +92,7 @@ function DealCard({
               <AiOutlineClockCircle size={"1.6em"} />
               <div className="flex flex-col items-center">
                 <span>
-                  {" "}
-                  {date}, {time}{" "}
+                  {date}, {time}
                 </span>
               </div>
             </div>
@@ -105,14 +106,10 @@ function DealCard({
             <p className="text-orange-500 font-bold"> {price}zł</p>
             <del className=" text-gray-500"> {nextBestPrice}zł</del>
             <p>
-              {" "}
-              -{Math.floor(
-                ((nextBestPrice - price) / nextBestPrice) * 100
-              )}%{" "}
+              -{Math.floor(((nextBestPrice - price) / nextBestPrice) * 100)}%
             </p>
             <p className="flex flex-row text-slate-500 gap-2 items-center text-sm">
-              {" "}
-              <MdOutlineLocalShipping size={26} /> {shippingCost}zł{" "}
+              <MdOutlineLocalShipping size={26} /> {shippingCost}zł
             </p>
           </div>
           {voucherCode && (
@@ -122,8 +119,7 @@ function DealCard({
                 onClick={(e) => copyToClipboard(e)}
                 className="flex border-dashed border-2 border-gray-300 hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-full h-8"
               >
-                {" "}
-                {isCopied ? "Copied!" : voucherCode} <BiCopyAlt size={20} />{" "}
+                {isCopied ? "Copied!" : voucherCode} <BiCopyAlt size={20} />
               </button>
               <button className="flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-full h-8">
                 <a
@@ -132,7 +128,7 @@ function DealCard({
                   target="_blank"
                 >
                   Go to deal
-                  <FiExternalLink />{" "}
+                  <FiExternalLink />
                 </a>
               </button>
             </div>
@@ -166,7 +162,7 @@ function DealCard({
               to={`/deal/${postId}`}
               className="flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8"
             >
-              <BiCommentDetail /> {comments}{" "}
+              <BiCommentDetail /> {commentsCount}
             </Link>
             {!voucherCode && (
               <button className="flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-32 h-8">
@@ -176,7 +172,7 @@ function DealCard({
                   target="_blank"
                 >
                   Go to deal
-                  <FiExternalLink />{" "}
+                  <FiExternalLink />
                 </a>
               </button>
             )}

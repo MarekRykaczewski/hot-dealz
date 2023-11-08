@@ -18,7 +18,7 @@ import { Comment, Deal } from "../../../types";
 import { sortCommentsByNewest } from "../../../utils";
 
 interface Props {
-  currentUserId: string | null;
+  currentUserId?: string;
 }
 
 function DealDetails({ currentUserId }: Props) {

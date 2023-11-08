@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
 import { fetchDeals } from "../../api/firebase/deals";
 import DealCard from "../../components/DealCard/DealCard";
@@ -14,7 +14,7 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [dealsPerPage, setDealsPerPage] = useState(5);
   const { category } = useParams<{ category: string }>();
-  const [currentSorting, setCurrentSorting] = useState("default");
+  const [currentSorting, setCurrentSorting] = useState<any>("newest");
 
   useEffect(() => {
     async function fetchData() {
@@ -34,14 +34,16 @@ function Home() {
 
     if (category) {
       filteredDealsCopy = filteredDealsCopy.filter(
-        (deal) => deal.category.toLowerCase() === category.toLowerCase()
+        (deal) => deal.category?.toLowerCase() === category.toLowerCase()
       );
     }
 
     if (currentSorting === "newest") {
-      filteredDealsCopy.sort((a, b) => b.posted.seconds - a.posted.seconds);
+      filteredDealsCopy.sort(
+        (a, b) => (b.posted?.seconds || 0) - (a.posted?.seconds || 0)
+      );
     } else if (currentSorting === "comments") {
-      filteredDealsCopy.sort((a, b) => b.comments - a.comments);
+      filteredDealsCopy.sort((a, b) => (b.comments || 0) - (a.comments || 0));
     }
 
     setFilteredDeals(filteredDealsCopy);
@@ -53,11 +55,11 @@ function Home() {
   const currentDeals = filteredDeals.slice(indexOfFirstDeal, indexOfLastDeal);
   const totalPages = Math.ceil(filteredDeals.length / dealsPerPage);
 
-  const paginate = (pageNumber) => {
+  const paginate = (pageNumber: SetStateAction<number>) => {
     setCurrentPage(pageNumber);
   };
 
-  function filterDealsByCategory(category, deals) {
+  function filterDealsByCategory(category: string, deals: Deal[]) {
     const dealsCopy = [...deals];
     const filteredDeals = dealsCopy.filter(
       (deal) =>
@@ -67,16 +69,13 @@ function Home() {
   }
 
   const dealElements = currentDeals.map((item) => {
-    const options = {
-      month: "short", // Abbreviated month name (e.g., Jan, Feb)
-      day: "numeric", // Numeric day of the month
-    };
-
     const milliseconds = item.posted.seconds * 1000;
     const date = new Date(milliseconds);
-    const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
-      date
-    );
+    const formattedDate = new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "numeric",
+    }).format(date);
+
     const formattedTime = date.toLocaleTimeString([], { timeStyle: "short" });
 
     return (
@@ -92,7 +91,7 @@ function Home() {
         date={formattedDate}
         time={formattedTime}
         voucherCode={item.voucherCode}
-        comments={item.comments}
+        commentsCount={item.comments}
         userId={item.userId}
         shippingCost={item.shippingCost}
         imageURLs={item.imageURLs}
@@ -133,15 +132,7 @@ function Home() {
         <Route path="/search/:query" element={<Home />} />
         <Route
           path="/saved/*"
-          element={
-            <Saved
-              dealsPerPage={dealsPerPage}
-              paginate={paginate}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              filterDealsByCategory={filterDealsByCategory}
-            />
-          }
+          element={<Saved paginate={paginate} currentPage={currentPage} />}
         />
         <Route path="/category/:category" element={<Home />} />
         <Route path="/deal/:dealId" element={<DealDetails />} />
@@ -155,6 +146,8 @@ function Home() {
               currentPage={currentPage}
               currentSorting={currentSorting}
               setCurrentSorting={setCurrentSorting}
+              deals={deals}
+              setDeals={setDeals}
             />
           }
         />

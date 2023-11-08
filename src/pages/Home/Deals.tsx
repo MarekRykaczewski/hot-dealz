@@ -7,7 +7,7 @@ import { Deal } from "../../types";
 interface DealsProps {
   deals: Deal[];
   setDeals: React.Dispatch<React.SetStateAction<Deal[]>>;
-  currentSorting: "newest" | "comments";
+  currentSorting?: "newest" | "comments";
   setCurrentSorting: React.Dispatch<React.SetStateAction<string>>;
   dealElements: ReactElement[];
   paginate: (pageNumber: number) => void;

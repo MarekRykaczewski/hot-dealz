@@ -1,7 +1,7 @@
 import React from "react";
 
 interface TabsProps {
-  currentSorting: "newest" | "comments";
+  currentSorting?: "newest" | "comments";
   setCurrentSorting: (sorting: "newest" | "comments") => void;
 }
 
