@@ -12,12 +12,12 @@ export type Deal = {
     seconds: number;
   };
   userId: string;
-  comments: number;
+  comments?: number;
   shippingCost: number;
   imageURLs: string[];
   archived: boolean;
   category: string;
-  voucherCode: string;
+  voucherCode?: string;
 };
 
 export type Comment = {
