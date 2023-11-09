@@ -1,7 +1,8 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
 import DealCard from "../../components/DealCard/DealCard";
 import { useDeals } from "../../hooks/useDeals";
+import usePagination from "../../hooks/usePagination";
 import { Deal } from "../../types";
 import Deals from "./Deals";
 import Saved from "./Saved";
@@ -9,12 +10,15 @@ import DealDetails from "./[id]/DealDetails";
 
 function Home() {
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [dealsPerPage, setDealsPerPage] = useState(5);
   const { category } = useParams<{ category: string }>();
   const [currentSorting, setCurrentSorting] = useState<any>("newest");
 
   const { deals, loading } = useDeals();
+  const { currentPage, currentItems, totalPages, paginate } = usePagination(
+    filteredDeals,
+    dealsPerPage
+  );
 
   useEffect(() => {
     let filteredDealsCopy = [...deals];
@@ -34,19 +38,9 @@ function Home() {
     }
 
     setFilteredDeals(filteredDealsCopy);
-    setCurrentPage(1);
   }, [category, deals, currentSorting]);
 
-  const indexOfLastDeal = currentPage * dealsPerPage;
-  const indexOfFirstDeal = indexOfLastDeal - dealsPerPage;
-  const currentDeals = filteredDeals.slice(indexOfFirstDeal, indexOfLastDeal);
-  const totalPages = Math.ceil(filteredDeals.length / dealsPerPage);
-
-  const paginate = (pageNumber: SetStateAction<number>) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const dealElements = currentDeals.map((item) => {
+  const dealElements = currentItems.map((item) => {
     const milliseconds = item.posted.seconds * 1000;
     const date = new Date(milliseconds);
     const formattedDate = new Intl.DateTimeFormat("en-US", {
