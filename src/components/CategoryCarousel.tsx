@@ -1,14 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { fetchCategories } from "../api/firebase/firestore";
-
-interface Category {
-  title: string;
-}
+import { useCategories } from "../hooks/useCategories";
 
 function CategoryCarousel() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const { categories } = useCategories();
 
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -17,18 +13,6 @@ function CategoryCarousel() {
       ref.current.scrollLeft += scrollOffset;
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchCategories();
-      const transformedCategories: Category[] = data.map((doc) => ({
-        title: doc.title,
-      }));
-      setCategories(transformedCategories);
-    };
-
-    fetchData();
-  }, []);
 
   const items = categories.map((item) => (
     <Link
