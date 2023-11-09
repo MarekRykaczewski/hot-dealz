@@ -9,7 +9,7 @@ interface DealCardDetailedProps {
   dealId: string;
   isArchived: boolean;
   imageURLs: string[];
-  posted: string;
+  posted: Date;
   title: string;
   price: number;
   nextBestPrice: number;
@@ -47,6 +47,28 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
     }, 2000);
   };
 
+  const formatPostedDate = (posted: Date) => {
+    const postedDate: Date = new Date(posted);
+    const currentDate: Date = new Date();
+
+    const timeDifference = currentDate.getTime() - postedDate.getTime();
+    const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
+
+    if (hoursDifference < 24) {
+      return `Deal shared ${hoursDifference} hours ago`;
+    } else {
+      const options = {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      };
+      return `Deal shared on ${postedDate.toLocaleDateString(
+        "en-US",
+        options as any
+      )}`;
+    }
+  };
+
   return (
     <div
       className={`${
@@ -58,26 +80,22 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
       </div>
       <div className="bg-white p-4 flex flex-col w-full max-w-3xl">
         <div className="text-sm text-gray-600 flex flex-col items-start gap-3">
-          <div className="flex flex-row-reverse w-full gap-2 items-center">
-            <div>
-              <div className="flex flex-col items-center text-lg">
-                {posted && <span> {posted} </span>}
-              </div>
-            </div>
-            <button className="flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-2/3 h-8">
+          <div className="flex w-full gap-2 items-center justify-between">
+            <DealCardVotes postId={dealId} archived={isArchived} />
+            <button className="flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-1/3 h-8">
               Share
             </button>
-            <DealCardVotes postId={dealId} archived={isArchived} />
+          </div>
+          <div className="flex flex-col items-center text-sm">
+            {posted && <span>{formatPostedDate(posted)}</span>}
           </div>
           <div className="text-gray-900 font-bold text-3xl mb-2">{title}</div>
           <div className="flex gap-3 items-center w-full">
             <p className="text-orange-500 font-bold text-3xl"> {price}zł</p>
-            <del className=" text-gray-500 font-bold text-3xl">
-              {" "}
-              {nextBestPrice}zł{" "}
+            <del className="text-gray-500 font-bold text-3xl">
+              {nextBestPrice}zł
             </del>
             <p className="text-3xl">
-              {" "}
               -{Math.floor(((+nextBestPrice - +price) / +nextBestPrice) * 100)}%
             </p>
             <p className="flex flex-row text-xl text-slate-500 gap-2 items-center ml-auto">
@@ -92,8 +110,7 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
                 href={dealLink}
                 target="_blank"
               >
-                Go to deal
-                <FiExternalLink />
+                Go to deal <FiExternalLink />
               </a>
             </button>
             {voucherCode && (
@@ -103,15 +120,18 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
                   onClick={(e) => copyToClipboard(e)}
                   className="flex border-dashed border-2 border-gray-300 hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-full h-8"
                 >
-                  {" "}
-                  {isCopied ? "Copied!" : voucherCode} <BiCopyAlt size={20} />{" "}
+                  {isCopied ? "Copied!" : voucherCode} <BiCopyAlt size={20} />
                 </button>
               </div>
             )}
           </div>
           <div className="flex items-center justify-between gap-5">
             <div className="flex justify-center items-center">
-              <img className="w-10 h-10 rounded-full mr-4" src={profileUrl} />
+              <img
+                className="w-10 h-10 rounded-full mr-4"
+                src={profileUrl}
+                alt="Profile"
+              />
               <div className="text-sm">
                 <p className="text-gray-900 leading-none">Shared by {owner}</p>
               </div>
