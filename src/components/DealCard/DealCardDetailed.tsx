@@ -58,12 +58,15 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
       </div>
       <div className="bg-white p-4 flex flex-col w-full max-w-3xl">
         <div className="text-sm text-gray-600 flex flex-col items-start gap-3">
-          <div className="flex flex-row-reverse w-full justify-between gap-2 items-center">
+          <div className="flex flex-row-reverse w-full gap-2 items-center">
             <div>
               <div className="flex flex-col items-center text-lg">
                 {posted && <span> {posted} </span>}
               </div>
             </div>
+            <button className="flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-2/3 h-8">
+              Share
+            </button>
             <DealCardVotes postId={dealId} archived={isArchived} />
           </div>
           <div className="text-gray-900 font-bold text-3xl mb-2">{title}</div>
