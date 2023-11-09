@@ -94,7 +94,7 @@ function DealCardVotes({ postId, archived }: DealCardVotesProps) {
 
   if (archived) {
     return (
-      <div className="relative flex justify-center items-center gap-5 rounded-l-full rounded-r-full border w-36 h-8 py-4 mb-2">
+      <div className="relative flex justify-center items-center gap-5 rounded-l-full rounded-r-full border w-36 h-8 py-4">
         <span className="font-bold text-lg">
           {" "}
           {likes.length - dislikes.length || 0}{" "}
@@ -108,7 +108,7 @@ function DealCardVotes({ postId, archived }: DealCardVotesProps) {
   }
 
   return (
-    <div className="relative flex justify-between items-center gap-2 rounded-l-full rounded-r-full border w-28 h-8 py-4 mb-2">
+    <div className="relative flex justify-between items-center gap-2 rounded-l-full rounded-r-full border w-28 h-8 py-4">
       <VoteButton
         onClick={() => handleVoteClick("dislike")}
         disabled={userDisliked}
