@@ -107,7 +107,8 @@ function DealCard({
               -{Math.floor(((nextBestPrice - price) / nextBestPrice) * 100)}%
             </p>
             <p className="flex flex-row text-slate-500 gap-2 items-center text-sm">
-              <MdOutlineLocalShipping size={26} /> {shippingCost}zł
+              <MdOutlineLocalShipping size={26} /> {shippingCost}
+              {shippingCost ? "zł" : "Free Shipping"}
             </p>
           </div>
           {voucherCode && (
