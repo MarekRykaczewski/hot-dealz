@@ -46,15 +46,6 @@ function Home() {
     setCurrentPage(pageNumber);
   };
 
-  function filterDealsByCategory(category: string, deals: Deal[]) {
-    const dealsCopy = [...deals];
-    const filteredDeals = dealsCopy.filter(
-      (deal) =>
-        deal.category && deal.category.toLowerCase() === category.toLowerCase()
-    );
-    return filteredDeals;
-  }
-
   const dealElements = currentDeals.map((item) => {
     const milliseconds = item.posted.seconds * 1000;
     const date = new Date(milliseconds);
