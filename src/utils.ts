@@ -45,3 +45,26 @@ export const sortCommentsByLikes = (
   });
   setComments(commentsCopy);
 };
+
+export const formatPostedDate = (posted: {
+  seconds: number;
+  nanoseconds: number;
+}) => {
+  const seconds = posted.seconds;
+  const nanoseconds = posted.nanoseconds;
+
+  if (seconds < 86400) {
+    return `Deal shared ${Math.floor(seconds / 3600)} hours ago`;
+  } else {
+    const postedDate = new Date(seconds * 1000 + nanoseconds / 1000000);
+    const options = {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    };
+    return `Deal shared on ${postedDate.toLocaleDateString(
+      "en-US",
+      options as any
+    )}`;
+  }
+};

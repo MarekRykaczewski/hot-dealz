@@ -10,6 +10,7 @@ export type Deal = {
   description: string;
   posted: {
     seconds: number;
+    nanoseconds: number;
   };
   userId: string;
   comments?: number;

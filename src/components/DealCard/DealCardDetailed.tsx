@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BiCopyAlt } from "react-icons/bi";
 import { FiExternalLink } from "react-icons/fi";
 import { MdOutlineLocalShipping } from "react-icons/md";
+import { formatPostedDate } from "../../utils";
 import ImageSlider from "../ImageSlider";
 import DealCardVotes from "./DealCardVotes";
 
@@ -9,7 +10,10 @@ interface DealCardDetailedProps {
   dealId: string;
   isArchived: boolean;
   imageURLs: string[];
-  posted: Date;
+  posted: {
+    seconds: number;
+    nanoseconds: number;
+  };
   title: string;
   price: number;
   nextBestPrice: number;
@@ -45,28 +49,6 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
     setTimeout(() => {
       setIsCopied(false);
     }, 2000);
-  };
-
-  const formatPostedDate = (posted: Date) => {
-    const postedDate: Date = new Date(posted);
-    const currentDate: Date = new Date();
-
-    const timeDifference = currentDate.getTime() - postedDate.getTime();
-    const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
-
-    if (hoursDifference < 24) {
-      return `Deal shared ${hoursDifference} hours ago`;
-    } else {
-      const options = {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      };
-      return `Deal shared on ${postedDate.toLocaleDateString(
-        "en-US",
-        options as any
-      )}`;
-    }
   };
 
   return (

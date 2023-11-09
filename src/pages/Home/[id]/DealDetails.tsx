@@ -57,10 +57,6 @@ function DealDetails({ currentUserId }: Props) {
     }
   };
 
-  const formatDate = (date: any) => {
-    return new Date(date.seconds * 1000).toLocaleString();
-  };
-
   useEffect(() => {
     fetchProfileImageData();
   }, [currentUserId]);
@@ -97,7 +93,7 @@ function DealDetails({ currentUserId }: Props) {
           owner={deal.owner || ""}
           price={deal.price || 0}
           nextBestPrice={deal.nextBestPrice || 0}
-          posted={formatDate(deal.posted)}
+          posted={deal.posted}
           shippingCost={deal.shippingCost || 0}
           voucherCode={deal.voucherCode || ""}
           profileUrl={profileUrl}
