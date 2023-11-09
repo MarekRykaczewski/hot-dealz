@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { BiCommentDetail } from "react-icons/bi";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
-import { fetchComments, fetchDealData } from "../../../api/firebase/deals";
+import { fetchComments } from "../../../api/firebase/deals";
 import {
   archiveDeal,
   checkSavedDeal,
@@ -14,6 +14,7 @@ import CommentSection from "../../../components/CommentSection";
 import DealCardControls from "../../../components/DealCard/DealCardControls";
 import DealCardDetailed from "../../../components/DealCard/DealCardDetailed";
 import EditDealFormModal from "../../../components/DealCard/EditDealFormModal";
+import { useDealDetails } from "../../../hooks/useDealDetails";
 import { Comment, Deal } from "../../../types";
 import { sortCommentsByNewest } from "../../../utils";
 
@@ -23,7 +24,6 @@ interface Props {
 
 function DealDetails({ currentUserId }: Props) {
   const [hasSaved, setHasSaved] = useState(false);
-  const [deal, setDeal] = useState<Deal | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const commentInput = useRef<HTMLTextAreaElement | null>(null);
   const [profileUrl, setProfileUrl] = useState<string>("");
@@ -31,16 +31,7 @@ function DealDetails({ currentUserId }: Props) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const { dealId } = useParams<{ dealId: string }>();
-
-  const fetchData = async (dealId: string) => {
-    const specificDeal = (await fetchDealData(dealId)) as Deal;
-    if (specificDeal) {
-      setDeal(specificDeal);
-      setIsArchived(specificDeal.archived);
-    } else {
-      setDeal(null);
-    }
-  };
+  const deal = useDealDetails(dealId || "");
 
   const fetchCommentsData = async () => {
     if (!dealId) return;
@@ -84,10 +75,6 @@ function DealDetails({ currentUserId }: Props) {
   useEffect(() => {
     fetchProfileImageData();
   }, [currentUserId]);
-
-  useEffect(() => {
-    if (dealId) fetchData(dealId);
-  }, [dealId]);
 
   useEffect(() => {
     if (!dealId) return;
