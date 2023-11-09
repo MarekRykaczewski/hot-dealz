@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { RxDotFilled } from "react-icons/rx";
-import { getImages } from "../api/firebase/storage";
-
-type Slide = {
-  url: string;
-};
+import useImageLoader from "../hooks/useImageLoader";
 
 type ImageSliderProps = {
   dealId: string;
@@ -13,9 +9,8 @@ type ImageSliderProps = {
 };
 
 function ImageSlider({ imageURLs }: ImageSliderProps) {
-  const [slides, setSlides] = useState<Slide[]>([]);
+  const { slides, loading } = useImageLoader(imageURLs);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
@@ -32,21 +27,6 @@ function ImageSlider({ imageURLs }: ImageSliderProps) {
   const goToSlide = (slideIndex: number) => {
     setCurrentIndex(slideIndex);
   };
-
-  useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const imageList = await getImages(imageURLs);
-        setSlides(imageList);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching images:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchImages();
-  }, [imageURLs]);
 
   if (loading) {
     return <div>Loading</div>;

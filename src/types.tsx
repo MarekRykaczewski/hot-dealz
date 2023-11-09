@@ -45,3 +45,7 @@ export type Category = {
   id: string;
   title: string;
 };
+
+export type Slide = {
+  url: string;
+};
