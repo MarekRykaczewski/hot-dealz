@@ -7,6 +7,7 @@ import ImageSlider from "../ImageSlider";
 import DealCardVotes from "./DealCardVotes";
 
 interface DealCardDetailedProps {
+  profileUrl: string;
   dealId: string;
   isArchived: boolean;
   imageURLs: string[];
@@ -19,7 +20,6 @@ interface DealCardDetailedProps {
   nextBestPrice: number;
   shippingCost: number;
   dealLink: string;
-  profileUrl: string;
   owner: string;
   voucherCode?: string;
 }
@@ -34,9 +34,9 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
   nextBestPrice,
   shippingCost,
   dealLink,
-  profileUrl,
   owner,
   voucherCode,
+  profileUrl,
 }) => {
   const [isCopied, setIsCopied] = useState(false);
 
@@ -50,6 +50,8 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
       setIsCopied(false);
     }, 2000);
   };
+
+  console.log(profileUrl);
 
   return (
     <div
@@ -109,11 +111,13 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
           </div>
           <div className="flex items-center justify-between gap-5">
             <div className="flex justify-center items-center">
-              <img
-                className="w-10 h-10 rounded-full mr-4"
-                src={profileUrl}
-                alt="Profile"
-              />
+              {
+                <img
+                  className="w-10 h-10 rounded-full mr-4"
+                  src={profileUrl}
+                  alt="Profile"
+                />
+              }
               <div className="text-sm">
                 <p className="text-gray-900 leading-none">Shared by {owner}</p>
               </div>

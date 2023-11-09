@@ -8,7 +8,7 @@ import {
   toggleSaved,
   updateDealDetails,
 } from "../../../api/firebase/firestore";
-import { fetchProfileImageById } from "../../../api/firebase/users";
+import { fetchProfileImageUrl } from "../../../api/firebase/storage";
 import CommentSection from "../../../components/CommentSection";
 import DealCardControls from "../../../components/DealCard/DealCardControls";
 import DealCardDetailed from "../../../components/DealCard/DealCardDetailed";
@@ -49,17 +49,15 @@ function DealDetails({ currentUserId }: Props) {
   };
 
   const fetchProfileImageData = async () => {
-    if (currentUserId) {
-      const imageUrl = await fetchProfileImageById(currentUserId);
-      if (imageUrl) {
-        setProfileUrl(imageUrl);
-      }
+    const imageUrl = await fetchProfileImageUrl(deal?.userId!);
+    if (imageUrl) {
+      setProfileUrl(imageUrl);
     }
   };
 
   useEffect(() => {
     fetchProfileImageData();
-  }, [currentUserId]);
+  }, []);
 
   useEffect(() => {
     if (!dealId) return;

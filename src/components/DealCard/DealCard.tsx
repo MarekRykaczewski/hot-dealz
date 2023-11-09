@@ -7,7 +7,7 @@ import { MdOutlineLocalShipping } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { checkSavedDeal } from "../../api/firebase/firestore/checkSavedDeal";
 import { toggleSaved } from "../../api/firebase/firestore/toggleSaved";
-import { fetchProfileImage } from "../../api/firebase/storage";
+import { fetchProfileImageUrl } from "../../api/firebase/storage";
 import { auth } from "../../config/firebase";
 import { UserAuth } from "../../context/AuthContext";
 import ImageSlider from "../ImageSlider";
@@ -61,7 +61,12 @@ function DealCard({
   }, [postId, currentUserId]);
 
   useEffect(() => {
-    fetchProfileImage(userId, setProfileUrl);
+    const fetchProfileImage = async () => {
+      const profileImageUrl = await fetchProfileImageUrl(userId);
+      setProfileUrl(profileImageUrl);
+    };
+
+    fetchProfileImage();
   }, [userId]);
 
   const copyToClipboard = (e: React.MouseEvent<HTMLButtonElement>) => {
