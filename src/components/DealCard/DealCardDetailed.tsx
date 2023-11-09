@@ -51,8 +51,6 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
     }, 2000);
   };
 
-  console.log(profileUrl);
-
   return (
     <div
       className={`${
