@@ -1,33 +1,20 @@
 import { SetStateAction, useEffect, useState } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
-import { fetchDeals } from "../../api/firebase/deals";
 import DealCard from "../../components/DealCard/DealCard";
+import { useDeals } from "../../hooks/useDeals";
 import { Deal } from "../../types";
 import Deals from "./Deals";
 import Saved from "./Saved";
 import DealDetails from "./[id]/DealDetails";
 
 function Home() {
-  const [deals, setDeals] = useState<Deal[]>([]);
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>([]);
-  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [dealsPerPage, setDealsPerPage] = useState(5);
   const { category } = useParams<{ category: string }>();
   const [currentSorting, setCurrentSorting] = useState<any>("newest");
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const dealList = await fetchDeals();
-        setDeals(dealList);
-        setLoading(false);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    fetchData();
-  }, []);
+  const { deals, loading } = useDeals();
 
   useEffect(() => {
     let filteredDealsCopy = [...deals];
@@ -147,7 +134,6 @@ function Home() {
               currentSorting={currentSorting}
               setCurrentSorting={setCurrentSorting}
               deals={deals}
-              setDeals={setDeals}
             />
           }
         />
