@@ -43,7 +43,7 @@ function DealDetails({ currentUserId }: Props) {
 
   const handleArchiveClick = async () => {
     if (dealId) {
-      const success = await archiveDeal(dealId, !isArchived);
+      const success = await archiveDeal(dealId, isArchived);
       if (success) {
         setIsArchived((prevIsArchived) => !prevIsArchived);
       }
