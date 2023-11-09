@@ -13,6 +13,7 @@ import CommentSection from "../../../components/CommentSection";
 import DealCardControls from "../../../components/DealCard/DealCardControls";
 import DealCardDetailed from "../../../components/DealCard/DealCardDetailed";
 import EditDealFormModal from "../../../components/DealCard/EditDealFormModal";
+import { UserAuth } from "../../../context/AuthContext";
 import { useDealDetails } from "../../../hooks/useDealDetails";
 import { Deal } from "../../../types";
 
@@ -29,6 +30,7 @@ function DealDetails({ currentUserId }: Props) {
 
   const { dealId } = useParams<{ dealId: string }>();
   const deal = useDealDetails(dealId || "");
+  const { user } = UserAuth();
 
   const handleSaveChanges = async (editedDealDetails: Partial<Deal>) => {
     if (dealId) {
@@ -124,8 +126,8 @@ function DealDetails({ currentUserId }: Props) {
           </button>
           <button
             onClick={() => {
-              if (!currentUserId) return;
-              toggleSaved(hasSaved, setHasSaved, currentUserId, dealId || "");
+              if (!user) return;
+              toggleSaved(hasSaved, setHasSaved, user.uid, dealId || "");
             }}
             className="flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition"
           >
