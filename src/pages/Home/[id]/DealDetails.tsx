@@ -13,7 +13,6 @@ import CommentSection from "../../../components/CommentSection";
 import DealCardControls from "../../../components/DealCard/DealCardControls";
 import DealCardDetailed from "../../../components/DealCard/DealCardDetailed";
 import EditDealFormModal from "../../../components/DealCard/EditDealFormModal";
-import { useCommentsData } from "../../../hooks/useCommentsData";
 import { useDealDetails } from "../../../hooks/useDealDetails";
 import { Deal } from "../../../types";
 
@@ -30,7 +29,6 @@ function DealDetails({ currentUserId }: Props) {
 
   const { dealId } = useParams<{ dealId: string }>();
   const deal = useDealDetails(dealId || "");
-  const { comments, setComments } = useCommentsData(dealId);
 
   const handleSaveChanges = async (editedDealDetails: Partial<Deal>) => {
     if (dealId) {
@@ -141,12 +139,7 @@ function DealDetails({ currentUserId }: Props) {
           </button>
         </div>
       </div>
-      <CommentSection
-        commentInput={commentInput}
-        postId={dealId || ""}
-        comments={comments}
-        setComments={setComments}
-      />
+      <CommentSection commentInput={commentInput} postId={dealId || ""} />
     </div>
   );
 }

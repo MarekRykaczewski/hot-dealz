@@ -1,24 +1,18 @@
-import React, { ChangeEvent, RefObject, useState } from "react";
+import { ChangeEvent, RefObject, useState } from "react";
 import { submitComment } from "../api/firebase/comments";
 import { UserAuth } from "../context/AuthContext";
-import { Comment } from "../types";
+import { useCommentsData } from "../hooks/useCommentsData";
 import { sortCommentsByLikes, sortCommentsByNewest } from "../utils";
 import CommentCard from "./CommentCard";
 
 interface CommentSectionProps {
   postId: string;
-  comments: Comment[];
-  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
   commentInput: RefObject<HTMLTextAreaElement>;
 }
 
-function CommentSection({
-  postId,
-  comments,
-  setComments,
-  commentInput,
-}: CommentSectionProps) {
+function CommentSection({ postId, commentInput }: CommentSectionProps) {
   const { user, userData } = UserAuth();
+  const { comments, setComments } = useCommentsData(postId);
 
   const [comment, setComment] = useState<string>("");
 
