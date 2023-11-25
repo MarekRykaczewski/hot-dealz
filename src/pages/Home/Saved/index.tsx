@@ -1,23 +1,27 @@
-import { ReactElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchSavedDeals } from "../../../api/firebase/deals";
 import CategoryCarousel from "../../../components/CategoryCarousel";
 import DealCard from "../../../components/DealCard/DealCard";
 import FooterNav from "../../../components/FooterNav";
+import Tabs from "../../../components/Tabs";
 import { auth } from "../../../config/firebase";
+import usePagination from "../../../hooks/usePagination";
 import { Deal } from "../../../types";
 
-interface SavedProps {
-  paginate: (pageNumber: number) => void;
-  currentPage: number;
-}
-
-function Saved({ paginate, currentPage }: SavedProps): ReactElement {
+function Saved() {
+  const [filteredDeals, setFilteredDeals] = useState<Deal[]>([]);
   const [deals, setDeals] = useState<Deal[]>([]);
   const [dealsPerPage, setDealsPerPage] = useState(5);
+  const [currentSorting, setCurrentSorting] = useState<any>("newest");
 
   const userId = auth.currentUser?.uid;
 
-  const totalPages = Math.ceil(deals.length / dealsPerPage);
+  const { currentPage, currentItems, totalPages, paginate } = usePagination(
+    filteredDeals,
+    dealsPerPage
+  );
+
+  console.log(deals);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,6 +69,10 @@ function Saved({ paginate, currentPage }: SavedProps): ReactElement {
     <div>
       <CategoryCarousel />
       <div className="flex bg-gray-200 flex-col w-full h-screen gap-3 justify-start items-center">
+        <Tabs
+          currentSorting={currentSorting}
+          setCurrentSorting={setCurrentSorting}
+        />
         {deals.length > 0 ? dealElements : <div> Nothing here! </div>}
         <FooterNav
           paginate={paginate}
