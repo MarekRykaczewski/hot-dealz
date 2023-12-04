@@ -31,4 +31,5 @@ dataimport
 .firebaserc
 firebase.json
 
-
+# Env
+.env
