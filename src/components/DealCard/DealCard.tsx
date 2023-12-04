@@ -12,6 +12,7 @@ import { auth } from "../../config/firebase";
 import { UserAuth } from "../../context/AuthContext";
 import ImageSlider from "../ImageSlider";
 import DealCardVotes from "./DealCardVotes";
+import { copyToClipboard } from "../../utilities/copyToClipboard";
 
 interface DealCardProps {
   userId: string;
@@ -69,13 +70,8 @@ function DealCard({
     fetchProfileImage();
   }, [userId]);
 
-  const copyToClipboard = (e: React.MouseEvent<HTMLButtonElement>) => {
-    navigator.clipboard.writeText(e.currentTarget.value);
-    setIsCopied(true);
-
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 2000);
+  const handleCopyToClipboard = (text: string) => {
+    copyToClipboard(text, setIsCopied);
   };
 
   return (
@@ -120,7 +116,7 @@ function DealCard({
             <div className="mb-2 mt-2 flex gap-3 w-full text-gray-60">
               <button
                 value={voucherCode}
-                onClick={(e) => copyToClipboard(e)}
+                onClick={(e) => handleCopyToClipboard(e.target.value)}
                 className="flex border-dashed border-2 border-gray-300 hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-full h-8"
               >
                 {isCopied ? "Copied!" : voucherCode} <BiCopyAlt size={20} />
