@@ -17,11 +17,7 @@ import { UserAuth } from "../../../context/AuthContext";
 import { useDealDetails } from "../../../hooks/useDealDetails";
 import { Deal } from "../../../types";
 
-interface Props {
-  currentUserId?: string;
-}
-
-function DealDetails({ currentUserId }: Props) {
+function DealDetails() {
   const [hasSaved, setHasSaved] = useState(false);
   const commentInput = useRef<HTMLTextAreaElement | null>(null);
   const [profileUrl, setProfileUrl] = useState<string>("");
@@ -31,6 +27,8 @@ function DealDetails({ currentUserId }: Props) {
   const { dealId } = useParams<{ dealId: string }>();
   const deal = useDealDetails(dealId || "");
   const { user } = UserAuth();
+  const currentUserId = user!.uid;
+  const isOwner = currentUserId === deal?.userId;
 
   const handleSaveChanges = async (editedDealDetails: Partial<Deal>) => {
     if (dealId) {
@@ -73,8 +71,6 @@ function DealDetails({ currentUserId }: Props) {
       setIsArchived(deal.archived);
     }
   }, [deal]);
-
-  const isOwner = currentUserId === deal?.userId;
 
   return (
     <div className="bg-slate-200 h-screen w-full flex flex-col ml-auto mr-auto items-center justify-start">
