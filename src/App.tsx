@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Settings/Profile";
 import Submission from "./pages/Submission";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const [openNavAccountMenu, setOpenNavAccountMenu] = useState<boolean>(false); // Add the type for useState
@@ -23,9 +24,11 @@ function App() {
         />
         <Routes>
           <Route path="*" element={<Home />} />
-          <Route path="/submission" element={<Submission />} />
-          <Route path="/settings" element={<Settings />}>
-            <Route path="/settings/profile" element={<Profile />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/submission" element={<Submission />} />
+            <Route path="/settings" element={<Settings />}>
+              <Route path="/settings/profile" element={<Profile />} />
+            </Route>
           </Route>
         </Routes>
       </AuthContextProvider>
