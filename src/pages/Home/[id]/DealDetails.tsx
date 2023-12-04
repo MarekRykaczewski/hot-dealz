@@ -78,7 +78,7 @@ function DealDetails({ currentUserId }: Props) {
 
   return (
     <div className="bg-slate-200 h-screen w-full flex flex-col ml-auto mr-auto items-center justify-start">
-      {!isOwner && (
+      {isOwner && (
         <DealCardControls
           onEditClick={() => setIsEditModalOpen(true)}
           isArchived={isArchived}
