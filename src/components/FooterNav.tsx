@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiFillFacebook,
   AiFillInstagram,
@@ -19,13 +19,37 @@ const FooterNav: React.FC<FooterNavProps> = ({
   totalPages,
 }) => {
   const [showFooter, setShowFooter] = useState(false);
+  const [showFooterDetails, setShowFooterDetails] = useState(false);
 
   const toggleFooter = () => {
-    setShowFooter(!showFooter);
+    setShowFooterDetails(!showFooterDetails);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if the user has scrolled down a certain amount
+      const shouldShowFooter = window.scrollY > 200;
+
+      setShowFooter(shouldShowFooter);
+    };
+
+    // Attach the scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="sticky item mt-auto bottom-0 w-full bg-white border-t-2 border-gray-300">
+    <div
+      className={`sticky bottom-0 w-full bg-white border-t-2 border-gray-300 transition-opacity duration-300 ease-in-out ${
+        showFooter || showFooterDetails
+          ? "opacity-100"
+          : "opacity-0 pointer-events-none"
+      }`}
+    >
       <div className="flex text-lg font-semibold text-slate-600 items-center justify-between py-4 px-8">
         <button
           className="hover:text-orange-500 transition"
@@ -84,9 +108,11 @@ const FooterNav: React.FC<FooterNavProps> = ({
             </ul>
           </nav>
         </div>
-        <button onClick={toggleFooter}>{showFooter ? "Hide" : "Show"}</button>
+        <button onClick={toggleFooter}>
+          {showFooterDetails ? "Hide" : "Show"}
+        </button>
       </div>
-      {showFooter && (
+      {showFooterDetails && (
         <div className="flex flex-col items-center p-4 text-white bg-slate-700">
           <div className="mb-4">
             <h1 className="text-xl font-bold">
