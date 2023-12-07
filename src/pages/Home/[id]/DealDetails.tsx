@@ -27,7 +27,7 @@ function DealDetails() {
   const { dealId } = useParams<{ dealId: string }>();
   const deal = useDealDetails(dealId || "");
   const { user } = UserAuth();
-  const currentUserId = user!.uid;
+  const currentUserId = user?.uid;
   const isOwner = currentUserId === deal?.userId;
 
   const handleSaveChanges = async (editedDealDetails: Partial<Deal>) => {
