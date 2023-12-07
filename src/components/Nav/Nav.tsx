@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import { FunctionComponent, useRef, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { AiFillFire, AiOutlinePlusCircle } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
@@ -19,12 +19,32 @@ const Nav: FunctionComponent<NavProps> = ({
 }) => {
   const [openAuthModal, setOpenAuthModal] = useState<boolean>(false);
   const { user }: { user: User | null } = UserAuth();
-
+  const [scrollingDown, setScrollingDown] = useState<boolean>(false);
+  const [lastScrollY, setLastScrollY] = useState<number>(0);
   const profileRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      setScrollingDown(currentScrollY > lastScrollY);
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
 
   return (
     <>
-      <nav className="relative bg-slate-700 px-6 py-3">
+      <nav
+        className={`sticky top-0 z-50 bg-slate-700 px-6 py-3 transition-opacity duration-500 ${
+          scrollingDown ? "opacity-0" : "opacity-100"
+        }`}
+      >
         <div className="max-w-[80em] ml-auto mr-auto flex sm:flex-row flex-row sm:items-center gap-3 items-center justify-between">
           <div className="flex flex-row flex-wrap gap-3 items-center justify-between w-full">
             <Link
