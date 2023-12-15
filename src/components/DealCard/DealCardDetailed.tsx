@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BiCopyAlt } from "react-icons/bi";
 import { FiExternalLink } from "react-icons/fi";
 import { MdOutlineLocalShipping } from "react-icons/md";
@@ -6,6 +6,9 @@ import { formatPostedDate } from "../../utils";
 import ImageSlider from "../ImageSlider";
 import DealCardVotes from "./DealCardVotes";
 import { copyToClipboard } from "../../utilities/copyToClipboard";
+import { FaFacebook, FaCopy } from "react-icons/fa";
+import { BsTwitterX } from "react-icons/bs";
+import { CiShare2 } from "react-icons/ci";
 
 interface DealCardDetailedProps {
   profileUrl: string;
@@ -40,10 +43,34 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
   profileUrl,
 }) => {
   const [isCopied, setIsCopied] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const shareButtonRef = useRef(null);
 
   const handleCopyToClipboard = (text: string) => {
     copyToClipboard(text, setIsCopied);
   };
+
+  const handleShareButtonClick = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node) &&
+      event.target !== shareButtonRef.current
+    ) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div
@@ -57,10 +84,38 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
       <div className="bg-white p-4 flex flex-col w-full max-w-3xl">
         <div className="text-sm text-gray-600 flex flex-col items-start gap-3">
           <div className="flex w-full gap-2 items-center justify-between">
-            <DealCardVotes postId={dealId} archived={isArchived} />
-            <button className="flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-1/3 h-8">
-              Share
-            </button>
+            <div className="w-1/2">
+              <DealCardVotes postId={dealId} archived={isArchived} />
+            </div>
+            <div className="relative flex justify-end w-1/2">
+              <button
+                ref={shareButtonRef}
+                onClick={handleShareButtonClick}
+                className="flex gap-2 font-bold border w-full hover:bg-gray-100 transition items-center justify-center rounded-full h-8"
+              >
+                <CiShare2 size={24} />
+                Share
+              </button>
+              {isDropdownOpen && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute overflow-hidden w-full font-bold top-full left-0 mt-2 bg-white border rounded-lg shadow-md"
+                >
+                  <button className="flex hover:text-orange-500 transition-all items-center justify-center gap-2 w-full text-left p-2">
+                    <FaFacebook size={18} />
+                    <span>Facebook</span>
+                  </button>
+                  <button className="flex hover:text-orange-500 transition-all items-center justify-center gap-2 w-full text-left p-2">
+                    <BsTwitterX size={18} />
+                    <span>X (Twitter)</span>
+                  </button>
+                  <button className="flex hover:text-orange-500 transition-all items-center justify-center gap-2 w-full text-left p-2">
+                    <FaCopy size={18} />
+                    <span>Copy Link</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex flex-col items-center text-sm">
             {posted && <span>{formatPostedDate(posted)}</span>}
