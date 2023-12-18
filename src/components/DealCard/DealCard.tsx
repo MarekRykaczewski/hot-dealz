@@ -71,7 +71,13 @@ function DealCard({
   }, [userId]);
 
   const handleCopyToClipboard = (text: string) => {
-    copyToClipboard(text, setIsCopied);
+    copyToClipboard(text);
+
+    setIsCopied(true);
+
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
   };
 
   return (

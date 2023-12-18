@@ -48,11 +48,37 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
   const shareButtonRef = useRef(null);
 
   const handleCopyToClipboard = (text: string) => {
-    copyToClipboard(text, setIsCopied);
+    copyToClipboard(text);
+    setIsCopied(true);
+
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
   };
 
   const handleShareButtonClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleFacebookShare = () => {
+    const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      dealLink
+    )}`;
+    window.open(shareUrl, "_blank");
+    setIsDropdownOpen(false);
+  };
+
+  const handleTwitterShare = () => {
+    const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+      dealLink
+    )}&text=${encodeURIComponent(title)}`;
+    window.open(shareUrl, "_blank");
+    setIsDropdownOpen(false);
+  };
+
+  const handleCopyLink = () => {
+    copyToClipboard(dealLink);
+    setIsDropdownOpen(false);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -101,15 +127,24 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
                   ref={dropdownRef}
                   className="absolute overflow-hidden w-full font-bold top-full left-0 mt-2 bg-white border rounded-lg shadow-md"
                 >
-                  <button className="flex hover:text-orange-500 transition-all items-center justify-center gap-2 w-full text-left p-2">
+                  <button
+                    onClick={handleFacebookShare}
+                    className="flex hover:text-orange-500 transition-all items-center justify-center gap-2 w-full text-left p-2"
+                  >
                     <FaFacebook size={18} />
                     <span>Facebook</span>
                   </button>
-                  <button className="flex hover:text-orange-500 transition-all items-center justify-center gap-2 w-full text-left p-2">
+                  <button
+                    onClick={handleTwitterShare}
+                    className="flex hover:text-orange-500 transition-all items-center justify-center gap-2 w-full text-left p-2"
+                  >
                     <BsTwitterX size={18} />
                     <span>X (Twitter)</span>
                   </button>
-                  <button className="flex hover:text-orange-500 transition-all items-center justify-center gap-2 w-full text-left p-2">
+                  <button
+                    onClick={handleCopyLink}
+                    className="flex hover:text-orange-500 transition-all items-center justify-center gap-2 w-full text-left p-2"
+                  >
                     <FaCopy size={18} />
                     <span>Copy Link</span>
                   </button>
