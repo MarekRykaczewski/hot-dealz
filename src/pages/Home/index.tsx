@@ -40,7 +40,7 @@ function Home() {
     setFilteredDeals(filteredDealsCopy);
   }, [category, deals, currentSorting]);
 
-  const dealElements = currentItems.map((item) => {
+  function formatDealDate(item) {
     const milliseconds = item.posted.seconds * 1000;
     const date = new Date(milliseconds);
     const formattedDate = new Intl.DateTimeFormat("en-US", {
@@ -49,6 +49,12 @@ function Home() {
     }).format(date);
 
     const formattedTime = date.toLocaleTimeString([], { timeStyle: "short" });
+
+    return { formattedDate, formattedTime };
+  }
+
+  function createDealCard(item) {
+    const { formattedDate, formattedTime } = formatDealDate(item);
 
     return (
       <DealCard
@@ -70,7 +76,9 @@ function Home() {
         archived={item.archived}
       />
     );
-  });
+  }
+
+  const dealElements = currentItems.map(createDealCard);
 
   if (loading)
     return (
