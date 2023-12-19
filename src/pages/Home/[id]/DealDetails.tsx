@@ -101,18 +101,18 @@ function DealDetails() {
       <EditDealFormModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
-        initialTitle={deal?.title || ""}
-        initialPrice={deal?.price || 0}
-        initialNextBestPrice={deal?.nextBestPrice || 0}
-        initialShippingCost={deal?.shippingCost || 0}
-        initialDealLink={deal?.dealLink || ""}
-        initialVoucherCode={deal?.voucherCode || ""}
+        initialTitle={deal?.title}
+        initialPrice={deal?.price}
+        initialNextBestPrice={deal?.nextBestPrice}
+        initialShippingCost={deal?.shippingCost}
+        initialDealLink={deal?.dealLink}
+        initialVoucherCode={deal?.voucherCode}
         onSave={handleSaveChanges}
       />
       <div className="flex flex-col w-full max-w-3xl bg-white mt-2 rounded-lg">
         <div className="p-5">
           <h1 className="font-bold">About this deal</h1>
-          <p className="text-gray-700 text-base">{deal?.description || ""}</p>
+          <p className="text-gray-700 text-base">{deal?.description}</p>
         </div>
         <div className="bg-slate-300 flex gap-4 w-full px-6 py-3">
           <button
@@ -124,7 +124,7 @@ function DealDetails() {
           <button
             onClick={() => {
               if (!user) return;
-              toggleSaved(hasSaved, setHasSaved, user.uid, dealId || "");
+              toggleSaved(hasSaved, setHasSaved, user.uid, dealId!);
             }}
             className="flex flex-row-reverse gap-2 items-center justify-center hover:text-orange-500 transition"
           >
@@ -132,7 +132,7 @@ function DealDetails() {
           </button>
         </div>
       </div>
-      <CommentSection commentInput={commentInput} postId={dealId || ""} />
+      <CommentSection commentInput={commentInput} postId={dealId!} />
     </div>
   );
 }
