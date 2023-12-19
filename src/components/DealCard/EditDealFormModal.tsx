@@ -1,6 +1,7 @@
 import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import Modal from "../Modal";
+import FormField from "../FormField";
 
 interface EditDealFormModalProps {
   isOpen: boolean;
@@ -15,7 +16,6 @@ interface EditDealFormModalProps {
 }
 
 interface FormData {
-  [key: string]: string | number;
   title: string;
   price: number;
   nextBestPrice: number;
@@ -50,24 +50,50 @@ const EditDealFormModal: React.FC<EditDealFormModalProps> = ({
     },
   });
 
-  const onSubmit = async (data: FormData) => {
-    // Filter out fields with empty values before calling onSave
-    const filteredData: FormData = Object.keys(data).reduce((acc, key) => {
-      if (data[key] !== "") {
-        acc[key] = data[key];
-      }
-      return acc;
-    }, {} as FormData);
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    const filteredData: FormData = Object.fromEntries(
+      Object.entries(data).filter(([key, value]) => value !== "")
+    );
 
     if (Object.keys(filteredData).length > 0) {
       onSave(filteredData);
       onClose();
-      window.location.reload();
     } else {
-      // Handle the case where no fields were updated or all were left empty
       onClose();
     }
   };
+
+  const formFields = [
+    {
+      label: "Title (at most 100 characters)",
+      name: "title",
+      maxLength: 100,
+      errorMessage: errors.title?.message,
+    },
+    {
+      label: "Price (must be a valid number)",
+      name: "price",
+      validate: (value) =>
+        !isNaN(parseFloat(value)) || "Price must be a valid number",
+      errorMessage: errors.price?.message,
+    },
+    {
+      label: "Next Best Price (optional)",
+      name: "nextBestPrice",
+      validate: (value) =>
+        !isNaN(parseFloat(value)) || "Next Best Price must be a valid number",
+      errorMessage: errors.nextBestPrice?.message,
+    },
+    {
+      label: "Shipping Cost (optional)",
+      name: "shippingCost",
+      validate: (value) =>
+        !isNaN(parseFloat(value)) || "Shipping Cost must be a valid number",
+      errorMessage: errors.shippingCost?.message,
+    },
+    { label: "Deal Link (optional)", name: "dealLink" },
+    { label: "Voucher Code (optional)", name: "voucherCode" },
+  ];
 
   return (
     <Modal open={isOpen} onClose={onClose}>
@@ -75,204 +101,9 @@ const EditDealFormModal: React.FC<EditDealFormModalProps> = ({
         Edit Deal Details
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4">
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Title (at most 100 characters)
-          </label>
-          <Controller
-            name="title"
-            control={control}
-            rules={{
-              maxLength: {
-                value: 100,
-                message: "Title must be at most 100 characters",
-              },
-            }}
-            render={({ field }) => (
-              <>
-                <input
-                  type="text"
-                  id="title"
-                  {...field}
-                  className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500 ${
-                    errors.title ? "border-red-500" : ""
-                  }`}
-                />
-                {errors.title && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.title.message}
-                  </p>
-                )}
-              </>
-            )}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="price"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Price (must be a valid number)
-          </label>
-          <Controller
-            name="price"
-            control={control}
-            rules={{
-              validate: (value) => {
-                if (!value) return true; // Allow empty value
-                const valueString = value.toString();
-                return (
-                  !isNaN(parseFloat(valueString)) ||
-                  "Price must be a valid number"
-                );
-              },
-            }}
-            render={({ field }) => (
-              <>
-                <input
-                  type="number"
-                  id="price"
-                  {...field}
-                  className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500 ${
-                    errors.price ? "border-red-500" : ""
-                  }`}
-                />
-                {errors.price && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.price.message}
-                  </p>
-                )}
-              </>
-            )}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="nextBestPrice"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Next Best Price (optional)
-          </label>
-          <Controller
-            name="nextBestPrice"
-            control={control}
-            rules={{
-              validate: (value) => {
-                if (!value) return true; // Allow empty value
-                const valueString = value.toString();
-                return (
-                  !isNaN(parseFloat(valueString)) ||
-                  "Next Best Price must be a valid number"
-                );
-              },
-            }}
-            render={({ field }) => (
-              <>
-                <input
-                  type="number"
-                  id="nextBestPrice"
-                  {...field}
-                  className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500 ${
-                    errors.nextBestPrice ? "border-red-500" : ""
-                  }`}
-                />
-                {errors.nextBestPrice && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.nextBestPrice.message}
-                  </p>
-                )}
-              </>
-            )}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="shippingCost"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Shipping Cost (optional)
-          </label>
-          <Controller
-            name="shippingCost"
-            control={control}
-            rules={{
-              validate: (value) => {
-                if (!value) return true; // Allow empty value
-                const valueString = value.toString();
-                return (
-                  !isNaN(parseFloat(valueString)) ||
-                  "Shipping Cost must be a valid number"
-                );
-              },
-            }}
-            render={({ field }) => (
-              <>
-                <input
-                  type="number"
-                  id="shippingCost"
-                  {...field}
-                  className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500 ${
-                    errors.shippingCost ? "border-red-500" : ""
-                  }`}
-                />
-                {errors.shippingCost && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.shippingCost.message}
-                  </p>
-                )}
-              </>
-            )}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="dealLink"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Deal Link (optional)
-          </label>
-          <Controller
-            name="dealLink"
-            control={control}
-            render={({ field }) => (
-              <input
-                type="text"
-                id="dealLink"
-                {...field}
-                className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500`}
-              />
-            )}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="voucherCode"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Voucher Code (optional)
-          </label>
-          <Controller
-            name="voucherCode"
-            control={control}
-            render={({ field }) => (
-              <input
-                type="text"
-                id="voucherCode"
-                {...field}
-                className={`mt-1 p-2 block w-full border rounded-md focus:ring-orange-500 focus:border-orange-500`}
-              />
-            )}
-          />
-        </div>
-
+        {formFields.map((field) => (
+          <FormField key={field.name} {...field} control={control} />
+        ))}
         <div className="mt-4">
           <button
             type="submit"

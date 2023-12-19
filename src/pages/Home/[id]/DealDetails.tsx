@@ -32,6 +32,7 @@ function DealDetails() {
 
   const handleSaveChanges = async (editedDealDetails: Partial<Deal>) => {
     if (dealId) {
+      console.log("handlesave");
       const success = await updateDealDetails(dealId, editedDealDetails);
       if (success) {
         setIsEditModalOpen(false);
