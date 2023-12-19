@@ -84,17 +84,17 @@ function DealDetails() {
       )}
       {deal && (
         <DealCardDetailed
-          dealId={dealId || ""}
-          title={deal.title || ""}
-          dealLink={deal.dealLink || ""}
-          owner={deal.owner || ""}
-          price={deal.price || 0}
-          nextBestPrice={deal.nextBestPrice || 0}
+          dealId={dealId!}
+          title={deal.title}
+          dealLink={deal.dealLink}
+          owner={deal.owner}
+          price={deal.price}
+          nextBestPrice={deal.nextBestPrice}
           posted={deal.posted}
-          shippingCost={deal.shippingCost || 0}
-          voucherCode={deal.voucherCode || ""}
+          shippingCost={deal.shippingCost}
+          voucherCode={deal.voucherCode}
           profileUrl={profileUrl}
-          imageURLs={deal.imageURLs || []}
+          imageURLs={deal.imageURLs}
           isArchived={isArchived}
         />
       )}
