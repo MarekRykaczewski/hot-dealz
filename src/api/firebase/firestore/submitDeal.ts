@@ -49,7 +49,7 @@ export const submitDeal = async (
 
     await submitImages(newDocId, formData.images);
 
-    return true; // Submission successful
+    return { success: true, newDocId }; // Submission successful with the new document ID
   } catch (error) {
     console.error("Error submitting deal:", error);
     return false; // Submission failed
