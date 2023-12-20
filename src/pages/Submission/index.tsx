@@ -13,6 +13,7 @@ import FormImageUpload from "./FormImageUpload";
 import FormPriceDetails from "./FormPriceDetails";
 import FormTitle from "./FormTitle";
 import PreviewDealModal from "./PreviewDealModal";
+import { toast } from "react-toastify";
 
 function Submission() {
   const methods = useForm();
@@ -57,9 +58,19 @@ function Submission() {
   };
 
   const submitData = async () => {
-    const success = await submitDeal(formDetails, userData, user);
+    const { success, newDocId } = await submitDeal(formDetails, userData, user);
     if (success) {
-      navigate("/");
+      toast.success("Deal Submitted Sucessfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      navigate(`/deal/${newDocId}`);
     }
   };
 

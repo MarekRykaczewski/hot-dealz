@@ -7,6 +7,8 @@ import Settings from "./pages/Settings";
 import Profile from "./pages/Settings/Profile";
 import Submission from "./pages/Submission";
 import PrivateRoute from "./components/PrivateRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [openNavAccountMenu, setOpenNavAccountMenu] = useState<boolean>(false); // Add the type for useState
@@ -16,7 +18,7 @@ function App() {
   };
 
   return (
-    <div>
+    <>
       <AuthContextProvider>
         <Nav
           openNavAccountMenu={openNavAccountMenu}
@@ -32,7 +34,19 @@ function App() {
           </Route>
         </Routes>
       </AuthContextProvider>
-    </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+    </>
   );
 }
 
