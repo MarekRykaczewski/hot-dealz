@@ -1,12 +1,13 @@
 import { User } from "firebase/auth";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
-import { AiFillFire, AiOutlinePlusCircle } from "react-icons/ai";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 import AuthModal from "../Auth/AuthModal";
 import NavAccountMenu from "./NavAccountMenu";
 import NavSearchBar from "./NavSearchBar";
+import { PiFireSimpleFill } from "react-icons/pi";
 
 interface NavProps {
   openNavAccountMenu: boolean;
@@ -23,14 +24,14 @@ const Nav: FunctionComponent<NavProps> = ({
   const [lastScrollY, setLastScrollY] = useState<number>(0);
   const profileRef = useRef<HTMLDivElement | null>(null);
 
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+
+    setScrollingDown(currentScrollY > lastScrollY);
+    setLastScrollY(currentScrollY);
+  };
+
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      setScrollingDown(currentScrollY > lastScrollY);
-      setLastScrollY(currentScrollY);
-    };
-
     window.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -41,7 +42,7 @@ const Nav: FunctionComponent<NavProps> = ({
   return (
     <>
       <nav
-        className={`sticky top-0 z-50 bg-slate-700 px-6 py-3 transition-opacity duration-500 ${
+        className={`sticky top-0 z-50 bg-gradient-to-r from-slate-700 to-slate-800 px-6 py-2 shadow-md transition-all duration-300 ${
           scrollingDown ? "opacity-0" : "opacity-100"
         }`}
       >
@@ -51,7 +52,7 @@ const Nav: FunctionComponent<NavProps> = ({
               to="/"
               className="flex items-center flex-shrink-0 text-white gap-1"
             >
-              <AiFillFire fontSize="2.5em" color="orange" />
+              <PiFireSimpleFill fontSize="2.5em" color="#f97316" />
               <span className="font-semibold text-2xl tracking-tight">
                 Hot Dealz
               </span>
