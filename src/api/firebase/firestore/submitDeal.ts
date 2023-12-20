@@ -12,6 +12,11 @@ import { ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../../config/firebase";
 import { UserData } from "../../../context/AuthContext";
 
+interface SubmitDealResult {
+  success: boolean;
+  newDocId?: string | null; // Use optional chaining to handle potential absence
+}
+
 export const submitDeal = async (
   formData: {
     dealLink: any;
@@ -27,7 +32,7 @@ export const submitDeal = async (
   },
   userData: UserData,
   user: User | null
-) => {
+): Promise<SubmitDealResult> => {
   try {
     const dealsCollection = collection(db, "deals");
     const newDocRef = doc(dealsCollection);
@@ -52,7 +57,7 @@ export const submitDeal = async (
     return { success: true, newDocId }; // Submission successful with the new document ID
   } catch (error) {
     console.error("Error submitting deal:", error);
-    return false; // Submission failed
+    return { success: false }; // Submission failed
   }
 };
 
