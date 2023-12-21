@@ -39,6 +39,14 @@ const Nav: FunctionComponent<NavProps> = ({
     };
   }, [lastScrollY]);
 
+  const handleUserButtonClick = () => {
+    if (user) {
+      toggleNavAccountMenu();
+    } else {
+      setOpenAuthModal(true);
+    }
+  };
+
   return (
     <>
       <nav
@@ -62,13 +70,13 @@ const Nav: FunctionComponent<NavProps> = ({
           <div className="flex flex-col sm:flex-row gap-2">
             <button
               ref={profileRef}
-              className="flex-1 relative p-2 gap-2 font-semibold flex items-center justify-center rounded-full bg-slate-500 transition-all text-white hover:bg-slate-400 duration-200 h-10 w-[12rem]"
-              onClick={
-                user ? toggleNavAccountMenu : () => setOpenAuthModal(true)
-              }
+              className="flex-1 relative p-2 gap-1 font-semibold flex items-center justify-center rounded-full bg-slate-500 transition-all text-white hover:bg-slate-400 duration-200 h-10 sm:w-48"
+              onClick={handleUserButtonClick}
             >
               <BiUserCircle size={30} />
-              <span className="flex-1">Sign In / Register</span>
+              <span className="flex-1 hidden sm:inline">
+                Sign In / Register
+              </span>
               {openNavAccountMenu && (
                 <NavAccountMenu
                   profileRef={profileRef}
@@ -78,13 +86,12 @@ const Nav: FunctionComponent<NavProps> = ({
               )}
             </button>
 
-            <Link
-              className="flex p-2 gap-1 font-semibold items-center justify-center rounded-3xl bg-orange-500 transition-all hover:bg-orange-400 duration-200 h-10 w-fit text-white"
-              to="/submission"
-            >
-              <AiOutlinePlusCircle size={30} />
-              <span>Submit</span>
-            </Link>
+            <button className="flex p-2 gap-1 font-semibold items-center justify-center rounded-3xl bg-orange-500 transition-all hover:bg-orange-400 duration-200 h-10 w-fit text-white">
+              <Link to="/submission">
+                <AiOutlinePlusCircle size={30} />
+              </Link>
+              <span className="hidden sm:inline">Submit</span>
+            </button>
           </div>
         </div>
       </nav>
