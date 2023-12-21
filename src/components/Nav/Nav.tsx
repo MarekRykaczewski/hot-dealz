@@ -62,7 +62,7 @@ const Nav: FunctionComponent<NavProps> = ({
           <div className="flex flex-col sm:flex-row gap-2">
             <button
               ref={profileRef}
-              className="flex-1 relative p-2 gap-2 font-semibold flex items-center justify-center rounded-full bg-slate-500 transition-all text-white hover:bg-slate-400 duration-500 h-10 w-[12rem]"
+              className="flex-1 relative p-2 gap-2 font-semibold flex items-center justify-center rounded-full bg-slate-500 transition-all text-white hover:bg-slate-400 duration-200 h-10 w-[12rem]"
               onClick={
                 user ? toggleNavAccountMenu : () => setOpenAuthModal(true)
               }
@@ -79,7 +79,7 @@ const Nav: FunctionComponent<NavProps> = ({
             </button>
 
             <Link
-              className="flex p-2 gap-1 font-semibold items-center justify-center rounded-3xl bg-orange-500 transition-all hover:bg-orange-400 duration-500 h-10 w-fit text-white"
+              className="flex p-2 gap-1 font-semibold items-center justify-center rounded-3xl bg-orange-500 transition-all hover:bg-orange-400 duration-200 h-10 w-fit text-white"
               to="/submission"
             >
               <AiOutlinePlusCircle size={30} />
