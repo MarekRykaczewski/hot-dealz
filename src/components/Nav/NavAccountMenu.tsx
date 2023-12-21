@@ -32,7 +32,7 @@ const NavAccountMenu: React.FC<NavAccountMenuProps> = ({
     };
   }, [openNavAccountMenu, profileRef, toggleNavAccountMenu]);
 
-  const { logout, user, userData } = UserAuth();
+  const { logout, userData } = UserAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -41,51 +41,50 @@ const NavAccountMenu: React.FC<NavAccountMenuProps> = ({
     });
   };
 
+  const menuItems = [
+    {
+      label: "Settings",
+      to: "/settings/profile",
+      hoverClass: "hover:bg-gray-100",
+    },
+    { label: "My saved", to: "/saved/", hoverClass: "hover:bg-gray-100" },
+    {
+      label: "Sign out",
+      onClick: handleLogout,
+      hoverClass: "hover:bg-gray-100",
+    },
+  ];
+
   return (
-    <div
-      id="dropdownInformation"
-      className="z-10 absolute top-12 right-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
-    >
-      <div className="px-4 py-3 text-white bg-orange-500 rounded-t-lg">
+    <div className="flex flex-col z-10 absolute top-12 right-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-full">
+      <div className="px-4 py-3 w-full text-white bg-orange-500 rounded-t-lg">
         <div className="text-md">{userData.username}</div>
-        <div className="text-md truncate">{user && user.email}</div>
       </div>
-      <ul
-        className="py-2 text-md text-gray-700"
-        aria-labelledby="dropdownInformationButton"
-      >
-        <li>
-          <Link
-            onClick={toggleNavAccountMenu}
-            to="/settings/profile"
-            className="block px-4 py-2 hover:bg-gray-100"
+      <ul className="flex w-full flex-col px-2 text-md text-gray-700">
+        {menuItems.map((item, index) => (
+          <li
+            key={index}
+            className={index < menuItems.length - 1 ? "border-b" : ""}
           >
-            Settings
-          </Link>
-        </li>
+            {item.to ? (
+              <Link
+                onClick={toggleNavAccountMenu}
+                to={item.to}
+                className={`block px-4 py-3 ${item.hoverClass}`}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <button
+                onClick={item.onClick}
+                className={`block px-4 py-3 w-full ${item.hoverClass}`}
+              >
+                {item.label}
+              </button>
+            )}
+          </li>
+        ))}
       </ul>
-      <ul
-        className="py-2 text-md text-gray-700"
-        aria-labelledby="dropdownInformationButton"
-      >
-        <li>
-          <Link
-            onClick={toggleNavAccountMenu}
-            to="/saved/"
-            className="block px-4 py-2 hover-bg-gray-100"
-          >
-            My saved
-          </Link>
-        </li>
-      </ul>
-      <div className="py-2">
-        <a
-          onClick={handleLogout}
-          className="block px-4 py-2 text-gray-700 hover-bg-gray-100"
-        >
-          Sign out
-        </a>
-      </div>
     </div>
   );
 };
