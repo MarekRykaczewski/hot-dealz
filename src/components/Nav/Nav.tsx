@@ -46,7 +46,7 @@ const Nav: FunctionComponent<NavProps> = ({
           scrollingDown ? "opacity-0" : "opacity-100"
         }`}
       >
-        <div className="max-w-[80em] ml-auto mr-auto flex sm:flex-row flex-row sm:items-center gap-3 items-center justify-between">
+        <div className="max-w-[75em] ml-auto mr-auto flex sm:flex-row flex-row sm:items-center gap-3 items-center justify-between">
           <div className="flex flex-row flex-wrap gap-3 items-center justify-between w-full">
             <Link
               to="/"
@@ -60,17 +60,15 @@ const Nav: FunctionComponent<NavProps> = ({
             <NavSearchBar />
           </div>
           <div className="flex flex-col sm:flex-row gap-2">
-            <div
+            <button
               ref={profileRef}
-              className="relative flex items-center justify-center rounded-full bg-slate-500 transition-all text-white hover:bg-slate-400 duration-500 h-10 w-10"
+              className="flex-1 relative p-2 gap-2 font-semibold flex items-center justify-center rounded-full bg-slate-500 transition-all text-white hover:bg-slate-400 duration-500 h-10 w-[12rem]"
+              onClick={
+                user ? toggleNavAccountMenu : () => setOpenAuthModal(true)
+              }
             >
-              <BiUserCircle
-                size={35}
-                onClick={
-                  user ? toggleNavAccountMenu : () => setOpenAuthModal(true)
-                }
-                className="cursor-pointer"
-              />
+              <BiUserCircle size={30} />
+              <span className="flex-1">Sign In / Register</span>
               {openNavAccountMenu && (
                 <NavAccountMenu
                   profileRef={profileRef}
@@ -78,13 +76,15 @@ const Nav: FunctionComponent<NavProps> = ({
                   toggleNavAccountMenu={toggleNavAccountMenu}
                 />
               )}
-            </div>
+            </button>
 
-            <div className="flex items-center justify-center rounded-full bg-slate-500 transition-all hover:bg-slate-400 duration-500 h-10 w-10 text-white">
-              <Link to="/submission">
-                <AiOutlinePlusCircle size={35} className="cursor-pointer" />
-              </Link>
-            </div>
+            <Link
+              className="flex p-2 gap-1 font-semibold items-center justify-center rounded-3xl bg-orange-500 transition-all hover:bg-orange-400 duration-500 h-10 w-fit text-white"
+              to="/submission"
+            >
+              <AiOutlinePlusCircle size={30} />
+              <span>Submit</span>
+            </Link>
           </div>
         </div>
       </nav>
