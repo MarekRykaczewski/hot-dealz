@@ -12,7 +12,7 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 function Home() {
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>([]);
   const [dealsPerPage, setDealsPerPage] = useState(5);
-  const { category } = useParams<{ category: string }>();
+  const { category, query } = useParams<{ category: string }>();
   const [currentSorting, setCurrentSorting] = useState<any>("newest");
 
   const { deals, loading } = useDeals();
@@ -30,6 +30,15 @@ function Home() {
       );
     }
 
+    if (query) {
+      const lowercaseQuery = query.toLowerCase();
+      filteredDealsCopy = filteredDealsCopy.filter(
+        (deal) =>
+          deal.title.toLowerCase().includes(lowercaseQuery) ||
+          deal.description.toLowerCase().includes(lowercaseQuery)
+      );
+    }
+
     if (currentSorting === "newest") {
       filteredDealsCopy.sort(
         (a, b) => (b.posted?.seconds || 0) - (a.posted?.seconds || 0)
@@ -39,7 +48,7 @@ function Home() {
     }
 
     setFilteredDeals(filteredDealsCopy);
-  }, [category, deals, currentSorting]);
+  }, [category, deals, currentSorting, query]);
 
   function formatDealDate(item) {
     const milliseconds = item.posted.seconds * 1000;
