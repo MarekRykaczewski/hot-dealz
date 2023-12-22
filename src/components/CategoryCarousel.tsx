@@ -16,7 +16,7 @@ function CategoryCarousel() {
 
   const items = categories.map((item) => (
     <Link
-      className="w-fit"
+      className="flex-shrink-0 w-fit"
       key={item.title}
       to={`/category/${encodeURIComponent(item.title)}`}
     >
@@ -30,25 +30,22 @@ function CategoryCarousel() {
   const onScrollRightClick = () => scroll(150);
 
   return (
-    <div className="bg-slate-900 py-3 w-full">
-      <div className="flex items-center justify-center max-w-[80em] ml-auto mr-auto">
+    <div className="bg-slate-900 py-3">
+      <div className="flex items-center justify-center max-w-screen-xl mx-auto">
         <button
           onClick={onScrollLeftClick}
-          id="slideLeft"
           className="flex item-center justify-center p-2"
         >
           <AiFillCaretLeft fontSize="1.5em" className="text-slate-500" />
         </button>
         <div
           ref={ref}
-          id="carouselContainer"
           className="flex flex-row w-fit overflow-x-hidden scroll-smooth gap-4 p-1"
         >
           {items}
         </div>
         <button
           onClick={onScrollRightClick}
-          id="slideRight"
           className="flex item-center justify-center p-2"
         >
           <AiFillCaretRight fontSize="1.5em" className="text-slate-500" />
