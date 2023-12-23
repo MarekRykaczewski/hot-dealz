@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchSavedDeals } from "../../../api/firebase/deals";
 import CategoryCarousel from "../../../components/CategoryCarousel";
 import DealCard from "../../../components/DealCard/DealCard";
-import FooterNav from "../../../components/FooterNav";
+import FooterNav from "../../../components/Footer/FooterNav";
 import Tabs from "../../../components/Tabs";
 import { auth } from "../../../config/firebase";
 import usePagination from "../../../hooks/usePagination";
