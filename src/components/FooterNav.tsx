@@ -50,16 +50,16 @@ const FooterNav: React.FC<FooterNavProps> = ({
           : "opacity-0 pointer-events-none"
       }`}
     >
-      <div className="flex text-lg font-semibold text-slate-600 items-center justify-between py-4 px-8">
+      <div className="flex text-sm sm:text-lg font-semibold text-slate-600 items-center justify-center py-2 px-4 sm:py-4 sm:px-8">
         <button
-          className="hover:text-orange-500 transition"
+          className="w-1/4 hover:text-orange-500 transition"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           Go to top
         </button>
         <div>
           <nav>
-            <ul className="flex items-center justify-center">
+            <ul className="flex w-1/2">
               <li>
                 <button
                   className={`h-10 w-10 text-orange-500 transition`}
@@ -71,7 +71,7 @@ const FooterNav: React.FC<FooterNavProps> = ({
               </li>
               <li>
                 <button
-                  className={`h-10 w-10 text-2xl text-slate-600 hover:bg-slate-200 rounded-2xl transition`}
+                  className={`h-10 w-5 sm:w-10 text-2xl text-slate-600 hover:bg-slate-200 rounded-2xl transition`}
                   onClick={() => paginate(currentPage - 1)}
                   disabled={currentPage === 1}
                 >
@@ -80,7 +80,7 @@ const FooterNav: React.FC<FooterNavProps> = ({
               </li>
               <li>
                 <button
-                  className={`h-10 w-24 text-slate-600`}
+                  className={`h-10 w-16 sm:w-24 text-slate-600`}
                   onClick={() => paginate(currentPage)}
                   disabled={true}
                 >
@@ -89,7 +89,7 @@ const FooterNav: React.FC<FooterNavProps> = ({
               </li>
               <li>
                 <button
-                  className={`h-10 w-10 text-2xl text-slate-600 transition hover:bg-slate-200 rounded-2xl`}
+                  className={`h-10 w-5 sm:w-10 text-2xl text-slate-600 transition hover:bg-slate-200 rounded-2xl`}
                   onClick={() => paginate(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >
@@ -108,7 +108,7 @@ const FooterNav: React.FC<FooterNavProps> = ({
             </ul>
           </nav>
         </div>
-        <button onClick={toggleFooter}>
+        <button className="w-1/4" onClick={toggleFooter}>
           {showFooterDetails ? "Hide" : "Show"}
         </button>
       </div>
