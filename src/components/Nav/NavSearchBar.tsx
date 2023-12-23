@@ -15,10 +15,9 @@ interface SearchResult {
   };
 }
 
-function NavSearchBar() {
+function NavSearchBar({ isFocused, setIsFocused }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [isFocused, setIsFocused] = useState(false);
 
   const navigate = useNavigate();
 
@@ -50,9 +49,9 @@ function NavSearchBar() {
   }, [searchQuery, isFocused]);
 
   return (
-    <div className="relative h-8 flex min-w-[300px]">
+    <div className="relative h-8 flex">
       <input
-        className="w-full rounded-full px-9 focus:outline-orange-500 focus:outline-4 focus:outline transition-all duration-100"
+        className="sm:focus:w-fit focus:w-[80vw] w-[50vw] sm:w-fit rounded-full px-9 focus:outline-orange-500 focus:outline-4 focus:outline transition-all duration-100"
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
