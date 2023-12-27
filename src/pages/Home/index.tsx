@@ -39,7 +39,7 @@ function Home() {
     <div>
       <Routes>
         <Route path="/search/:query" element={<Home />} />
-        <Route path="/saved/*" element={<Saved />} />
+        <Route path="/saved/" element={<Saved />} />
         <Route path="/category/:category" element={<Home />} />
         <Route path="/deal/:dealId" element={<DealDetails />} />
         <Route

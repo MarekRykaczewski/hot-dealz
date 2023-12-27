@@ -19,14 +19,18 @@ export async function fetchSavedDeals(userId: string) {
     );
     const querySnapshot = await getDocs(dealsQuery);
 
-    const fetchedDeals: Deal[] = [];
-    querySnapshot.forEach(async (doc) => {
-      const dealData = doc.data() as Deal;
-      const commentsSnapshot = await getDocs(collection(doc.ref, "comments"));
-      const commentsCount = commentsSnapshot.size;
-      fetchedDeals.push({ ...dealData, comments: commentsCount, id: doc.id });
+    const fetchedDealsPromises: Promise<Deal>[] = [];
+    querySnapshot.forEach((doc) => {
+      const commentsPromise = getDocs(collection(doc.ref, "comments"));
+      const dealPromise = commentsPromise.then((commentsSnapshot) => {
+        const commentsCount = commentsSnapshot.size;
+        return { ...(doc.data() as Deal), comments: commentsCount, id: doc.id };
+      });
+
+      fetchedDealsPromises.push(dealPromise);
     });
 
+    const fetchedDeals = await Promise.all(fetchedDealsPromises);
     return fetchedDeals;
   } catch (err) {
     console.error("Error fetching saved deals:", err);

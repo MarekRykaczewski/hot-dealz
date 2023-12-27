@@ -22,6 +22,8 @@ function Deals({
   currentPage,
   totalPages,
 }: DealsProps): ReactElement {
+  console.log("dealElements:", dealElements);
+
   return (
     <div className="h-screen flex flex-col justify-between">
       <CategoryCarousel />
