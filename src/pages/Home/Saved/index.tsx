@@ -21,8 +21,6 @@ function Saved() {
     dealsPerPage
   );
 
-  console.log(deals);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
