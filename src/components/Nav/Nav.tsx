@@ -85,9 +85,9 @@ const Nav: FunctionComponent<NavProps> = ({
               <NavSearchBar isFocused={isFocused} setIsFocused={setIsFocused} />
               <button
                 ref={profileRef}
-                className={`${user && "p-0 sm:w-10"} ${
+                className={`${!user && "p-0 sm:w-48 w-10"} ${
                   isFocused && "hidden sm:flex"
-                } h-10 w-48 relative gap-1 font-semibold flex items-center justify-center rounded-full bg-slate-500 transition-all text-white hover:bg-slate-400 duration-200`}
+                } h-10 w-10 relative gap-1 font-semibold flex items-center justify-center rounded-full bg-slate-500 transition-all text-white hover:bg-slate-400 duration-200`}
                 onClick={handleUserButtonClick}
               >
                 {user ? (
