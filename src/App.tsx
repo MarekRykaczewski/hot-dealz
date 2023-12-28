@@ -25,7 +25,7 @@ function App() {
           toggleNavAccountMenu={toggleNavAccountMenu}
         />
         <Routes>
-          <Route path="*" element={<Home />} />
+          <Route path="/*" element={<Home />} />
           <Route element={<PrivateRoute />}>
             <Route path="/submission" element={<Submission />} />
             <Route path="/settings" element={<Settings />}>
