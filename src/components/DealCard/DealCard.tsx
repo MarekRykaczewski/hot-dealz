@@ -82,7 +82,7 @@ function DealCard({
 
   return (
     <div
-      className={`w-full sm:max-w-4xl ${
+      className={`w-full sm:max-w-4xl shadow-md ${
         archived && "filter grayscale"
       } bg-white p-5 rounded-xl flex flex-col sm:flex-row sm:justify-between`}
     >
