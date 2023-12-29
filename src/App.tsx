@@ -9,6 +9,7 @@ import Submission from "./pages/Submission";
 import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UserProfile from "./pages/Profile";
 
 function App() {
   const [openNavAccountMenu, setOpenNavAccountMenu] = useState<boolean>(false); // Add the type for useState
@@ -26,6 +27,7 @@ function App() {
         />
         <Routes>
           <Route path="/*" element={<Home />} />
+          <Route path="/profile/:username" element={<UserProfile />} />
           <Route element={<PrivateRoute />}>
             <Route path="/submission" element={<Submission />} />
             <Route path="/settings" element={<Settings />}>
