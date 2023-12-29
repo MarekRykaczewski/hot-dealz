@@ -1,4 +1,4 @@
-import { doc, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { db } from "../../config/firebase";
 import { UserAuth } from "../../context/AuthContext";
@@ -37,6 +37,7 @@ function AuthModal({ open, onClose }: AuthModalProps) {
       const res = await createUser(email, password);
       await setDoc(doc(db, "users", res.user.uid), {
         username: username,
+        createdAt: serverTimestamp(),
       });
       onClose();
     } catch (e: any) {
