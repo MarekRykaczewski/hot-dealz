@@ -22,17 +22,16 @@ function PreviewDealModal({
   const fileToURL = (file: File) => URL.createObjectURL(file);
 
   return (
-    <div className="w-[50vw]">
-      <h1 className="text-4xl font-bold mb-5"> Review your deal </h1>
+    <div className="w-[80vw] sm:max-w-[50vw] mx-auto">
+      <h1 className="text-2xl sm:text-4xl font-bold mb-5">Review your deal</h1>
       <div className="flex flex-col gap-3">
         <div className="grid-rows-2 col-span-3 border-2 p-2 rounded-lg">
-          <p className="font-semibold">Link</p>
+          <p className="text-xl font-bold">Link</p>
           <p className="mt-1">{link}</p>
         </div>
         <div className="grid grid-cols-3 gap-4 border-2 p-2 rounded-lg">
           <h1 className="grid-rows-1 col-span-3 text-xl font-bold">
-            {" "}
-            Basic Info{" "}
+            Basic Info
           </h1>
           <div className="grid-rows-2 col-span-3">
             <p className="font-semibold">Title</p>
