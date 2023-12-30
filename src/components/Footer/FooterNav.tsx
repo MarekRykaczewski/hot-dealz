@@ -28,7 +28,8 @@ const FooterNav: React.FC<FooterNavProps> = ({
   useEffect(() => {
     const handleScroll = () => {
       // Check if the user has scrolled down a certain amount
-      const shouldShowFooter = window.scrollY > 200;
+      const shouldShowFooter =
+        window.scrollY > 200 || currentPage === totalPages;
 
       setShowFooter(shouldShowFooter);
     };
@@ -40,11 +41,11 @@ const FooterNav: React.FC<FooterNavProps> = ({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [currentPage]);
 
   return (
     <div
-      className={`sticky bottom-0 w-full bg-white border-t-2 border-gray-300 transition-opacity duration-300 ease-in-out ${
+      className={`sticky mt-auto bottom-0 w-full bg-white border-t-2 border-gray-300 transition-opacity duration-300 ease-in-out ${
         showFooter || showFooterDetails
           ? "opacity-100"
           : "opacity-0 pointer-events-none"
