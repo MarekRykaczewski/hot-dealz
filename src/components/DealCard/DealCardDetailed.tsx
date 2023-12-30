@@ -9,6 +9,7 @@ import { copyToClipboard } from "../../utilities/copyToClipboard";
 import { FaFacebook, FaCopy } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
 import { CiShare2 } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 interface DealCardDetailedProps {
   profileUrl: string;
@@ -191,7 +192,10 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
               </div>
             )}
           </div>
-          <div className="flex items-center justify-between gap-5">
+          <Link
+            to={`/profile/${owner}`}
+            className="flex items-center justify-between gap-5"
+          >
             <div className="flex justify-center items-center">
               {
                 <img
@@ -204,7 +208,7 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
                 <p className="text-gray-900 leading-none">Shared by {owner}</p>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

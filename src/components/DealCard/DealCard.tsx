@@ -148,12 +148,15 @@ function DealCard({
           </p>
         </div>
         <div className="flex items-center justify-between gap-5 mt-4">
-          <div className="flex justify-center items-center">
+          <Link
+            className="flex justify-center items-center"
+            to={`profile/${owner}`}
+          >
             <img className="w-8 h-8 rounded-full mr-2" src={profileUrl} />
             <div className="text-sm">
               <p className="text-gray-900 leading-none">{owner}</p>
             </div>
-          </div>
+          </Link>
           <div className="flex flex-wrap gap-3 items-center justify-end text-gray-600">
             <button
               onClick={() => {

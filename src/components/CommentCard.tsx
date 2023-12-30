@@ -7,6 +7,7 @@ import {
   toggleCommentLike,
 } from "../api/firebase/comments";
 import { getProfileUrlFromUserId } from "../api/firebase/users";
+import { Link } from "react-router-dom";
 
 interface CommentCardProps {
   userId: string;
@@ -76,7 +77,7 @@ function CommentCard({
     <div className="border border-gray-400 border-t-1 border-b-0 border-l-0 border-r-0 w-full">
       <div className="flex flex-col p-6">
         <div className="flex mb-3 justify-between">
-          <div className="flex">
+          <Link to={`/profile/${username}`} className="flex">
             {profileUrl && (
               <img
                 className="self-start w-10 h-10 rounded-full mr-4"
@@ -88,7 +89,7 @@ function CommentCard({
               <span>{username || "Anonymous"}</span>
               <span>{date}</span>
             </div>
-          </div>
+          </Link>
           <div>
             <button
               onClick={handleToggleCommentLike}
