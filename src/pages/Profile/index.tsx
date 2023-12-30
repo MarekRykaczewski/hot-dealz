@@ -117,15 +117,6 @@ const UserProfile = () => {
                 <p className="text-gray-600">
                   Member since {creationDate?.toLocaleDateString()}
                 </p>
-                {/* Add Message and Observe buttons */}
-                <div className="flex mt-2">
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">
-                    Message
-                  </button>
-                  <button className="bg-green-500 text-white px-4 py-2 rounded-md">
-                    Observe
-                  </button>
-                </div>
               </div>
             </div>
           </div>
