@@ -74,7 +74,7 @@ function DealDetails() {
   }, [deal]);
 
   return (
-    <div className="bg-slate-200 h-screen w-full flex flex-col ml-auto mr-auto items-center justify-start">
+    <div className="mb-2 h-full w-full flex flex-col ml-auto mr-auto items-center justify-start">
       {isOwner && (
         <DealCardControls
           onEditClick={() => setIsEditModalOpen(true)}
