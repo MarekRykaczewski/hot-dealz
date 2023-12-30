@@ -58,7 +58,9 @@ const NavAccountMenu: React.FC<NavAccountMenuProps> = ({
   return (
     <div className="flex flex-col z-10 absolute top-12 bg-white divide-y divide-gray-100 rounded-lg shadow sm:w-[250px]">
       <div className="px-4 py-3 w-full text-white bg-orange-500 rounded-t-lg">
-        <div className="text-md">{userData.username}</div>
+        <Link to={`/profile/${userData.username}`} className="text-md">
+          {userData.username}
+        </Link>
       </div>
       <ul className="flex w-full flex-col  text-md text-gray-700">
         {menuItems.map((item, index) => (
