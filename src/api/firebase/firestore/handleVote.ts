@@ -1,6 +1,7 @@
 import { User } from "firebase/auth";
 import { collection, doc, getDoc, writeBatch } from "firebase/firestore";
 import { db } from "../../../config/firebase";
+import { updateOverallScore } from "./updateOverallScore";
 
 export async function handleVote(
   postId: string,
@@ -36,9 +37,15 @@ export async function handleVote(
         // If the user has a vote in the opposite collection, remove it
         batch.delete(oppositeVoteRef);
       }
+
+      // Update the overall score
+      await updateOverallScore(postId, voteType);
     } else {
       // If the document exists, delete it
       batch.delete(voteRef);
+
+      // Update the overall score
+      await updateOverallScore(postId, voteType);
     }
 
     // Commit the batch write
