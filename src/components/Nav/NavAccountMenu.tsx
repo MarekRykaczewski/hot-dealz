@@ -56,7 +56,7 @@ const NavAccountMenu: React.FC<NavAccountMenuProps> = ({
   ];
 
   return (
-    <div className="flex flex-col z-10 absolute top-12 right-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-[50vw] sm:w-[25vw]">
+    <div className="flex flex-col z-10 absolute top-12 bg-white divide-y divide-gray-100 rounded-lg shadow sm:w-[250px]">
       <div className="px-4 py-3 w-full text-white bg-orange-500 rounded-t-lg">
         <div className="text-md">{userData.username}</div>
       </div>
