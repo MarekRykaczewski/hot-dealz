@@ -7,6 +7,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { Comment } from "../../../types";
+import { incrementUserComments } from "../users/incrementUserComments";
 
 // Function to post comment
 export const submitComment = async (
@@ -43,6 +44,9 @@ export const submitComment = async (
       };
       updatedComments.push(comment);
     });
+
+    // Increment the total comments count for the user
+    await incrementUserComments(newComment.userId);
 
     return updatedComments;
   } catch (error) {
