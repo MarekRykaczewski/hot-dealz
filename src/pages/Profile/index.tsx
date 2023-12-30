@@ -78,22 +78,22 @@ const UserProfile = () => {
 
   const statisticsData = [
     {
-      icon: <AiOutlineFileText size={20} className="text-gray-400 mr-2" />,
+      icon: <AiOutlineFileText size={30} className="text-gray-400" />,
       label: "Number of Posts",
       value: userStatistics ? userStatistics.numberOfDeals : 0,
     },
     {
-      icon: <RiHotspotLine size={20} className="text-gray-400 mr-2" />,
+      icon: <RiHotspotLine size={30} className="text-gray-400" />,
       label: "Hottest Deal",
       value: userStatistics ? userStatistics.hottestDeal : 0,
     },
     {
-      icon: <AiFillStar size={20} className="text-gray-400 mr-2" />,
+      icon: <AiFillStar size={30} className="text-gray-400" />,
       label: "Average Deal Rating",
       value: userStatistics ? userStatistics.averageTotalScore : 0,
     },
     {
-      icon: <FaRegComment size={20} className="text-gray-400 mr-2" />,
+      icon: <FaRegComment size={30} className="text-gray-400" />,
       label: "Number of Comments",
       value: userStatistics ? userStatistics.totalComments : 0,
     },
@@ -101,7 +101,7 @@ const UserProfile = () => {
 
   return (
     <>
-      <div className="w-max-[80vw] w-fit p-4 mx-auto grid grid-cols-2 gap-4">
+      <div className="w-max-[70vw] w-fit p-4 mx-auto grid grid-cols-2 gap-4">
         {/* Left side: Profile information and User Statistics */}
         <div className="col-span-1">
           {/* Profile information */}
@@ -139,9 +139,12 @@ const UserProfile = () => {
             <div className="bg-white flex items-center justify-center p-4 rounded-lg shadow-md">
               <div className="grid grid-cols-2 gap-4">
                 {statisticsData.map(({ icon, label, value }) => (
-                  <div key={label} className="flex flex-col items-center mb-2">
+                  <div
+                    key={label}
+                    className="flex flex-col items-center justify-center mb-2"
+                  >
                     {icon}
-                    <div className="flex flex-col items-center gap-2">
+                    <div className="flex flex-col items-center  gap-2">
                       <p className="text-gray-600">{label}</p>
                       <p className="text-2xl font-bold">{value}</p>
                     </div>
