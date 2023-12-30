@@ -74,8 +74,6 @@ const UserProfile = () => {
     return <LoadingSpinner />;
   }
 
-  console.log("userStats", userStatistics);
-
   const statisticsData = [
     {
       icon: <AiOutlineFileText size={30} className="text-gray-400" />,
