@@ -50,15 +50,17 @@ function DealDetails() {
   };
 
   const fetchProfileImageData = async () => {
-    const imageUrl = await fetchProfileImageUrl(deal?.userId!);
-    if (imageUrl) {
-      setProfileUrl(imageUrl);
+    if (deal?.userId) {
+      const imageUrl = await fetchProfileImageUrl(deal.userId);
+      if (imageUrl) {
+        setProfileUrl(imageUrl);
+      }
     }
   };
 
   useEffect(() => {
     fetchProfileImageData();
-  }, []);
+  }, [deal]);
 
   useEffect(() => {
     if (!dealId) return;
