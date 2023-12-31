@@ -104,7 +104,7 @@ const UserProfile = () => {
 
   return (
     <>
-      <div className="w-max-[70vw] w-fit p-4 mx-auto grid grid-cols-2 gap-4">
+      <div className="w-max-[70vw] w-fit p-4 mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Left side: Profile information and User Statistics */}
         <div className="col-span-1">
           {/* Profile information */}
