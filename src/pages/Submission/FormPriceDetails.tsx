@@ -59,6 +59,10 @@ function FormPriceDetails({
         <input
           {...register("price", {
             min: 0,
+            max: {
+              value: 9999999,
+              message: "Are you sure it's THAT expensive? 🤔",
+            },
             validate: {
               required: (value: number) => {
                 if (!(value >= 0)) return "This is required";
@@ -91,9 +95,18 @@ function FormPriceDetails({
         <input
           {...register("nextBestPrice", {
             min: 0,
+            max: {
+              value: 9999999,
+              message: "Are you sure it's THAT expensive? 🤔",
+            },
             validate: {
               required: (value: number) => {
                 if (!(value >= 0)) return "This is required";
+              },
+              notSmallerThanPrice: (value: number) => {
+                const priceValue = formDetails.price || 0; // Default to 0 if price is not available
+                if (value < priceValue)
+                  return "Price can't be bigger than the next best price!";
               },
               ...decimalValidation,
             },
@@ -118,12 +131,7 @@ function FormPriceDetails({
           {...register("shippingCost", {
             min: 0,
             validate: {
-              validValue: (value: string) => {
-                const numericValue = parseFloat(value);
-                if (!/^\d+(\.\d{1,2})?$/.test(numericValue.toString()))
-                  return "Invalid decimal value";
-                return "Invalid decimal value";
-              },
+              ...decimalValidation,
             },
           })}
           name="shippingCost"

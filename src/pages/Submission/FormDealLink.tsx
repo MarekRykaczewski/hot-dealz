@@ -14,6 +14,8 @@ function FormDealLink({ formDetails, handleInputChange }: FormDealLinkProps) {
     formState: { errors },
   } = useFormContext();
 
+  const linkRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+
   return (
     <div className="flex flex-col">
       <div>
@@ -24,7 +26,13 @@ function FormDealLink({ formDetails, handleInputChange }: FormDealLinkProps) {
       </div>
 
       <input
-        {...register("dealLink", { required: "This is required." })}
+        {...register("dealLink", {
+          required: "This is required.",
+          pattern: {
+            value: linkRegex,
+            message: "Please enter a valid link.",
+          },
+        })}
         name="dealLink"
         value={formDetails.dealLink}
         onChange={handleInputChange}
