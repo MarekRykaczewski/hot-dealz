@@ -10,6 +10,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const [openNavAccountMenu, setOpenNavAccountMenu] = useState<boolean>(false); // Add the type for useState
@@ -26,7 +27,7 @@ function App() {
           toggleNavAccountMenu={toggleNavAccountMenu}
         />
         <Routes>
-          <Route path="/*" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/profile/:username" element={<UserProfile />} />
           <Route element={<PrivateRoute />}>
             <Route path="/submission" element={<Submission />} />
@@ -34,6 +35,7 @@ function App() {
               <Route path="/settings/profile" element={<Profile />} />
             </Route>
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthContextProvider>
       <ToastContainer
