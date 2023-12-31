@@ -67,7 +67,12 @@ const UserProfile = () => {
   );
 
   const dealElements = currentItems.map((item) => (
-    <DealCard key={item.dealId} {...item} userId={userId} />
+    <DealCard
+      key={item.dealId}
+      {...item}
+      dealLink={`/deal/${item.dealId}`}
+      userId={userId}
+    />
   ));
 
   if (loading) {
