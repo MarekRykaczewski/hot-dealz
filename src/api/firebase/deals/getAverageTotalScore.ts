@@ -21,8 +21,6 @@ export const getAverageTotalScore = async (userId) => {
       averageTotalScore: average("totalScore"),
     });
 
-    console.log(aggregateSnapshot);
-
     // Get the result of the average total score directly
     const averageTotalScore = aggregateSnapshot.data().averageTotalScore;
 
