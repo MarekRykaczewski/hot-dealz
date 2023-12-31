@@ -86,10 +86,10 @@ function DealCard({
         archived && "filter grayscale"
       } bg-white p-5 rounded-xl flex flex-col sm:flex-row sm:justify-between`}
     >
-      <div className="h-64 sm:w-64 rounded-xl overflow-hidden bg-slate-500">
+      <div className="h-64 sm:w-64 bg-red-200 overflow-hidden rounded-xl">
         <ImageSlider dealId={postId} imageURLs={imageURLs} />
       </div>
-      <div className="bg-white flex-grow p-4 flex flex-col justify-between">
+      <div className="bg-white max-w-xl flex-grow p-4 flex flex-col justify-between">
         <div className="flex flex-col gap-1">
           <div className="text-sm text-gray-600 flex justify-between">
             <DealCardVotes postId={postId} archived={archived} />
@@ -102,14 +102,20 @@ function DealCard({
               </div>
             </div>
           </div>
-          <Link className="block" to={`/deal/${postId}`}>
-            <div className="text-gray-900 font-bold text-xl hover:text-orange-500 transition">
+
+          <Link to={`/deal/${postId}`}>
+            <div className="text-gray-900 w-full overflow-hidden text-ellipsis whitespace-nowrap font-bold text-xl  hover:text-orange-500 transition">
               {title}
             </div>
           </Link>
-          <div className="flex flex-wrap gap-3 text-xl">
-            <p className="text-orange-500 font-bold"> {price}zł</p>
-            <del className=" text-gray-500"> {nextBestPrice}zł</del>
+
+          <div className="flex sm:flex-nowrap flex-wrap gap-3 text-xl">
+            <p className="text-orange-500 font-bold overflow-hidden whitespace-nowrap text-ellipsis">
+              {price}zł
+            </p>
+            <del className="overflow-hidden whitespace-nowrap text-ellipsis text-gray-500">
+              {nextBestPrice}zł
+            </del>
             <p>
               -{Math.floor(((nextBestPrice - price) / nextBestPrice) * 100)}%
             </p>
@@ -123,7 +129,7 @@ function DealCard({
               <button
                 value={voucherCode}
                 onClick={(e) => handleCopyToClipboard(e.target.value)}
-                className="flex border-dashed border-2 border-gray-300 hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-full h-8"
+                className="flex overflow-hidden text-ellipsis whitespace-nowrap border-dashed border-2 border-gray-300 hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-full h-8"
               >
                 {isCopied ? "Copied!" : voucherCode} <BiCopyAlt size={20} />
               </button>
@@ -140,9 +146,7 @@ function DealCard({
             </div>
           )}
           <p
-            className={`text-gray-700 ${
-              voucherCode ? "line-clamp-3" : "line-clamp-5"
-            } w-full overflow-hidden text-ellipsis mb-3`}
+            className={`text-gray-700 w-full overflow-hidden whitespace-nowrap text-ellipsis mb-3`}
           >
             {description}
           </p>
@@ -150,7 +154,7 @@ function DealCard({
         <div className="flex items-center justify-between gap-5 mt-4">
           <Link
             className="flex justify-center items-center"
-            to={`/profile/${owner}`}
+            to={`profile/${owner}`}
           >
             <img className="w-8 h-8 rounded-full mr-2" src={profileUrl} />
             <div className="text-sm">
