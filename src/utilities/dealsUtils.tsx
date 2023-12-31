@@ -51,6 +51,7 @@ export function createDealCard(item) {
       postId={item.id}
       title={item.title}
       dealLink={item.dealLink}
+      freeShipping={item.freeShipping}
       owner={item.owner}
       price={item.price}
       nextBestPrice={item.nextBestPrice}

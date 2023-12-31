@@ -43,6 +43,7 @@ export const submitDeal = async (
       dealLink: formData.dealLink,
       title: formData.title,
       description: formData.description,
+      freeShipping: formData.freeShipping,
       price: formData.price,
       nextBestPrice: formData.nextBestPrice,
       posted: serverTimestamp(),

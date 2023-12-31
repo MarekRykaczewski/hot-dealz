@@ -20,6 +20,7 @@ interface DealCardProps {
   archived: boolean;
   imageURLs: string[];
   shippingCost: number;
+  freeShipping: Boolean;
   title: string;
   date: string;
   time: string;
@@ -38,6 +39,7 @@ function DealCard({
   archived,
   imageURLs,
   shippingCost,
+  freeShipping,
   title,
   date,
   time,
@@ -120,8 +122,9 @@ function DealCard({
               -{Math.floor(((nextBestPrice - price) / nextBestPrice) * 100)}%
             </p>
             <p className="flex flex-row text-slate-500 gap-2 items-center text-sm">
-              <MdOutlineLocalShipping size={26} /> {shippingCost}
-              {shippingCost ? "zł" : "Free Shipping"}
+              <MdOutlineLocalShipping size={26} />{" "}
+              {freeShipping ? "Free Shipping" : shippingCost}
+              {!freeShipping && "zł"}
             </p>
           </div>
           {voucherCode && (
