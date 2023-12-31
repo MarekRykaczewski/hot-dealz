@@ -11,6 +11,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import Saved from "./pages/Home/Saved";
+import DealDetails from "./pages/Home/[id]/DealDetails";
 
 function App() {
   const [openNavAccountMenu, setOpenNavAccountMenu] = useState<boolean>(false); // Add the type for useState
@@ -35,6 +37,10 @@ function App() {
               <Route path="/settings/profile" element={<Profile />} />
             </Route>
           </Route>
+          <Route path="/search/:query" element={<Home />} />
+          <Route path="/saved/" element={<Saved />} />
+          <Route path="/category/:category" element={<Home />} />
+          <Route path="/deal/:dealId" element={<DealDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthContextProvider>
