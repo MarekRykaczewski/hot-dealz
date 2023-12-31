@@ -150,7 +150,7 @@ function DealCard({
         <div className="flex items-center justify-between gap-5 mt-4">
           <Link
             className="flex justify-center items-center"
-            to={`profile/${owner}`}
+            to={`/profile/${owner}`}
           >
             <img className="w-8 h-8 rounded-full mr-2" src={profileUrl} />
             <div className="text-sm">
