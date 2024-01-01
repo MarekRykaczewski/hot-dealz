@@ -78,6 +78,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
     };
   }, []);
 
+  // useEffect for fetching user data
   useEffect(() => {
     const fetchData = async () => {
       if (!user) {
@@ -88,19 +89,33 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
         const userDataFromFirestore = docSnap.data() as UserData;
-
-        // Load the image here
-        const imageRef = ref(storage, `profileImages/${user.uid}/image`);
-        const imageUrl = await getDownloadURL(imageRef);
-
-        // Update userData with the image URL
-        setUserData({ ...userDataFromFirestore, profileUrl: imageUrl });
+        setUserData(userDataFromFirestore);
       } catch (err) {
         console.log(err);
         setUserData({});
       }
     };
     fetchData();
+  }, [user]);
+
+  // useEffect for fetching and updating image URL
+  useEffect(() => {
+    const loadImage = async () => {
+      if (!user) {
+        return;
+      }
+      try {
+        const imageRef = ref(storage, `profileImages/${user.uid}/image`);
+        const imageUrl = await getDownloadURL(imageRef);
+        setUserData((prevUserData) => ({
+          ...prevUserData,
+          profileUrl: imageUrl,
+        }));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    loadImage();
   }, [user]);
 
   return (
