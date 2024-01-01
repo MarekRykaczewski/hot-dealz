@@ -10,6 +10,7 @@ import { FaFacebook, FaCopy } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
 import { CiShare2 } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface DealCardDetailedProps {
   profileUrl: string;
@@ -51,6 +52,7 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
   const handleCopyToClipboard = (text: string) => {
     copyToClipboard(text);
     setIsCopied(true);
+    toast.success("Copied code to clipboard");
 
     setTimeout(() => {
       setIsCopied(false);
@@ -79,6 +81,7 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
 
   const handleCopyLink = () => {
     copyToClipboard(dealLink);
+    toast.success("Copied link to clipboard");
     setIsDropdownOpen(false);
   };
 

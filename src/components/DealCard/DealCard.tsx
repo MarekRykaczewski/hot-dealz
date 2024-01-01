@@ -13,6 +13,7 @@ import { UserAuth } from "../../context/AuthContext";
 import ImageSlider from "../ImageSlider";
 import DealCardVotes from "./DealCardVotes";
 import { copyToClipboard } from "../../utilities/copyToClipboard";
+import { toast } from "react-toastify";
 
 interface DealCardProps {
   userId: string;
@@ -76,6 +77,7 @@ function DealCard({
     copyToClipboard(text);
 
     setIsCopied(true);
+    toast.success("Copied code to clipboard");
 
     setTimeout(() => {
       setIsCopied(false);

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { db } from "../../config/firebase";
 import { UserAuth } from "../../context/AuthContext";
 import Modal from "../Modal";
+import { toast } from "react-toastify";
 
 interface AuthModalProps {
   open: boolean;
@@ -24,9 +25,11 @@ function AuthModal({ open, onClose }: AuthModalProps) {
     try {
       await signIn(email, password);
       onClose();
+      toast.success("Login successful!");
     } catch (e: any) {
       setError(e.message);
       console.log(e.message);
+      toast.error("Incorrect email or password.");
     }
   };
 
