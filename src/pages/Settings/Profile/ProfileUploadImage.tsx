@@ -51,9 +51,11 @@ const ProfileUploadImage: React.FC<ProfileUploadImageProps> = ({
       <div className="flex flex-col">
         <img
           src={
-            profilePicture
+            editing && profilePicture
               ? URL.createObjectURL(profilePicture)
               : userData.profileUrl
+              ? userData.profileUrl
+              : "/placeholderAvatar.png"
           }
           className="mb-4 self-center max-w-[200px] h-[200px] bg-slate-600"
           alt="Profile Picture"

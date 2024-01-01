@@ -92,7 +92,7 @@ const Nav: FunctionComponent<NavProps> = ({
               >
                 {user ? (
                   <img
-                    src={profileImageUrl}
+                    src={profileImageUrl || "/placeholderAvatar.png"}
                     alt="User Profile"
                     className="w-[30px] h-[30px] rounded-full object-cover"
                   />
