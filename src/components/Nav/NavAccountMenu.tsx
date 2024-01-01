@@ -57,11 +57,11 @@ const NavAccountMenu: React.FC<NavAccountMenuProps> = ({
 
   return (
     <div className="flex flex-col z-10 absolute top-12 bg-white divide-y divide-gray-100 rounded-lg shadow sm:w-[250px]">
-      <div className="px-4 py-3 w-full text-white bg-orange-500 rounded-t-lg">
-        <Link to={`/profile/${userData.username}`} className="text-md">
+      <Link to={`/profile/${userData.username}`} className="text-md">
+        <div className="px-4 py-3 w-full text-white hover:bg-orange-400 bg-orange-500 rounded-t-lg">
           {userData.username}
-        </Link>
-      </div>
+        </div>
+      </Link>
       <ul className="flex w-full flex-col  text-md text-gray-700">
         {menuItems.map((item, index) => (
           <li
