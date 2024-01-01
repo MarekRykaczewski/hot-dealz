@@ -4,6 +4,7 @@ import { db } from "../../config/firebase";
 import { UserAuth } from "../../context/AuthContext";
 import Modal from "../Modal";
 import { toast } from "react-toastify";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 interface AuthModalProps {
   open: boolean;
@@ -43,6 +44,21 @@ function AuthModal({ open, onClose }: AuthModalProps) {
         createdAt: serverTimestamp(),
       });
       onClose();
+    } catch (e: any) {
+      setError(e.message);
+      console.log(e.message);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email) {
+      toast.warning("Please provide your email to reset your password.");
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(getAuth(), email);
+      toast.success("Password reset email sent! Check your inbox.");
     } catch (e: any) {
       setError(e.message);
       console.log(e.message);
@@ -133,9 +149,13 @@ function AuthModal({ open, onClose }: AuthModalProps) {
               <input id="remember" type="checkbox" className="mr-2" />
               Remember me
             </label>
-            <a href="#" className="text-orange-700 text-sm hover:underline">
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="text-orange-700 text-sm hover:underline"
+            >
               Lost Password?
-            </a>
+            </button>
           </div>
           <button
             type="submit"
