@@ -150,13 +150,12 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-      <div className="">
-        <FooterNav
-          paginate={paginate}
-          currentPage={currentPage}
-          totalPages={totalPages}
-        />
-      </div>
+
+      <FooterNav
+        paginate={paginate}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
     </>
   );
 };
