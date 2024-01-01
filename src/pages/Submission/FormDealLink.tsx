@@ -2,6 +2,7 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 import { AiOutlineLink } from "react-icons/ai";
 import { FormDetails } from "../../types";
+import { dealLinkValidation } from "../../utilities/validationRules";
 
 interface FormDealLinkProps {
   formDetails: FormDetails;
@@ -14,8 +15,6 @@ function FormDealLink({ formDetails, handleInputChange }: FormDealLinkProps) {
     formState: { errors },
   } = useFormContext();
 
-  const linkRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-
   return (
     <div className="flex flex-col">
       <div>
@@ -26,13 +25,7 @@ function FormDealLink({ formDetails, handleInputChange }: FormDealLinkProps) {
       </div>
 
       <input
-        {...register("dealLink", {
-          required: "This is required.",
-          pattern: {
-            value: linkRegex,
-            message: "Please enter a valid link.",
-          },
-        })}
+        {...register("dealLink", dealLinkValidation)}
         name="dealLink"
         value={formDetails.dealLink}
         onChange={handleInputChange}

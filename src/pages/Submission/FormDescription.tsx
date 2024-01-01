@@ -2,6 +2,7 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 import { FormDetails } from "../../types";
 import Tooltip from "./Tooltip";
+import { descriptionValidation } from "../../utilities/validationRules";
 
 interface FormDescriptionProps {
   formDetails: FormDetails;
@@ -36,13 +37,7 @@ function FormDescription({
         subtext="Include details about the product, links to any relevant info/reviews, and why you think it's a deal worth sharing"
       >
         <textarea
-          {...register("description", {
-            required: "This is required",
-            maxLength: {
-              value: DESCRIPTION_CHARACTER_LIMIT,
-              message: `Max length is ${DESCRIPTION_CHARACTER_LIMIT}`,
-            },
-          })}
+          {...register("description", descriptionValidation)}
           name="description"
           value={formDetails.description}
           onChange={handleInputChange}

@@ -2,6 +2,7 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 import { FormDetails } from "../../types";
 import Tooltip from "./Tooltip";
+import { titleValidation } from "../../utilities/validationRules";
 
 interface FormTitleProps {
   formDetails: FormDetails;
@@ -25,7 +26,7 @@ function FormTitle({
         <h3 className="text-sm font-bold text-gray-500 mb-2"> Title </h3>
         <span className="text-xs text-gray-500">
           {TITLE_CHARACTER_LIMIT - formDetails.title.length} Characters
-          remaining{" "}
+          remaining
         </span>
       </div>
       <Tooltip
@@ -35,13 +36,7 @@ function FormTitle({
         }
       >
         <input
-          {...register("title", {
-            required: "This is required",
-            maxLength: {
-              value: TITLE_CHARACTER_LIMIT,
-              message: `Max length is ${TITLE_CHARACTER_LIMIT}`,
-            },
-          })}
+          {...register("title", titleValidation)}
           name="title"
           value={formDetails.title}
           onChange={handleInputChange}

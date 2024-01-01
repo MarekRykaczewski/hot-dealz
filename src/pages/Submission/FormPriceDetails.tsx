@@ -1,12 +1,18 @@
+// FormPriceDetails.tsx
 import React, { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormDetails } from "../../types";
 import Tooltip from "./Tooltip";
+import {
+  priceValidation,
+  nextBestPriceValidation,
+  shippingCostValidation,
+} from "../../utilities/validationRules";
 
 interface FormPriceDetailsProps {
   formDetails: FormDetails;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Replace with the correct type
-  handleCheckChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Replace with the correct type
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCheckChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function FormPriceDetails({
@@ -20,21 +26,12 @@ function FormPriceDetails({
     formState: { errors },
   } = useFormContext();
 
-  // Decimal validation object
-  const decimalValidation = {
-    decimal: (value: string) => {
-      if (!/^\d+(\.\d{1,2})?$/.test(value)) return "Invalid decimal value";
-    },
-  };
-
   const handleFreeShippingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked;
     const shippingCostValue = isChecked ? 0 : formDetails.shippingCost;
 
-    // Update the formDetails state using the provided function
     handleCheckChange(e);
 
-    // Set the value and trigger re-validation
     setValue("shippingCost", shippingCostValue, {
       shouldValidate: true,
     });
@@ -57,23 +54,11 @@ function FormPriceDetails({
         subtext={"This should be the total price after any discounts"}
       >
         <input
-          {...register("price", {
-            min: 0,
-            max: {
-              value: 9999999,
-              message: "Are you sure it's THAT expensive? 🤔",
-            },
-            validate: {
-              required: (value: number) => {
-                if (!(value >= 0)) return "This is required";
-              },
-              ...decimalValidation,
-            },
-          })}
+          {...register("price", priceValidation)}
           name="price"
           value={formDetails.price}
           onChange={handleInputChange}
-          step="0.01" // Specify step size to allow two decimal places
+          step="0.01"
           className="border rounded-md p-1 focus:outline-orange-500 w-full"
           type="number"
         />
@@ -93,29 +78,12 @@ function FormPriceDetails({
         subtext={"This should be the total price before any discounts"}
       >
         <input
-          {...register("nextBestPrice", {
-            min: 0,
-            max: {
-              value: 9999999,
-              message: "Are you sure it's THAT expensive? 🤔",
-            },
-            validate: {
-              required: (value: number) => {
-                if (!(value >= 0)) return "This is required";
-              },
-              notSmallerThanPrice: (value: number) => {
-                const priceValue = formDetails.price || 0; // Default to 0 if price is not available
-                if (value < priceValue)
-                  return "Price can't be bigger than the next best price!";
-              },
-              ...decimalValidation,
-            },
-          })}
+          {...register("nextBestPrice", nextBestPriceValidation)}
           name="nextBestPrice"
           value={formDetails.nextBestPrice}
           onChange={handleInputChange}
           className="border rounded-md p-1 focus:outline-orange-500 w-full"
-          step="0.01" // Specify step size to allow two decimal places
+          step="0.01"
           type="number"
         />
         <span className="text-sm text-red-500 mt-1">
@@ -128,18 +96,13 @@ function FormPriceDetails({
       </label>
       <div className="flex flex-col">
         <input
-          {...register("shippingCost", {
-            min: 0,
-            validate: {
-              ...decimalValidation,
-            },
-          })}
+          {...register("shippingCost", shippingCostValidation)}
           name="shippingCost"
           value={formDetails.freeShipping ? 0 : formDetails.shippingCost}
           onChange={handleInputChange}
           className="border rounded-md p-1 focus:outline-orange-500"
           type="number"
-          step="0.01" // Specify step size to allow two decimal places
+          step="0.01"
           min={0}
           disabled={formDetails.freeShipping ? true : false}
         />
