@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import getUserIdFromUsername from "../../api/firebase/users/getUserIdFromUsername";
 import getUserCreationDate from "../../api/firebase/users/getUserCreationDate";
 import { calculateUserStatistics } from "../../api/firebase/users/calculateUserStatistics";
+import { createDealCard, formatDealDate } from "../../utilities/dealsUtils";
 
 const UserProfile = () => {
   const { username } = useParams();
@@ -66,14 +67,7 @@ const UserProfile = () => {
     3
   );
 
-  const dealElements = currentItems.map((item) => (
-    <DealCard
-      key={item.dealId}
-      {...item}
-      dealLink={`/deal/${item.dealId}`}
-      userId={userId}
-    />
-  ));
+  const dealElements = currentItems.map((item) => createDealCard(item));
 
   if (loading) {
     return <LoadingSpinner />;
