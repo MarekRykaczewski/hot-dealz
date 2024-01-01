@@ -98,67 +98,65 @@ const UserProfile = () => {
 
   return (
     <>
-      <div className="w-max-[70vw] w-fit p-4 mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="sm:max-w-[70vw] w-full p-4 mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Left side: Profile information and User Statistics */}
         <div className="col-span-1">
           {/* Profile information */}
-          <div className="bg-white flex items-center justify-center p-4 rounded-lg shadow-md mb-4">
-            <div className="flex items-center mb-4">
+          <div className="bg-white h-full flex items-center justify-center p-4 rounded-lg shadow-md">
+            <div className="flex flex-col items-center">
               <img
                 src={profilePictureUrl}
                 alt={`${username}'s Profile Picture`}
-                className="w-20 h-20 rounded-full mr-4"
+                className="w-32 h-32 rounded-full mb-3"
               />
-              <div>
-                <h2 className="text-3xl font-bold">{username}</h2>
-                <p className="text-gray-600">
-                  Member since {creationDate?.toLocaleDateString()}
-                </p>
-              </div>
+              <h2 className="text-3xl font-bold">{username}</h2>
+              <p className="text-gray-600">
+                Member since {creationDate?.toLocaleDateString()}
+              </p>
             </div>
           </div>
+        </div>
+        {/* User Statistics */}
+        <div className="col-span-1">
+          <h3 className="text-2xl mb-4 h-fit shadow-md bg-white rounded-lg p-4 text-center font-semibold">
+            Statistics
+          </h3>
 
-          {/* User Statistics */}
-          <div className="col-span-1">
-            <h3 className="text-2xl mb-4 h-fit shadow-md bg-white rounded-lg p-4 text-center font-semibold">
-              Statistics
-            </h3>
-
-            <div className="bg-white flex items-center justify-center p-4 rounded-lg shadow-md">
-              <div className="grid grid-cols-2 gap-4">
-                {statisticsData.map(({ icon, label, value }) => (
-                  <div
-                    key={label}
-                    className="flex flex-col items-center justify-center mb-2"
-                  >
-                    {icon}
-                    <div className="flex flex-col items-center  gap-2">
-                      <p className="text-gray-600">{label}</p>
-                      <p className="text-2xl font-bold">{value}</p>
-                    </div>
+          <div className="bg-white flex items-center justify-center p-4 rounded-lg shadow-md">
+            <div className="grid grid-cols-2 gap-4">
+              {statisticsData.map(({ icon, label, value }) => (
+                <div
+                  key={label}
+                  className="flex flex-col items-center justify-center mb-2"
+                >
+                  {icon}
+                  <div className="flex flex-col items-center  gap-2">
+                    <p className="text-gray-600">{label}</p>
+                    <p className="text-2xl font-bold">{value}</p>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Right side: Deals section */}
-        <div className="col-span-1 w-fit">
+        <div className="sm:col-span-2">
           <h3 className="text-2xl bg-white rounded-lg p-4 shadow-md text-center font-semibold mb-4">
             User's Deals
           </h3>
-          <div className="flex flex-col w-fit items-center justify-center gap-2">
+          <div className="flex flex-col items-center justify-center gap-2">
             {dealElements}
           </div>
         </div>
       </div>
-
-      <FooterNav
-        paginate={paginate}
-        currentPage={currentPage}
-        totalPages={totalPages}
-      />
+      <div className="">
+        <FooterNav
+          paginate={paginate}
+          currentPage={currentPage}
+          totalPages={totalPages}
+        />
+      </div>
     </>
   );
 };
