@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { FiThumbsUp } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import {
   checkUserLiked,
@@ -8,6 +7,7 @@ import {
   toggleCommentLike,
 } from "../../api/firebase/comments";
 import { getProfileUrlFromUserId } from "../../api/firebase/users";
+import LikeButton from "../ui/LikeButton";
 
 interface CommentCardProps {
   userId: string;
@@ -90,17 +90,11 @@ function CommentCard({
               <span>{date}</span>
             </div>
           </Link>
-          <div>
-            <button
-              onClick={handleToggleCommentLike}
-              className={`hover:text-orange-500 ${
-                liked && "text-orange-500 font-bold"
-              } cursor-pointer transition flex flex-row-reverse gap-2 items-center`}
-            >
-              <div> {liked ? "Liked" : "Like"}</div>
-              <FiThumbsUp color={liked ? "orange" : "gray"} />
-            </button>
-          </div>
+          <LikeButton
+            liked={liked}
+            onClick={handleToggleCommentLike}
+            likes={likes}
+          />
         </div>
         <div className="flex flex-col">
           {comment}
