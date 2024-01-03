@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { BiCommentDetail, BiCopyAlt } from "react-icons/bi";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { FiExternalLink } from "react-icons/fi";
 import { MdOutlineLocalShipping } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { checkSavedDeal } from "../../api/firebase/firestore/checkSavedDeal";
-import { toggleSaved } from "../../api/firebase/firestore/toggleSaved";
+import { toast } from "react-toastify";
+import { checkSavedDeal } from "../../api/firebase/deals/checkSavedDeal";
+import { toggleSaved } from "../../api/firebase/deals/toggleSaved";
 import { fetchProfileImageUrl } from "../../api/firebase/storage";
 import { auth } from "../../config/firebase";
 import { UserAuth } from "../../context/AuthContext";
-import ImageSlider from "../ImageSlider";
-import DealCardVotes from "./DealCardVotes";
 import { copyToClipboard } from "../../utilities/copyToClipboard";
-import { toast } from "react-toastify";
+import DealCardVotes from "./DealCardVotes";
+import ImageSlider from "./ImageSlider";
 
 interface DealCardProps {
   userId: string;

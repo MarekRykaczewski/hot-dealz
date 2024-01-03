@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
-import CategoryCarousel from "../../components/CategoryCarousel";
-import FooterNav from "../../components/Footer/FooterNav";
-import Tabs from "../../components/Tabs";
-import { Deal } from "../../types";
+import CategoryCarousel from "../components/CategoryCarousel";
+import FooterNav from "../components/Footer/FooterNav";
+import Tabs from "../components/Tabs";
+import { Deal } from "../types";
 
 interface DealsProps {
   deals: Deal[];

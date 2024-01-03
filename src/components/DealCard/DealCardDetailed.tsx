@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BiCopyAlt } from "react-icons/bi";
-import { FiExternalLink } from "react-icons/fi";
-import { MdOutlineLocalShipping } from "react-icons/md";
-import { formatPostedDate } from "../../utils";
-import ImageSlider from "../ImageSlider";
-import DealCardVotes from "./DealCardVotes";
-import { copyToClipboard } from "../../utilities/copyToClipboard";
-import { FaFacebook, FaCopy } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
 import { CiShare2 } from "react-icons/ci";
+import { FaCopy, FaFacebook } from "react-icons/fa";
+import { FiExternalLink } from "react-icons/fi";
+import { MdOutlineLocalShipping } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { copyToClipboard } from "../../utilities/copyToClipboard";
+import { formatPostedDate } from "../../utils";
+import DealCardVotes from "./DealCardVotes";
+import ImageSlider from "./ImageSlider";
 
 interface DealCardDetailedProps {
   profileUrl: string;

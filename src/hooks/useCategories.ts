@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchCategories } from "../api/firebase/firestore";
+import { fetchCategories } from "../api/firebase/deals";
 import { Category } from "../types";
 
 export function useCategories() {

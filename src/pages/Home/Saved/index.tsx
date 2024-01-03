@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import usePagination from "../../../hooks/usePagination";
-import { Deal } from "../../../types";
-import Deals from "../Deals";
-import { createDealCard, filterDeals } from "../../../utilities/dealsUtils";
-import useSavedDeals from "../../../hooks/useSavedDeals";
 import { useParams } from "react-router-dom";
-import LoadingSpinner from "../../../components/LoadingSpinner";
+import LoadingSpinner from "../../../components/ui/LoadingSpinner";
+import usePagination from "../../../hooks/usePagination";
+import useSavedDeals from "../../../hooks/useSavedDeals";
+import Deals from "../../../templates/Deals";
+import { Deal } from "../../../types";
+import { createDealCard, filterDeals } from "../../../utilities/dealsUtils";
 
 function Saved() {
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>([]);

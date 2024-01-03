@@ -1,8 +1,8 @@
 import { ChangeEvent, RefObject, useState } from "react";
-import { submitComment } from "../api/firebase/comments";
-import { UserAuth } from "../context/AuthContext";
-import { useCommentsData } from "../hooks/useCommentsData";
-import { sortCommentsByLikes, sortCommentsByNewest } from "../utils";
+import { submitComment } from "../../api/firebase/comments";
+import { UserAuth } from "../../context/AuthContext";
+import { useCommentsData } from "../../hooks/useCommentsData";
+import { sortCommentsByLikes, sortCommentsByNewest } from "../../utils";
 import CommentCard from "./CommentCard";
 
 interface CommentSectionProps {

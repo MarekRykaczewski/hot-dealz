@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import { useDeals } from "../../hooks/useDeals";
 import usePagination from "../../hooks/usePagination";
+import Deals from "../../templates/Deals";
 import { Deal } from "../../types";
-import Deals from "./Deals";
-import LoadingSpinner from "../../components/LoadingSpinner";
 import { createDealCard, filterDeals } from "../../utilities/dealsUtils";
 
 function Home() {

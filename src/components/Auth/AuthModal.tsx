@@ -1,10 +1,10 @@
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { db } from "../../config/firebase";
 import { UserAuth } from "../../context/AuthContext";
-import Modal from "../Modal";
-import { toast } from "react-toastify";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import Modal from "../ui/Modal";
 
 interface AuthModalProps {
   open: boolean;

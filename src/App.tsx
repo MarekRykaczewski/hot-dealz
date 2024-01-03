@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Nav from "./components/Nav/Nav";
+import PrivateRoute from "./components/ui/PrivateRoute";
 import { AuthContextProvider } from "./context/AuthContext";
 import Home from "./pages/Home";
+import Saved from "./pages/Home/Saved";
+import DealDetails from "./pages/Home/[id]";
+import NotFound from "./pages/NotFound";
+import UserProfile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Settings/Profile";
 import Submission from "./pages/Submission";
-import PrivateRoute from "./components/PrivateRoute";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import UserProfile from "./pages/Profile";
-import NotFound from "./pages/NotFound";
-import Saved from "./pages/Home/Saved";
-import DealDetails from "./pages/Home/[id]/DealDetails";
 
 function App() {
   const [openNavAccountMenu, setOpenNavAccountMenu] = useState<boolean>(false); // Add the type for useState

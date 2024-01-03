@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BsHourglassBottom } from "react-icons/bs";
-import { getLikesAndDislikes, handleVote } from "../../api/firebase/firestore";
+import { getLikesAndDislikes, handleVote } from "../../api/firebase/deals";
 import { UserAuth } from "../../context/AuthContext";
 
 interface VoteButtonProps {

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { FiThumbsUp } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import {
   checkUserLiked,
   fetchCommentLikeCount,
   getUsernameFromComment,
   toggleCommentLike,
-} from "../api/firebase/comments";
-import { getProfileUrlFromUserId } from "../api/firebase/users";
-import { Link } from "react-router-dom";
+} from "../../api/firebase/comments";
+import { getProfileUrlFromUserId } from "../../api/firebase/users";
 
 interface CommentCardProps {
   userId: string;

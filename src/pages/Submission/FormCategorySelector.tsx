@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { fetchCategories } from "../../api/firebase/firestore";
+import { fetchCategories } from "../../api/firebase/deals";
 import { Category } from "../../types";
 
 function CategorySelector({

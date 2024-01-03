@@ -2,18 +2,18 @@ import React, { useState } from "react";
 
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { submitDeal } from "../../api/firebase/firestore";
-import Modal from "../../components/Modal";
+import { toast } from "react-toastify";
+import { submitDeal } from "../../api/firebase/deals";
+import Modal from "../../components/ui/Modal";
 import { UserAuth } from "../../context/AuthContext";
 import { FormDetails } from "../../types";
 import FormDealLink from "./FormDealLink";
 import FormDescription from "./FormDescription";
 import FormFinalDetails from "./FormFinalDetails";
 import FormImageUpload from "./FormImageUpload";
+import PreviewDealModal from "./FormPreviewDealModal";
 import FormPriceDetails from "./FormPriceDetails";
 import FormTitle from "./FormTitle";
-import PreviewDealModal from "./PreviewDealModal";
-import { toast } from "react-toastify";
 
 function Submission() {
   const methods = useForm();

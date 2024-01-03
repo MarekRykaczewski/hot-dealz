@@ -1,18 +1,17 @@
+import { useEffect, useState } from "react";
+import { AiFillStar, AiOutlineFileText } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
-import DealCard from "../../components/DealCard/DealCard";
-import { AiOutlineFileText, AiFillStar } from "react-icons/ai";
 import { RiHotspotLine } from "react-icons/ri";
-import { useUserDeals } from "../../hooks/useUserDeals";
-import LoadingSpinner from "../../components/LoadingSpinner";
-import usePagination from "../../hooks/usePagination";
-import FooterNav from "../../components/Footer/FooterNav";
 import { useParams } from "react-router-dom";
 import { getProfileUrlFromUserId } from "../../api/firebase/users";
-import { useEffect, useState } from "react";
-import getUserIdFromUsername from "../../api/firebase/users/getUserIdFromUsername";
-import getUserCreationDate from "../../api/firebase/users/getUserCreationDate";
 import { calculateUserStatistics } from "../../api/firebase/users/calculateUserStatistics";
-import { createDealCard, formatDealDate } from "../../utilities/dealsUtils";
+import getUserCreationDate from "../../api/firebase/users/getUserCreationDate";
+import getUserIdFromUsername from "../../api/firebase/users/getUserIdFromUsername";
+import FooterNav from "../../components/Footer/FooterNav";
+import LoadingSpinner from "../../components/ui/LoadingSpinner";
+import usePagination from "../../hooks/usePagination";
+import { useUserDeals } from "../../hooks/useUserDeals";
+import { createDealCard } from "../../utilities/dealsUtils";
 
 const UserProfile = () => {
   const { username } = useParams();

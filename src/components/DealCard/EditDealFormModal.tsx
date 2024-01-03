@@ -1,13 +1,13 @@
 import React from "react";
-import { SubmitHandler, useForm, Controller } from "react-hook-form";
-import Modal from "../Modal";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import Modal from "../ui/Modal";
 
 import {
-  titleValidation,
-  priceValidation,
-  nextBestPriceValidation,
-  shippingCostValidation,
   dealLinkValidation,
+  nextBestPriceValidation,
+  priceValidation,
+  shippingCostValidation,
+  titleValidation,
 } from "../../utilities/validationRules";
 
 interface EditDealFormModalProps {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { RxDotFilled } from "react-icons/rx";
-import useImageLoader from "../hooks/useImageLoader";
+import useImageLoader from "../../hooks/useImageLoader";
 
 type ImageSliderProps = {
   dealId: string;

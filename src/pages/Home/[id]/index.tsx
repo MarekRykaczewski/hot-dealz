@@ -7,9 +7,9 @@ import {
   checkSavedDeal,
   toggleSaved,
   updateDealDetails,
-} from "../../../api/firebase/firestore";
+} from "../../../api/firebase/deals";
 import { fetchProfileImageUrl } from "../../../api/firebase/storage";
-import CommentSection from "../../../components/CommentSection";
+import CommentSection from "../../../components/Comment/CommentSection";
 import DealCardControls from "../../../components/DealCard/DealCardControls";
 import DealCardDetailed from "../../../components/DealCard/DealCardDetailed";
 import EditDealFormModal from "../../../components/DealCard/EditDealFormModal";

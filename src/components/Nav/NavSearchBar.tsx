@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchSearchResults } from "../../api/firebase/firestore/fetchSearchResults";
+import { fetchSearchResults } from "../../api/firebase/deals/fetchSearchResults";
 import SearchResultItem from "./SearchResultItem";
 import { FaSearch } from "react-icons/fa";
 

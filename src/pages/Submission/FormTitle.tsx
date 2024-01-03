@@ -1,8 +1,8 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { FormDetails } from "../../types";
-import Tooltip from "./Tooltip";
 import { titleValidation } from "../../utilities/validationRules";
+import Tooltip from "./FormTooltip";
 
 interface FormTitleProps {
   formDetails: FormDetails;
