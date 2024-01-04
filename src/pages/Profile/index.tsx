@@ -7,7 +7,7 @@ import { getProfileUrlFromUserId } from "../../api/firebase/users";
 import { calculateUserStatistics } from "../../api/firebase/users/calculateUserStatistics";
 import getUserCreationDate from "../../api/firebase/users/getUserCreationDate";
 import getUserIdFromUsername from "../../api/firebase/users/getUserIdFromUsername";
-import FooterNav from "../../components/Footer/FooterNav";
+import FooterNav from "../../components/Footer";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import usePagination from "../../hooks/usePagination";
 import { useUserDeals } from "../../hooks/useUserDeals";

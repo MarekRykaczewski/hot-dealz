@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { fetchSearchResults } from "../../api/firebase/deals/fetchSearchResults";
-import SearchResultItem from "./SearchResultItem";
 import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { fetchSearchResults } from "../../../api/firebase/deals/fetchSearchResults";
+import SearchResultItem from "./SearchResultItem";
 
 interface SearchResult {
   id: string;
@@ -15,7 +15,7 @@ interface SearchResult {
   };
 }
 
-function NavSearchBar({ isFocused, setIsFocused }) {
+function SearchBar({ isFocused, setIsFocused }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
@@ -81,4 +81,4 @@ function NavSearchBar({ isFocused, setIsFocused }) {
   );
 }
 
-export default NavSearchBar;
+export default SearchBar;

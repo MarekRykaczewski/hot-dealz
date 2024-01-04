@@ -9,10 +9,10 @@ import {
   updateDealDetails,
 } from "../../../api/firebase/deals";
 import { fetchProfileImageUrl } from "../../../api/firebase/storage";
-import CommentSection from "../../../components/Comment/CommentSection";
-import DealCardControls from "../../../components/DealCard/DealCardControls";
-import DealCardDetailed from "../../../components/DealCard/DealCardDetailed";
-import EditDealFormModal from "../../../components/DealCard/EditDealFormModal";
+import CommentSection from "../../../components/CommentSection";
+import DealCardControls from "../../../components/DealControls";
+import EditDealFormModal from "../../../components/DealControls/EditDealFormModal";
+import DealCardDetailed from "../../../components/DealFull";
 import { UserAuth } from "../../../context/AuthContext";
 import { useDealDetails } from "../../../hooks/useDealDetails";
 import { Deal } from "../../../types";

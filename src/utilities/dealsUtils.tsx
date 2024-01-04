@@ -1,4 +1,4 @@
-import DealCard from "../components/DealCard/DealCard";
+import DealCard from "../components/DealCard";
 
 export function filterDeals(deals, category, query, sorting) {
   let filteredDealsCopy = [...deals];

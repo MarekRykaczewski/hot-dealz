@@ -1,5 +1,5 @@
+import ImageSlider from "../DealImageSlider";
 import DealDetails from "./DealDetails";
-import ImageSlider from "./DealImageSlider";
 import DealUserActions from "./DealUserActions";
 
 interface DealCardProps {

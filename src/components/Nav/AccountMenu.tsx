@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/AuthContext";
 
-interface NavAccountMenuProps {
+interface AccountMenuProps {
   openNavAccountMenu: boolean;
   toggleNavAccountMenu: () => void;
   profileRef: React.RefObject<HTMLDivElement>;
 }
 
-const NavAccountMenu: React.FC<NavAccountMenuProps> = ({
+const AccountMenu: React.FC<AccountMenuProps> = ({
   openNavAccountMenu,
   toggleNavAccountMenu,
   profileRef,
@@ -91,4 +91,4 @@ const NavAccountMenu: React.FC<NavAccountMenuProps> = ({
   );
 };
 
-export default NavAccountMenu;
+export default AccountMenu;

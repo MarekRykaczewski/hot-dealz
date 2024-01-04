@@ -2,13 +2,13 @@ import { User } from "firebase/auth";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import { UserAuth } from "../../context/AuthContext";
-import AuthModal from "../Auth/AuthModal";
-import NavAccountMenu from "./NavAccountMenu";
-import NavSearchBar from "./NavSearchBar";
 import { PiFireSimpleFill } from "react-icons/pi";
+import { Link } from "react-router-dom";
 import { getProfileUrlFromUserId } from "../../api/firebase/users";
+import { UserAuth } from "../../context/AuthContext";
+import AuthModal from "../Auth";
+import NavAccountMenu from "./AccountMenu";
+import NavSearchBar from "./SearchBar/SearchBar";
 
 interface NavProps {
   openNavAccountMenu: boolean;

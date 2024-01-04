@@ -6,7 +6,7 @@ import { MdOutlineLocalShipping } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { copyToClipboard } from "../../utilities/copyToClipboard";
-import DealCardVotes from "./DealVotes";
+import DealCardVotes from "../DealVotes";
 
 const DealDetails = ({
   postId,

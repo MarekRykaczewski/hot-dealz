@@ -1,13 +1,13 @@
 import React from "react";
 import { BsHourglassBottom, BsPencil } from "react-icons/bs";
 
-interface DealCardControlsProps {
+interface DealControlsProps {
   isArchived: boolean;
   handleArchiveClick: () => void;
   onEditClick: () => void;
 }
 
-const DealCardControls: React.FC<DealCardControlsProps> = ({
+const DealControls: React.FC<DealControlsProps> = ({
   isArchived,
   handleArchiveClick,
   onEditClick,
@@ -47,4 +47,4 @@ const DealCardControls: React.FC<DealCardControlsProps> = ({
   );
 };
 
-export default DealCardControls;
+export default DealControls;

@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import CategoryCarousel from "../components/CategoryCarousel";
-import FooterNav from "../components/Footer/FooterNav";
+import FooterNav from "../components/Footer";
 import Tabs from "../components/Tabs";
 import { Deal } from "../types";
 

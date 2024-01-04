@@ -9,10 +9,10 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { copyToClipboard } from "../../utilities/copyToClipboard";
 import { formatPostedDate } from "../../utils";
-import ImageSlider from "./DealImageSlider";
-import DealCardVotes from "./DealVotes";
+import ImageSlider from "../DealImageSlider";
+import DealCardVotes from "../DealVotes";
 
-interface DealCardDetailedProps {
+interface DealFullProps {
   profileUrl: string;
   dealId: string;
   isArchived: boolean;
@@ -30,7 +30,7 @@ interface DealCardDetailedProps {
   voucherCode?: string;
 }
 
-const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
+const DealFull: React.FC<DealFullProps> = ({
   dealId,
   isArchived,
   imageURLs,
@@ -218,4 +218,4 @@ const DealCardDetailed: React.FC<DealCardDetailedProps> = ({
   );
 };
 
-export default DealCardDetailed;
+export default DealFull;

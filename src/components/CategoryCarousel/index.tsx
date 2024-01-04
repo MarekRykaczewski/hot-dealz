@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { useCategories } from "../hooks/useCategories";
+import { useCategories } from "../../hooks/useCategories";
 
 function CategoryCarousel() {
   const { categories } = useCategories();

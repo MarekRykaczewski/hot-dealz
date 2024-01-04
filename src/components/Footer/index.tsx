@@ -7,13 +7,13 @@ import {
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
-type FooterNavProps = {
+type FooterProps = {
   paginate: (page: number) => void;
   currentPage: number;
   totalPages: number;
 };
 
-const FooterNav: React.FC<FooterNavProps> = ({
+const Footer: React.FC<FooterProps> = ({
   paginate,
   currentPage,
   totalPages,
@@ -153,4 +153,4 @@ const FooterNav: React.FC<FooterNavProps> = ({
   );
 };
 
-export default FooterNav;
+export default Footer;
