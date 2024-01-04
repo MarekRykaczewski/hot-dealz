@@ -9,8 +9,8 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { copyToClipboard } from "../../utilities/copyToClipboard";
 import { formatPostedDate } from "../../utils";
-import DealCardVotes from "./DealCardVotes";
-import ImageSlider from "./ImageSlider";
+import ImageSlider from "./DealImageSlider";
+import DealCardVotes from "./DealVotes";
 
 interface DealCardDetailedProps {
   profileUrl: string;

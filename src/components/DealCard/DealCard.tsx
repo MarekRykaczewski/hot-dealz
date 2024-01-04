@@ -1,19 +1,6 @@
-import { useEffect, useState } from "react";
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { BiCommentDetail, BiCopyAlt } from "react-icons/bi";
-import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
-import { FiExternalLink } from "react-icons/fi";
-import { MdOutlineLocalShipping } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { checkSavedDeal } from "../../api/firebase/deals/checkSavedDeal";
-import { toggleSaved } from "../../api/firebase/deals/toggleSaved";
-import { fetchProfileImageUrl } from "../../api/firebase/storage";
-import { auth } from "../../config/firebase";
-import { UserAuth } from "../../context/AuthContext";
-import { copyToClipboard } from "../../utilities/copyToClipboard";
-import DealCardVotes from "./DealCardVotes";
-import ImageSlider from "./ImageSlider";
+import DealDetails from "./DealDetails";
+import ImageSlider from "./DealImageSlider";
+import DealUserActions from "./DealUserActions";
 
 interface DealCardProps {
   userId: string;
@@ -52,38 +39,6 @@ function DealCard({
   voucherCode,
   commentsCount,
 }: DealCardProps) {
-  const [hasSaved, setHasSaved] = useState(false);
-  const [isCopied, setIsCopied] = useState(false);
-  const [profileUrl, setProfileUrl] = useState("");
-  const { user } = UserAuth();
-  const currentUserId = auth.currentUser?.uid;
-
-  useEffect(() => {
-    if (currentUserId) {
-      checkSavedDeal(setHasSaved, currentUserId, postId);
-    }
-  }, [postId, currentUserId]);
-
-  useEffect(() => {
-    const fetchProfileImage = async () => {
-      const profileImageUrl = await fetchProfileImageUrl(userId);
-      setProfileUrl(profileImageUrl);
-    };
-
-    fetchProfileImage();
-  }, [userId]);
-
-  const handleCopyToClipboard = (text: string) => {
-    copyToClipboard(text);
-
-    setIsCopied(true);
-    toast.success("Copied code to clipboard");
-
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 2000);
-  };
-
   return (
     <div
       className={`w-full sm:max-w-4xl shadow-md ${
@@ -94,108 +49,28 @@ function DealCard({
         <ImageSlider dealId={postId} imageURLs={imageURLs} />
       </div>
       <div className="bg-white max-w-xl flex-grow p-4 flex flex-col justify-between">
-        <div className="flex flex-col gap-1">
-          <div className="text-sm text-gray-600 flex justify-between">
-            <DealCardVotes postId={postId} archived={archived} />
-            <div className="flex gap-2 items-center">
-              <AiOutlineClockCircle size={"1.6em"} />
-              <div className="flex flex-col items-center">
-                <span>
-                  {date}, {time}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <Link to={`/deal/${postId}`}>
-            <div className="text-gray-900 w-full overflow-hidden text-ellipsis whitespace-nowrap font-bold text-xl  hover:text-orange-500 transition">
-              {title}
-            </div>
-          </Link>
-
-          <div className="flex sm:flex-nowrap flex-wrap gap-3 text-xl">
-            <p className="text-orange-500 font-bold overflow-hidden whitespace-nowrap text-ellipsis">
-              {price}zł
-            </p>
-            <del className="overflow-hidden whitespace-nowrap text-ellipsis text-gray-500">
-              {nextBestPrice}zł
-            </del>
-            <p>
-              -{Math.floor(((nextBestPrice - price) / nextBestPrice) * 100)}%
-            </p>
-            <p className="flex flex-row text-slate-500 gap-2 items-center text-sm">
-              <MdOutlineLocalShipping size={26} />{" "}
-              {freeShipping ? "Free Shipping" : shippingCost}
-              {!freeShipping && "zł"}
-            </p>
-          </div>
-          {voucherCode && (
-            <div className="mb-2 mt-2 flex gap-3 w-full text-gray-60">
-              <button
-                value={voucherCode}
-                onClick={(e) => handleCopyToClipboard(e.target.value)}
-                className="flex overflow-hidden text-ellipsis whitespace-nowrap border-dashed border-2 border-gray-300 hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-full h-8"
-              >
-                {isCopied ? "Copied!" : voucherCode} <BiCopyAlt size={20} />
-              </button>
-              <button className="flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-full h-8">
-                <a
-                  className="flex gap-2 items-center "
-                  href={dealLink}
-                  target="_blank"
-                >
-                  Go to deal
-                  <FiExternalLink />
-                </a>
-              </button>
-            </div>
-          )}
-          <p
-            className={`text-gray-700 w-full overflow-hidden whitespace-nowrap text-ellipsis mb-3`}
-          >
-            {description}
-          </p>
-        </div>
-        <div className="flex items-center justify-between gap-5 mt-4">
-          <Link
-            className="flex justify-center items-center"
-            to={`profile/${owner}`}
-          >
-            <img className="w-8 h-8 rounded-full mr-2" src={profileUrl} />
-            <div className="text-sm">
-              <p className="text-gray-900 leading-none">{owner}</p>
-            </div>
-          </Link>
-          <div className="flex flex-wrap gap-3 items-center justify-end text-gray-600">
-            <button
-              onClick={() => {
-                if (!user) return;
-                toggleSaved(hasSaved, setHasSaved, user.uid, postId);
-              }}
-              className="flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-8 h-8"
-            >
-              {hasSaved ? <BsFillBookmarkFill /> : <BsBookmark />}
-            </button>
-            <Link
-              to={`/deal/${postId}`}
-              className="flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8"
-            >
-              <BiCommentDetail /> {commentsCount}
-            </Link>
-            {!voucherCode && (
-              <button className="flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-32 h-8">
-                <a
-                  className="flex gap-2 items-center"
-                  href={dealLink}
-                  target="_blank"
-                >
-                  Go to deal
-                  <FiExternalLink />
-                </a>
-              </button>
-            )}
-          </div>
-        </div>
+        <DealDetails
+          postId={postId}
+          archived={archived}
+          date={date}
+          time={time}
+          title={title}
+          price={price}
+          nextBestPrice={nextBestPrice}
+          freeShipping={freeShipping}
+          shippingCost={shippingCost}
+          voucherCode={voucherCode}
+          dealLink={dealLink}
+          description={description}
+        />
+        <DealUserActions
+          userId={userId}
+          owner={owner}
+          postId={postId}
+          commentsCount={commentsCount}
+          voucherCode={voucherCode}
+          dealLink={dealLink}
+        />
       </div>
     </div>
   );
