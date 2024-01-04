@@ -1,12 +1,5 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  checkUserLiked,
-  fetchCommentLikeCount,
-  getUsernameFromComment,
-  toggleCommentLike,
-} from "../../api/firebase/comments";
-import { getProfileUrlFromUserId } from "../../api/firebase/users";
+import useComment from "../../hooks/useComment";
 import LikeButton from "../ui/LikeButton";
 
 interface CommentCardProps {
@@ -24,43 +17,11 @@ function CommentCard({
   comment,
   date,
 }: CommentCardProps) {
-  const [username, setUsername] = useState<string | null>(null);
-  const [profileUrl, setProfileUrl] = useState<string | null>(null);
-  const [liked, setLiked] = useState<boolean>(false);
-  const [likes, setLikes] = useState<number>(0);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const username = await getUsernameFromComment(commentId, postId);
-        setUsername(username);
-
-        const url = await getProfileUrlFromUserId(userId);
-        setProfileUrl(url);
-
-        const likeCount = await fetchCommentLikeCount(postId, commentId);
-        setLikes(likeCount);
-
-        // Check if the current user has liked the comment
-        const userHasLiked = await checkUserLiked(postId, commentId, userId);
-        setLiked(userHasLiked);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-
-    fetchData();
-  }, [commentId, postId, userId]);
-
-  const handleToggleLike = async () => {
-    try {
-      await toggleCommentLike(postId, commentId, userId);
-      setLiked(!liked);
-      setLikes(liked ? likes - 1 : likes + 1);
-    } catch (error) {
-      console.error("Error toggling comment like:", error);
-    }
-  };
+  const { username, profileUrl, liked, likes, handleToggleLike } = useComment(
+    userId,
+    postId,
+    commentId
+  );
 
   return (
     <div className="border border-gray-400 border-t-1 border-b-0 border-l-0 border-r-0 w-full">
