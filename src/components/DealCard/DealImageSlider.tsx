@@ -8,7 +8,7 @@ type ImageSliderProps = {
   imageURLs: string[];
 };
 
-function ImageSlider({ imageURLs }: ImageSliderProps) {
+function DealImageSlider({ imageURLs }: ImageSliderProps) {
   const { slides, loading } = useImageLoader(imageURLs);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -65,4 +65,4 @@ function ImageSlider({ imageURLs }: ImageSliderProps) {
   );
 }
 
-export default ImageSlider;
+export default DealImageSlider;

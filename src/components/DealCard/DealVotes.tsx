@@ -23,12 +23,12 @@ function VoteButton({ onClick, disabled, text }: VoteButtonProps) {
   );
 }
 
-interface DealCardVotesProps {
+interface DealVotesProps {
   postId: string;
   archived: boolean;
 }
 
-function DealCardVotes({ postId, archived }: DealCardVotesProps) {
+function DealVotes({ postId, archived }: DealVotesProps) {
   const { user } = UserAuth();
   const [likes, setLikes] = useState<any[]>([]);
   const [dislikes, setDislikes] = useState<any[]>([]);
@@ -127,4 +127,4 @@ function DealCardVotes({ postId, archived }: DealCardVotesProps) {
   );
 }
 
-export default DealCardVotes;
+export default DealVotes;
