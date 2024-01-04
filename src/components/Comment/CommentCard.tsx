@@ -52,23 +52,12 @@ function CommentCard({
     fetchData();
   }, [commentId, postId, userId]);
 
-  // Function to toggle like on a comment
-  const handleToggleCommentLike = async () => {
+  const handleToggleLike = async () => {
     try {
-      // Toggle the like on the server
       await toggleCommentLike(postId, commentId, userId);
-
-      // Update the liked state
       setLiked(!liked);
-
-      // Update the like count
-      if (liked) {
-        setLikes(likes - 1);
-      } else {
-        setLikes(likes + 1);
-      }
+      setLikes(liked ? likes - 1 : likes + 1);
     } catch (error) {
-      // Handle any errors that occurred
       console.error("Error toggling comment like:", error);
     }
   };
@@ -90,11 +79,7 @@ function CommentCard({
               <span>{date}</span>
             </div>
           </Link>
-          <LikeButton
-            liked={liked}
-            onClick={handleToggleCommentLike}
-            likes={likes}
-          />
+          <LikeButton liked={liked} onClick={handleToggleLike} likes={likes} />
         </div>
         <div className="flex flex-col">
           {comment}
