@@ -37,6 +37,7 @@ function FormTitle({
       >
         <input
           {...register("title", titleValidation)}
+          maxLength={TITLE_CHARACTER_LIMIT}
           name="title"
           value={formDetails.title}
           onChange={handleInputChange}

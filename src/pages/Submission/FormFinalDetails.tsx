@@ -15,10 +15,12 @@ function FormFinalDetails({ handleInputChange }: FormFinalDetailsProps) {
 
         <h3 className="text-2xl font-bold mb-4">Final details</h3>
 
-        <span className="text-sm font-bold text-gray-500">Categories</span>
-        <span className="text-xs text-gray-500 mb-3">
-          Which of these categories best describes your deal?
-        </span>
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-sm font-bold text-gray-500">Categories</span>
+          <span className="text-xs text-gray-500">
+            Which of these categories best describes your deal?
+          </span>
+        </div>
       </div>
 
       <div className="mb-2">
