@@ -7,12 +7,9 @@ import AuthModal from "../Auth";
 import AccountMenu from "./AccountMenu";
 
 interface NavUserProps {
-  user: User | null;
   isFocused: boolean;
-  profileImageUrl: string;
-  handleUserButtonClick: () => void;
-  openNavAccountMenu: boolean;
   toggleNavAccountMenu: () => void;
+  openNavAccountMenu: () => void;
 }
 
 const NavUser: React.FC<NavUserProps> = ({

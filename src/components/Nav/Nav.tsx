@@ -45,7 +45,6 @@ const Nav: FunctionComponent<NavProps> = ({
             <NavSearchBar isFocused={isFocused} setIsFocused={setIsFocused} />
             <NavUser
               isFocused={isFocused}
-              setIsFocused={setIsFocused}
               openNavAccountMenu={openNavAccountMenu}
               toggleNavAccountMenu={toggleNavAccountMenu}
             />
