@@ -7,6 +7,7 @@ import { db } from "../../config/firebase";
 import { UserAuth } from "../../context/AuthContext";
 import FormField from "../ui/FormField";
 import Modal from "../ui/Modal";
+import AuthGoogle from "./AuthGoogle";
 import WelcomeCard from "./WelcomeCard";
 
 interface AuthModalProps {
@@ -138,6 +139,7 @@ function AuthModal({ open, onClose }: AuthModalProps) {
             >
               {signUpMode ? "Register" : "Login to your account"}
             </button>
+            <AuthGoogle onClose={onClose} />
           </form>
         </FormProvider>
       </div>
