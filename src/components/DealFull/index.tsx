@@ -1,9 +1,7 @@
 import React, { useRef, useState } from "react";
-import { CiShare2 } from "react-icons/ci";
 import ImageSlider from "../DealImageSlider";
-import DealCardVotes from "../DealVotes";
+import DealActions from "./DealActions";
 import DealFullDetails from "./DealFullDetails";
-import ShareDropdown from "./ShareDropdown";
 
 interface DealFullProps {
   profileUrl: string;
@@ -55,26 +53,15 @@ const DealFull: React.FC<DealFullProps> = ({
       </div>
       <div className="bg-white p-4 flex flex-col w-full max-w-3xl">
         <div className="text-sm text-gray-600 flex flex-col items-start gap-3">
-          <div className="flex w-full gap-2 items-center justify-between">
-            <div className="w-1/2">
-              <DealCardVotes postId={dealId} archived={isArchived} />
-            </div>
-            <div className="relative flex justify-end w-1/2">
-              <button
-                ref={shareButtonRef}
-                onClick={handleShareButtonClick}
-                className="flex share-button gap-2 font-bold border w-full hover:bg-gray-100 transition items-center justify-center rounded-full h-8"
-              >
-                <CiShare2 size={24} />
-                Share
-              </button>
-              <ShareDropdown
-                dealLink={dealLink}
-                isOpen={isDropdownOpen}
-                onClose={() => setIsDropdownOpen(false)}
-              />
-            </div>
-          </div>
+          <DealActions
+            dealId={dealId}
+            isArchived={isArchived}
+            shareButtonRef={shareButtonRef}
+            handleShareButtonClick={handleShareButtonClick}
+            isDropdownOpen={isDropdownOpen}
+            setIsDropdownOpen={setIsDropdownOpen}
+            dealLink={dealLink}
+          />
           <DealFullDetails
             posted={posted}
             title={title}
