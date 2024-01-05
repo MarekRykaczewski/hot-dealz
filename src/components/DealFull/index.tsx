@@ -1,16 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { BiCopyAlt } from "react-icons/bi";
-import { BsTwitterX } from "react-icons/bs";
+import React, { useRef, useState } from "react";
 import { CiShare2 } from "react-icons/ci";
-import { FaCopy, FaFacebook } from "react-icons/fa";
-import { FiExternalLink } from "react-icons/fi";
-import { MdOutlineLocalShipping } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { copyToClipboard } from "../../utilities/copyToClipboard";
-import { formatPostedDate } from "../../utils";
 import ImageSlider from "../DealImageSlider";
 import DealCardVotes from "../DealVotes";
+import DealFullDetails from "./DealFullDetails";
+import ShareDropdown from "./ShareDropdown";
 
 interface DealFullProps {
   profileUrl: string;
@@ -44,63 +37,12 @@ const DealFull: React.FC<DealFullProps> = ({
   voucherCode,
   profileUrl,
 }) => {
-  const [isCopied, setIsCopied] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
   const shareButtonRef = useRef(null);
-
-  const handleCopyToClipboard = (text: string) => {
-    copyToClipboard(text);
-    setIsCopied(true);
-    toast.success("Copied code to clipboard");
-
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 2000);
-  };
 
   const handleShareButtonClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-
-  const handleFacebookShare = () => {
-    const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      dealLink
-    )}`;
-    window.open(shareUrl, "_blank");
-    setIsDropdownOpen(false);
-  };
-
-  const handleTwitterShare = () => {
-    const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-      dealLink
-    )}&text=${encodeURIComponent(title)}`;
-    window.open(shareUrl, "_blank");
-    setIsDropdownOpen(false);
-  };
-
-  const handleCopyLink = () => {
-    copyToClipboard(dealLink);
-    toast.success("Copied link to clipboard");
-    setIsDropdownOpen(false);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node) &&
-      event.target !== shareButtonRef.current
-    ) {
-      setIsDropdownOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <div
@@ -121,97 +63,29 @@ const DealFull: React.FC<DealFullProps> = ({
               <button
                 ref={shareButtonRef}
                 onClick={handleShareButtonClick}
-                className="flex gap-2 font-bold border w-full hover:bg-gray-100 transition items-center justify-center rounded-full h-8"
+                className="flex share-button gap-2 font-bold border w-full hover:bg-gray-100 transition items-center justify-center rounded-full h-8"
               >
                 <CiShare2 size={24} />
                 Share
               </button>
-              {isDropdownOpen && (
-                <div
-                  ref={dropdownRef}
-                  className="absolute overflow-hidden w-full font-bold top-full left-0 mt-2 bg-white border rounded-lg shadow-md"
-                >
-                  <button
-                    onClick={handleFacebookShare}
-                    className="flex hover:text-orange-500 transition-all items-center justify-center gap-2 w-full text-left p-2"
-                  >
-                    <FaFacebook size={18} />
-                    <span>Facebook</span>
-                  </button>
-                  <button
-                    onClick={handleTwitterShare}
-                    className="flex hover:text-orange-500 transition-all items-center justify-center gap-2 w-full text-left p-2"
-                  >
-                    <BsTwitterX size={18} />
-                    <span>X (Twitter)</span>
-                  </button>
-                  <button
-                    onClick={handleCopyLink}
-                    className="flex hover:text-orange-500 transition-all items-center justify-center gap-2 w-full text-left p-2"
-                  >
-                    <FaCopy size={18} />
-                    <span>Copy Link</span>
-                  </button>
-                </div>
-              )}
+              <ShareDropdown
+                dealLink={dealLink}
+                isOpen={isDropdownOpen}
+                onClose={() => setIsDropdownOpen(false)}
+              />
             </div>
           </div>
-          <div className="flex flex-col items-center text-sm">
-            {posted && <span>{formatPostedDate(posted)}</span>}
-          </div>
-          <div className="text-gray-900 font-bold text-3xl mb-2">{title}</div>
-          <div className="flex gap-3 items-center w-full">
-            <p className="text-orange-500 font-bold text-3xl"> {price}zł</p>
-            <del className="text-gray-500 font-bold text-3xl">
-              {nextBestPrice}zł
-            </del>
-            <p className="text-3xl">
-              -{Math.floor(((+nextBestPrice - +price) / +nextBestPrice) * 100)}%
-            </p>
-            <p className="flex flex-row text-xl text-slate-500 gap-2 items-center ml-auto">
-              <MdOutlineLocalShipping size={30} />
-              {shippingCost}zł
-            </p>
-          </div>
-          <div className="flex w-full gap-3 justify-center items-center">
-            <button className="flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-2/3 h-8">
-              <a
-                className="flex gap-2 items-center"
-                href={dealLink}
-                target="_blank"
-              >
-                Go to deal <FiExternalLink />
-              </a>
-            </button>
-            {voucherCode && (
-              <div className="mb-2 mt-2 flex gap-3 w-full text-gray-60">
-                <button
-                  value={voucherCode}
-                  onClick={(e) => handleCopyToClipboard(e.target.value)}
-                  className="flex border-dashed border-2 border-gray-300 hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-full h-8"
-                >
-                  {isCopied ? "Copied!" : voucherCode} <BiCopyAlt size={20} />
-                </button>
-              </div>
-            )}
-          </div>
-          <Link
-            to={`/profile/${owner}`}
-            className="flex items-center justify-between gap-5"
-          >
-            <div className="flex justify-center items-center">
-              {
-                <img
-                  className="w-10 h-10 rounded-full mr-4"
-                  src={profileUrl}
-                  alt="Profile"
-                />
-              }
-              <div className="text-sm">
-                <p className="text-gray-900 leading-none">Shared by {owner}</p>
-              </div>
-            </div>
-          </Link>
+          <DealFullDetails
+            posted={posted}
+            title={title}
+            price={price}
+            nextBestPrice={nextBestPrice}
+            shippingCost={shippingCost}
+            dealLink={dealLink}
+            owner={owner}
+            voucherCode={voucherCode}
+            profileUrl={profileUrl}
+          />
         </div>
       </div>
     </div>
