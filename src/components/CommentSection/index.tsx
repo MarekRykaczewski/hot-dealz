@@ -62,7 +62,7 @@ function CommentSection({ postId, commentInput }: CommentSectionProps) {
     <div className="flex flex-col w-full max-w-3xl bg-white mt-2 rounded-lg">
       <div className="flex flex-col gap-4 p-6">
         <div className="flex justify-between start gap-3">
-          <span className="text-xl">{commentElements.length}Comments</span>
+          <span className="text-xl">{commentElements.length} Comments</span>
           <div className="flex gap-2">
             <label htmlFor="commentSort" className="text-xl">
               Sorting:
