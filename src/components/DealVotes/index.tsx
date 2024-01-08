@@ -86,13 +86,24 @@ function DealVotes({ postId, archived }: DealVotesProps) {
   }
 
   return (
-    <div className="relative flex justify-between items-center gap-2 rounded-l-full rounded-r-full border w-28 h-8 py-4">
+    <div className="relative flex justify-between items-center gap-2 rounded-l-full rounded-r-full border w-fit h-8 py-4">
       <VoteButton
         onClick={() => handleVoteClick("dislike")}
         disabled={userVote === "dislike"}
         text="blue"
       />
-      <span className="font-bold text-lg">{totalScore}</span>
+      <span
+        className={`font-bold text-lg ${
+          totalScore >= 200
+            ? "text-red-500"
+            : totalScore <= -200
+            ? "text-blue-500"
+            : "text-orange-500"
+        } drop-shadow-md`}
+      >
+        {totalScore}°
+      </span>
+
       <VoteButton
         onClick={() => handleVoteClick("like")}
         disabled={userVote === "like"}
