@@ -3,13 +3,14 @@ import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
+import usernameExists from "../../api/firebase/users/usernameExists";
 import { db } from "../../config/firebase";
 
 interface AuthGoogleProps {
   onClose: () => void;
 }
 
-const AuthGoogle: React.FC<AuthGoogleProps> = ({ onClose }) => {
+const AuthGoogle: React.FC<AuthGoogleProps> = ({ onClose, username }) => {
   const handleGoogleLogin = async () => {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
@@ -23,12 +24,20 @@ const AuthGoogle: React.FC<AuthGoogleProps> = ({ onClose }) => {
         user.metadata.creationTime === user.metadata.lastSignInTime;
 
       if (isNewUser) {
-        // Additional information for new users
-        const displayName = user.displayName || "NewUser";
+        const newUsername = username || user.displayName;
+
+        const isUsernameTaken = await usernameExists(newUsername);
+
+        if (isUsernameTaken) {
+          toast.warning(
+            "Username is already taken. Please choose a different username."
+          );
+          return;
+        }
 
         // Create a document in the "users" collection for the new user
         await setDoc(doc(db, "users", user.uid), {
-          username: displayName,
+          username: newUsername,
           createdAt: serverTimestamp(),
         });
       }

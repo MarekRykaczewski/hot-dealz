@@ -3,6 +3,7 @@ import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import usernameExists from "../../api/firebase/users/usernameExists";
 import { db } from "../../config/firebase";
 import { UserAuth } from "../../context/AuthContext";
 import FormField from "../ui/FormField";
@@ -26,6 +27,8 @@ function AuthModal({ open, onClose }: AuthModalProps) {
   const [signUpMode, setSignUpMode] = useState(false);
   const { signIn, createUser } = UserAuth();
   const methods = useForm<FormData>();
+  const { watch } = useForm<FormData>();
+  const username = watch("username");
 
   const { handleSubmit, register } = methods;
 
@@ -41,6 +44,15 @@ function AuthModal({ open, onClose }: AuthModalProps) {
 
   const handleSignUp = async (data: FormData) => {
     try {
+      const isUsernameTaken = await usernameExists(data.username);
+
+      if (isUsernameTaken) {
+        toast.warning(
+          "Username is already taken. Please choose a different username."
+        );
+        return;
+      }
+
       const res = await createUser(data.email, data.password);
       await setDoc(doc(db, "users", res.user.uid), {
         username: data.username,
@@ -63,6 +75,13 @@ function AuthModal({ open, onClose }: AuthModalProps) {
     } catch (e: any) {
       toast.error(e.message);
     }
+  };
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -139,7 +158,7 @@ function AuthModal({ open, onClose }: AuthModalProps) {
             >
               {signUpMode ? "Register" : "Login to your account"}
             </button>
-            <AuthGoogle onClose={onClose} />
+            <AuthGoogle onClose={onClose} username={username} />
           </form>
         </FormProvider>
       </div>
