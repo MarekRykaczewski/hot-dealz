@@ -103,7 +103,7 @@ const UserProfile = () => {
       <div className="sm:max-w-[70vw] w-full p-4 mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
         <ProfileInformation
           username={username}
-          profilePictureUrl={profilePictureUrl}
+          profilePictureUrl={profilePictureUrl || null}
           creationDate={creationDate}
         />
         <UserStatistics statisticsData={statisticsData} />
