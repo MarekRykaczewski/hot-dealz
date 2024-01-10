@@ -1,4 +1,6 @@
+import { AnimatePresence, motion } from "framer-motion";
 import React, { ReactElement } from "react";
+import { cardAnimationVariant } from "../animations/cardAnimationVariant";
 import CategoryCarousel from "../components/CategoryCarousel";
 import FooterNav from "../components/Footer";
 import Tabs from "../components/Tabs";
@@ -30,7 +32,18 @@ function Deals({
           currentSorting={currentSorting}
           setCurrentSorting={setCurrentSorting}
         />
-        {dealElements}
+        <AnimatePresence>
+          <motion.div
+            key={currentPage}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={cardAnimationVariant}
+            className="flex flex-col gap-2"
+          >
+            {dealElements}
+          </motion.div>
+        </AnimatePresence>
         <FooterNav
           paginate={paginate}
           currentPage={currentPage}
