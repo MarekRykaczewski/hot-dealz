@@ -1,10 +1,10 @@
 import {
   collection,
+  getDocs,
+  limit,
+  orderBy,
   query,
   where,
-  getDocs,
-  orderBy,
-  limit,
 } from "firebase/firestore";
 
 import { db } from "../../../config/firebase";
@@ -21,7 +21,7 @@ export const getHottestDeal = async (userId) => {
 
     // Fetch the hottest deal
     const hottestDealSnapshot = await getDocs(hottestDealQuery);
-    const hottestDeal = hottestDealSnapshot.docs[0]?.data().totalScore || null;
+    const hottestDeal = hottestDealSnapshot.docs[0]?.data().totalScore || "N/A";
 
     return hottestDeal;
   } catch (error) {
