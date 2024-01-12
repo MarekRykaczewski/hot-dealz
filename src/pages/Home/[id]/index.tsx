@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { RiErrorWarningLine } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 import {
   archiveDeal,
@@ -8,23 +9,29 @@ import {
 } from "../../../api/firebase/deals";
 import { fetchProfileImageUrl } from "../../../api/firebase/storage";
 import CommentSection from "../../../components/CommentSection";
-import DealCardControls from "../../../components/DealControls";
+import DealAboutSection from "../../../components/DealAboutSection";
+import DealControls from "../../../components/DealControls";
 import EditDealFormModal from "../../../components/DealControls/EditDealFormModal";
 import DealCardDetailed from "../../../components/DealFull";
+import DealMessage from "../../../components/DealMessage";
 import { UserAuth } from "../../../context/AuthContext";
 import { useDealDetails } from "../../../hooks/useDealDetails";
 import { Deal } from "../../../types";
-import DealAboutSection from "../../../components/DealAboutSection";
 
 function DealDetails() {
+  const { dealId } = useParams<{ dealId: string }>();
+  const deal = useDealDetails(dealId || "");
+
+  const currentDate = new Date();
+  const dealEndDate = new Date(deal?.endDate);
+  const dealStartDate = new Date(deal?.startDate);
+
   const [hasSaved, setHasSaved] = useState(false);
   const commentInput = useRef<HTMLTextAreaElement | null>(null);
   const [profileUrl, setProfileUrl] = useState<string>("");
   const [isArchived, setIsArchived] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const { dealId } = useParams<{ dealId: string }>();
-  const deal = useDealDetails(dealId || "");
   const { user } = UserAuth();
   const currentUserId = user?.uid;
   const isOwner = currentUserId === deal?.userId;
@@ -63,24 +70,39 @@ function DealDetails() {
 
   useEffect(() => {
     if (!dealId) return;
+
+    if (dealEndDate < currentDate) {
+      // Deal has expired, archive it
+      if (dealId && !isArchived) {
+        archiveDeal(dealId, true);
+        setIsArchived(true);
+      }
+    }
+
     if (currentUserId) {
       checkSavedDeal(setHasSaved, currentUserId, dealId);
     }
-  }, [currentUserId, dealId]);
-
-  useEffect(() => {
-    if (deal?.archived !== undefined) {
-      setIsArchived(deal.archived);
-    }
-  }, [deal]);
+  }, [currentUserId, dealId, dealEndDate, isArchived]);
 
   return (
     <div className="mb-2 h-full w-full flex flex-col ml-auto mr-auto items-center justify-start">
       {isOwner && (
-        <DealCardControls
+        <DealControls
           onEditClick={() => setIsEditModalOpen(true)}
           isArchived={isArchived}
           handleArchiveClick={handleArchiveClick}
+        />
+      )}
+      {dealEndDate < currentDate && (
+        <DealMessage
+          icon={<RiErrorWarningLine size={32} color="red" />}
+          message={`Deal has expired on ${deal.endDate}`}
+        />
+      )}
+      {dealStartDate > currentDate && (
+        <DealMessage
+          icon={<RiErrorWarningLine size={32} color="red" />}
+          message={`Deal will begin on ${deal.startDate}`}
         />
       )}
       {deal && (
