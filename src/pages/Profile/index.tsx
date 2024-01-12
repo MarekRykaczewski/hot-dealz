@@ -77,37 +77,45 @@ const UserProfile = () => {
 
   const statisticsData = [
     {
-      icon: <AiOutlineFileText size={30} className="text-gray-400" />,
-      label: "Number of Posts",
+      icon: <AiOutlineFileText size={25} className="text-gray-600" />,
+      label: "Posts",
       value: userStatistics ? userStatistics.numberOfDeals : 0,
     },
     {
-      icon: <RiHotspotLine size={30} className="text-gray-400" />,
-      label: "Hottest Deal",
+      icon: <RiHotspotLine size={25} className="text-gray-600" />,
+      label: "Hottest",
       value: userStatistics ? userStatistics.hottestDeal : 0,
     },
     {
-      icon: <AiFillStar size={30} className="text-gray-400" />,
-      label: "Average Deal Rating",
+      icon: <AiFillStar size={25} className="text-gray-600" />,
+      label: "Average",
       value: userStatistics ? userStatistics.averageTotalScore : 0,
     },
     {
-      icon: <FaRegComment size={30} className="text-gray-400" />,
-      label: "Number of Comments",
+      icon: <FaRegComment size={25} className="text-gray-600" />,
+      label: "Comments",
       value: userStatistics ? userStatistics.totalComments : 0,
     },
   ];
 
   return (
     <>
-      <div className="sm:max-w-[70vw] w-full p-4 mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <ProfileInformation
-          username={username}
-          profilePictureUrl={profilePictureUrl || null}
-          creationDate={creationDate}
-        />
-        <UserStatistics statisticsData={statisticsData} />
-        <UserDeals dealElements={dealElements} />
+      <div className="w-full gap-4">
+        <div className="mb-4">
+          <ProfileInformation
+            username={username}
+            profilePictureUrl={profilePictureUrl || null}
+            creationDate={creationDate}
+          />
+        </div>
+        <div className="flex sm:flex-row flex-col justify-center gap-4 mx-4">
+          <div>
+            <UserStatistics statisticsData={statisticsData} />
+          </div>
+          <div className="mb-4">
+            <UserDeals dealElements={dealElements} />
+          </div>
+        </div>
       </div>
 
       <FooterNav
