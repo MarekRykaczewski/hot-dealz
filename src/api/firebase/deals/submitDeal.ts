@@ -29,6 +29,8 @@ export const submitDeal = async (
     shippingCost: any;
     voucherCode: any;
     category: any;
+    startDate: any;
+    endDate: any;
   },
   userData: UserData,
   user: User | null
@@ -39,7 +41,7 @@ export const submitDeal = async (
     const newDocId = newDocRef.id;
 
     await setDoc(newDocRef, {
-      owner: userData.username || "test",
+      owner: userData.username,
       dealLink: formData.dealLink,
       title: formData.title,
       description: formData.description,
@@ -50,6 +52,8 @@ export const submitDeal = async (
       category: formData.category,
       voucherCode: formData.voucherCode,
       shippingCost: formData.shippingCost,
+      startDate: formData.startDate,
+      endDate: formData.endDate,
       userId: user!.uid,
     });
 

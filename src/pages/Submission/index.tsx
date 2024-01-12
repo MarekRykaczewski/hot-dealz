@@ -7,6 +7,7 @@ import { submitDeal } from "../../api/firebase/deals";
 import Modal from "../../components/ui/Modal";
 import { UserAuth } from "../../context/AuthContext";
 import { FormDetails } from "../../types";
+import FormDateDetails from "./FormDateDetails";
 import FormDealLink from "./FormDealLink";
 import FormDescription from "./FormDescription";
 import FormFinalDetails from "./FormFinalDetails";
@@ -37,6 +38,8 @@ function Submission() {
     shippingCost: "",
     voucherCode: "",
     category: "",
+    startDate: "",
+    endDate: "",
   };
 
   const [formDetails, setFormDetails] = useState<FormDetails>(formDetailsObj);
@@ -118,11 +121,15 @@ function Submission() {
             DESCRIPTION_CHARACTER_LIMIT={DESCRIPTION_CHARACTER_LIMIT}
           />
           <hr className="mb-4 mt-4"></hr>
-          <h3 className="text-2xl font-bold mb-4"> Price details </h3>
+          <h3 className="text-2xl font-bold mb-4"> Price and Date details </h3>
           <FormPriceDetails
             handleCheckChange={handleCheckChange}
             handleInputChange={handleInputChange}
             formDetails={formDetails}
+          />
+          <FormDateDetails
+            formDetails={formDetails}
+            handleInputChange={handleInputChange}
           />
           <FormFinalDetails
             formDetails={formDetails}

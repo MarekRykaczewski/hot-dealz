@@ -64,6 +64,8 @@ export function createDealCard(item) {
       shippingCost={item.shippingCost}
       imageURLs={item.imageURLs}
       archived={item.archived}
+      startDate={item.startDate}
+      endDate={item.endDate}
     />
   );
 }
