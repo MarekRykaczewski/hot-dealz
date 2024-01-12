@@ -21,7 +21,7 @@ export const getHottestDeal = async (userId) => {
 
     // Fetch the hottest deal
     const hottestDealSnapshot = await getDocs(hottestDealQuery);
-    const hottestDeal = hottestDealSnapshot.docs[0]?.data().totalScore || "N/A";
+    const hottestDeal = hottestDealSnapshot.docs[0]?.data().totalScore || "0";
 
     return hottestDeal;
   } catch (error) {
