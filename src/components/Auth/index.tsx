@@ -77,13 +77,6 @@ function AuthModal({ open, onClose }: AuthModalProps) {
     }
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
   const onSubmit: SubmitHandler<FormData> = (data) => {
     if (signUpMode) {
       handleSignUp(data);
