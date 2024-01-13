@@ -47,14 +47,14 @@ function DealCard({
 
   return (
     <div
-      className={`w-full sm:max-w-4xl shadow-md ${
+      className={`w-full shadow-md ${
         archived || (dealEndDate < currentDate && "filter grayscale")
-      } bg-white p-5 rounded-xl flex flex-col sm:flex-row sm:justify-between`}
+      } bg-white p-4 rounded-xl flex flex-col sm:flex-row sm:justify-between`}
     >
       <div className="h-64 sm:w-64 bg-red-200 overflow-hidden rounded-xl">
         <ImageSlider dealId={postId} imageURLs={imageURLs} />
       </div>
-      <div className="bg-white max-w-xl flex-grow p-4 flex flex-col justify-between">
+      <div className="bg-white flex-grow sm:px-4 px-0 py-4 sm:py-0 flex flex-col justify-between">
         <DealDetails
           postId={postId}
           archived={archived}

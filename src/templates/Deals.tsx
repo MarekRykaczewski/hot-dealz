@@ -32,18 +32,21 @@ function Deals({
           currentSorting={currentSorting}
           setCurrentSorting={setCurrentSorting}
         />
-        <AnimatePresence>
-          <motion.div
-            key={currentPage}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            variants={cardAnimationVariant}
-            className="flex flex-col gap-2"
-          >
-            {dealElements}
-          </motion.div>
-        </AnimatePresence>
+        <div className="max-w-[70rem] w-full">
+          <AnimatePresence>
+            <motion.div
+              key={currentPage}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={cardAnimationVariant}
+              className="flex w-full flex-col gap-2"
+            >
+              {dealElements}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
         <FooterNav
           paginate={paginate}
           currentPage={currentPage}
