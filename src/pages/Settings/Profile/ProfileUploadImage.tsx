@@ -1,19 +1,18 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useEffect, useState } from "react";
+import Dropzone from "../../../components/Dropzone/Dropzone";
 import { storage } from "../../../config/firebase";
 import { UserAuth } from "../../../context/AuthContext";
 
 interface ProfileUploadImageProps {
   profilePicture: File | null;
   setProfilePicture: React.Dispatch<React.SetStateAction<File | null>>;
-  handleImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setProfileURL: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const ProfileUploadImage: React.FC<ProfileUploadImageProps> = ({
   profilePicture,
   setProfilePicture,
-  handleImageUpload,
   setProfileURL,
 }) => {
   const [editing, setEditing] = useState(false);
@@ -42,6 +41,12 @@ const ProfileUploadImage: React.FC<ProfileUploadImageProps> = ({
     }
   };
 
+  const handleDrop = (acceptedFiles: File[]) => {
+    if (acceptedFiles.length > 0) {
+      setProfilePicture(acceptedFiles[0]);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-between mb-10">
       <div className="flex flex-col md:mr-10">
@@ -61,23 +66,12 @@ const ProfileUploadImage: React.FC<ProfileUploadImageProps> = ({
           alt="Profile Picture"
         />
         {!editing && (
-          <div className="flex flex-col w-max-[300px]">
-            <label
-              htmlFor="profilePic"
-              className="text-center self-center py-1 border rounded-2xl pl-4 pr-4 md:pl-10 md:pr-10 hover:bg-gray-100 hover:text-orange-500 transition"
-            >
-              Upload
-            </label>
-            <input
-              onChange={handleImageUpload}
-              className="hidden"
-              id="profilePic"
-              type="file"
-            />
+          <div className="flex gap-3 flex-col w-max-[300px]">
+            <Dropzone onDrop={handleDrop} />
           </div>
         )}
         {editing && (
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex flex-col justify-center md:flex-row gap-4">
             <button
               onClick={() => setProfilePicture(null)}
               className="text-center self-center py-1 border rounded-2xl pl-4 pr-4 md:pl-10 md:pr-10 hover:bg-gray-100 hover:text-orange-500 transition"
@@ -86,7 +80,7 @@ const ProfileUploadImage: React.FC<ProfileUploadImageProps> = ({
             </button>
             <button
               onClick={handleSaveImage}
-              className="text-center self-center py-1 border rounded-2xl pl-4 pr-4 md:pl-10 md:pr-10 hover-bg-gray-100 hover-text-orange-500 transition"
+              className="text-center self-center py-1 border rounded-2xl pl-4 pr-4 md:pl-10 md:pr-10 hover:bg-gray-100 hover:text-orange-500 transition"
             >
               Confirm
             </button>

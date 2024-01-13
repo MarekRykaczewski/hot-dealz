@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import ProfileConfirmDeleteModal from "./ProfileConfirmDeleteModal";
 import ProfileEmail from "./ProfileEmail";
 import ProfilePassword from "./ProfilePassword";
@@ -11,12 +11,6 @@ function Profile() {
 
   const [deleteAccountModal, setDeleteAccountModal] = useState(false);
 
-  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setProfilePicture(e.target.files[0]);
-    }
-  };
-
   return (
     <div className="flex flex-col">
       <ProfileConfirmDeleteModal
@@ -27,7 +21,6 @@ function Profile() {
       <ProfileUploadImage
         profilePicture={profilePicture}
         setProfilePicture={setProfilePicture}
-        handleImageUpload={handleImageUpload}
         setProfileURL={setProfileURL}
       />
       <ProfileUsername />
