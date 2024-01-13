@@ -1,8 +1,8 @@
 import React from "react";
 import { FiExternalLink } from "react-icons/fi";
 import { formatPostedDate } from "../../utils";
+import DealPrice from "../DealPrice";
 import CopyToClipboardButton from "../ui/CopyToClipboardButton";
-import DealPrice from "./DealPrice";
 import ProfileLink from "./ProfileLink";
 
 interface DealFullDetailsProps {
@@ -43,6 +43,7 @@ const DealFullDetails: React.FC<DealFullDetailsProps> = ({
         nextBestPrice={nextBestPrice}
         shippingCost={shippingCost}
         freeShipping={freeShipping}
+        textSize="2xl"
       />
       <div className="flex w-full gap-3 justify-center items-center">
         <button className="flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-2/3 h-8">

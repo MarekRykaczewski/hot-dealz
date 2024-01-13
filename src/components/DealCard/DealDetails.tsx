@@ -2,10 +2,10 @@ import { useState } from "react";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { BiCopyAlt } from "react-icons/bi";
 import { FiExternalLink } from "react-icons/fi";
-import { MdOutlineLocalShipping } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { copyToClipboard } from "../../utilities/copyToClipboard";
+import DealPrice from "../DealPrice";
 import DealCardVotes from "../DealVotes";
 
 const DealDetails = ({
@@ -55,20 +55,13 @@ const DealDetails = ({
         </div>
       </Link>
 
-      <div className="flex sm:flex-nowrap flex-wrap gap-3 text-xl">
-        <p className="text-orange-500 font-bold overflow-hidden whitespace-nowrap text-ellipsis">
-          {price}zł
-        </p>
-        <del className="overflow-hidden whitespace-nowrap text-ellipsis text-gray-500">
-          {nextBestPrice}zł
-        </del>
-        <p>-{Math.floor(((nextBestPrice - price) / nextBestPrice) * 100)}%</p>
-        <p className="flex flex-row text-slate-500 gap-2 items-center text-sm">
-          <MdOutlineLocalShipping size={26} />{" "}
-          {freeShipping ? "Free Shipping" : shippingCost}
-          {!freeShipping && "zł"}
-        </p>
-      </div>
+      <DealPrice
+        price={price}
+        nextBestPrice={nextBestPrice}
+        shippingCost={shippingCost}
+        freeShipping={freeShipping}
+        textSize="xl"
+      />
       {voucherCode && (
         <div className="mb-2 mt-2 flex gap-3 w-full text-gray-60">
           <button

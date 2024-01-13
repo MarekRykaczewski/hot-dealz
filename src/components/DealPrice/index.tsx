@@ -1,17 +1,19 @@
 import React from "react";
 import { MdOutlineLocalShipping } from "react-icons/md";
 
-interface PriceComponentProps {
+interface DealPriceProps {
   price: number;
   nextBestPrice: number;
   shippingCost: number;
+  freeShipping: Boolean;
   textSize?: string; // Optional prop for text size
 }
 
-const PriceComponent: React.FC<PriceComponentProps> = ({
+const DealPrice: React.FC<DealPriceProps> = ({
   price,
   nextBestPrice,
   shippingCost,
+  freeShipping,
   textSize = "3xl", // Default text size if not provided
 }) => {
   const discountPercentage = Math.floor(
@@ -27,10 +29,10 @@ const PriceComponent: React.FC<PriceComponentProps> = ({
       <p className={`text-${textSize}`}>-{discountPercentage}%</p>
       <p className="flex flex-row text-slate-500 gap-2 items-center ml-auto">
         <MdOutlineLocalShipping size={30} />
-        {shippingCost ? "zl" : "Free Shipping"}
+        {freeShipping ? "Free Shipping" : shippingCost + " zł"}
       </p>
     </div>
   );
 };
 
-export default PriceComponent;
+export default DealPrice;
