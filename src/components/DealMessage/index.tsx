@@ -7,7 +7,7 @@ interface DealMessageProps {
 
 const DealMessage: React.FC<DealMessageProps> = ({ icon, message }) => {
   return (
-    <div className="p-4 flex w-full text-xl items-center justify-center max-w-3xl bg-white rounded-lg mt-3">
+    <div className="p-4 flex w-full text-xl items-center justify-center bg-white rounded-lg mt-3">
       <div className="flex items-center justify-center gap-2">
         {icon}
         <span>{message}</span>

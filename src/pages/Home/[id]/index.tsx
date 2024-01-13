@@ -85,7 +85,7 @@ function DealDetails() {
   }, [currentUserId, dealId, dealEndDate, isArchived]);
 
   return (
-    <div className="mb-2 h-full w-full flex flex-col ml-auto mr-auto items-center justify-start">
+    <div className="mb-2 h-full max-w-4xl flex flex-col ml-auto mr-auto items-center justify-start">
       {isOwner && (
         <DealControls
           onEditClick={() => setIsEditModalOpen(true)}
@@ -119,6 +119,7 @@ function DealDetails() {
           profileUrl={profileUrl}
           imageURLs={deal.imageURLs}
           isArchived={isArchived}
+          freeShipping={deal.freeShipping}
         />
       )}
       <EditDealFormModal

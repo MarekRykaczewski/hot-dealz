@@ -13,7 +13,7 @@ const DealControls: React.FC<DealControlsProps> = ({
   onEditClick,
 }) => {
   return (
-    <div className="p-6 flex justify-between w-full max-w-3xl bg-white rounded-lg mt-3">
+    <div className="p-6 flex justify-between w-full bg-white rounded-lg mt-3">
       <div className="flex gap-3 items-center">
         <h1 className="text-xl font-bold"> Status </h1>
         <span

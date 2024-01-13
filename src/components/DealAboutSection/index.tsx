@@ -11,7 +11,7 @@ const DealAboutSection = ({
   toggleSaved,
 }) => {
   return (
-    <div className="flex flex-col w-full max-w-3xl bg-white mt-2 rounded-lg">
+    <div className="flex flex-col w-full bg-white mt-2 rounded-lg">
       <div className="p-5">
         <h1 className="font-bold">About this deal</h1>
         <p className="text-gray-700 text-base">{deal?.description}</p>

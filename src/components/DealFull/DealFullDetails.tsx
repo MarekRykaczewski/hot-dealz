@@ -30,6 +30,7 @@ const DealFullDetails: React.FC<DealFullDetailsProps> = ({
   owner,
   voucherCode,
   profileUrl,
+  freeShipping,
 }) => {
   return (
     <div className="text-sm text-gray-600 flex flex-col w-full items-start gap-3">
@@ -41,6 +42,7 @@ const DealFullDetails: React.FC<DealFullDetailsProps> = ({
         price={price}
         nextBestPrice={nextBestPrice}
         shippingCost={shippingCost}
+        freeShipping={freeShipping}
       />
       <div className="flex w-full gap-3 justify-center items-center">
         <button className="flex border hover:bg-gray-100 transition items-center justify-center rounded-full w-2/3 h-8">
