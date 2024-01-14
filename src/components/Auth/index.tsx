@@ -43,6 +43,7 @@ function AuthModal({ open, onClose }: AuthModalProps) {
   };
 
   const handleSignUp = async (data: FormData) => {
+    if (!data.username) return;
     try {
       const isUsernameTaken = await usernameExists(data.username);
 

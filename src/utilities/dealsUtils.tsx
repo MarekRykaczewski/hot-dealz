@@ -1,6 +1,12 @@
 import DealCard from "../components/DealCard";
+import { Deal } from "../types";
 
-export function filterDeals(deals, category, query, sorting) {
+export function filterDeals(
+  deals: Deal[],
+  category: string,
+  query: string,
+  sorting: string
+) {
   let filteredDealsCopy = [...deals];
 
   if (category) {
@@ -29,8 +35,8 @@ export function filterDeals(deals, category, query, sorting) {
   return filteredDealsCopy;
 }
 
-export function formatDealDate(item) {
-  const milliseconds = item.posted.seconds * 1000;
+export function formatDealDate(rawDate: Deal) {
+  const milliseconds = rawDate.posted.seconds * 1000;
   const date = new Date(milliseconds);
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     month: "short",
@@ -42,7 +48,7 @@ export function formatDealDate(item) {
   return { formattedDate, formattedTime };
 }
 
-export function createDealCard(item) {
+export function createDealCard(item: Deal) {
   const { formattedDate, formattedTime } = formatDealDate(item);
 
   return (

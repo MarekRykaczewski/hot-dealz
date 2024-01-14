@@ -1,4 +1,12 @@
-const WelcomeCard = ({ signUpMode, setSignUpMode }) => {
+interface WelcomeCardProps {
+  signUpMode: boolean;
+  setSignUpMode: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const WelcomeCard: React.FC<WelcomeCardProps> = ({
+  signUpMode,
+  setSignUpMode,
+}) => {
   return (
     <div className="flex flex-1 flex-col justify-center items-center bg-slate-800 p-4 rounded-lg text-white w-full">
       <h3 className="text-3xl font-medium mb-4 text-center">

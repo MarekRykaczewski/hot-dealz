@@ -15,7 +15,12 @@ interface SearchResult {
   };
 }
 
-function SearchBar({ isFocused, setIsFocused }) {
+interface SearchBarProps {
+  isFocused: boolean;
+  setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function SearchBar({ isFocused, setIsFocused }: SearchBarProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 

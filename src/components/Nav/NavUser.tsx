@@ -9,7 +9,7 @@ import AccountMenu from "./AccountMenu";
 interface NavUserProps {
   isFocused: boolean;
   toggleNavAccountMenu: () => void;
-  openNavAccountMenu: () => void;
+  openNavAccountMenu: boolean;
 }
 
 const NavUser: React.FC<NavUserProps> = ({

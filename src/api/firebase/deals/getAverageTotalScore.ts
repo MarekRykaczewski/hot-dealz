@@ -1,14 +1,14 @@
 import {
+  average,
   collection,
+  getAggregateFromServer,
   query,
   where,
-  getAggregateFromServer,
-  average,
 } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
 // Function to get the average total score from user's deals
-export const getAverageTotalScore = async (userId) => {
+export const getAverageTotalScore = async (userId: string) => {
   try {
     // Use the 'query' function to create a query with conditions
     const dealsQuery = query(

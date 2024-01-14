@@ -1,9 +1,9 @@
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import { Deal } from "../../../types";
 
 // Function to fetch deals by userId from Firestore
-export async function fetchDealsByUserId(userId): Promise<Deal[]> {
+export async function fetchDealsByUserId(userId: string): Promise<Deal[]> {
   try {
     const dealsRef = collection(db, "deals");
     const q = query(dealsRef, where("userId", "==", userId));

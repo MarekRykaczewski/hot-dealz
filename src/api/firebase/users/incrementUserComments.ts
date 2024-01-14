@@ -1,7 +1,7 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
-export async function incrementUserComments(userId) {
+export async function incrementUserComments(userId: string) {
   try {
     const userRef = doc(db, "users", userId);
 

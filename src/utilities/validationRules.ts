@@ -1,5 +1,3 @@
-// validationRules.ts
-
 export const decimalValidation = {
   decimal: (value: string) => {
     if (!/^\d+(\.\d{1,2})?$/.test(value)) return "Invalid decimal value";

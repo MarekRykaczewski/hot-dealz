@@ -1,9 +1,10 @@
+import { Comment } from "../types";
 import { sortCommentsByLikes, sortCommentsByNewest } from "../utils";
 
 export const sortComments = (
   comments: Comment[],
   selectedSort: string,
-  setComments: Function
+  setComments: React.Dispatch<React.SetStateAction<Comment[]>>
 ) => {
   if (selectedSort === "Newest first") {
     const sortedComments = sortCommentsByNewest(comments);

@@ -3,7 +3,7 @@ import { fetchComments } from "../api/firebase/deals";
 import { Comment } from "../types";
 import { sortCommentsByNewest } from "../utils";
 
-export function useCommentsData(dealId: string | undefined) {
+export function useCommentsData(dealId: string) {
   const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {

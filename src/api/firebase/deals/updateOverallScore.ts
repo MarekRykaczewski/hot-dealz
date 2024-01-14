@@ -1,7 +1,10 @@
 import { doc, getDoc, writeBatch } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
-export async function updateOverallScore(dealId, voteType) {
+export async function updateOverallScore(
+  dealId: string,
+  voteType: "like" | "dislike"
+) {
   try {
     const dealRef = doc(db, "deals", dealId);
     const dealDoc = await getDoc(dealRef);

@@ -7,11 +7,23 @@ import {
 } from "../api/firebase/comments";
 import { getProfileUrlFromUserId } from "../api/firebase/users";
 
-function useComment(userId, postId, commentId) {
-  const [username, setUsername] = useState(null);
-  const [profileUrl, setProfileUrl] = useState(null);
-  const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(0);
+interface CommentData {
+  username: string | null;
+  profileUrl: string | null;
+  liked: boolean;
+  likes: number;
+  handleToggleLike: () => void;
+}
+
+function useComment(
+  userId: string,
+  postId: string,
+  commentId: string
+): CommentData {
+  const [username, setUsername] = useState<string | null>(null);
+  const [profileUrl, setProfileUrl] = useState<string | null>(null);
+  const [liked, setLiked] = useState<boolean>(false);
+  const [likes, setLikes] = useState<number>(0);
 
   useEffect(() => {
     async function fetchCommentData() {

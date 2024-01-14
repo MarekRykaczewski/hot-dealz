@@ -6,13 +6,14 @@ import { copyToClipboard } from "../../utilities/copyToClipboard";
 
 interface ShareDropdownProps {
   dealLink: string;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const ShareDropdown: React.FC<ShareDropdownProps> = ({
   dealLink,
   isOpen,
   onClose,
-  shareButtonRef,
 }) => {
   const handleFacebookShare = () => {
     const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
@@ -44,7 +45,6 @@ const ShareDropdown: React.FC<ShareDropdownProps> = ({
       const button = document.querySelector(".share-button");
 
       if (
-        !target.closest(".share-dropdown-container") &&
         dropdownContainer &&
         !dropdownContainer.contains(target) &&
         !(button && button.contains(target))

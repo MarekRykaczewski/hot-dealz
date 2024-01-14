@@ -6,7 +6,7 @@ interface TabsProps {
 }
 
 const Tabs: React.FC<TabsProps> = ({ currentSorting, setCurrentSorting }) => {
-  const tabOptions = ["newest", "comments"];
+  const tabOptions: ("newest" | "comments")[] = ["newest", "comments"];
 
   return (
     <div className="bg-white w-full px-5 py-2 border-b-2 border-gray-300">

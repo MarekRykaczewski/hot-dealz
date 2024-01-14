@@ -1,21 +1,28 @@
 import { useEffect, useState } from "react";
 import { fetchSavedDeals } from "../api/firebase/deals";
 import { UserAuth } from "../context/AuthContext";
+import { Deal } from "../types";
+import { User } from "firebase/auth";
 
-function useSavedDeals() {
-  const [savedDeals, setSavedDeals] = useState([]);
-  const [loading, setLoading] = useState(true);
+interface SavedDealsData {
+  savedDeals: Array<Deal>;
+  loading: boolean;
+}
+
+function useSavedDeals(): SavedDealsData {
+  const [savedDeals, setSavedDeals] = useState<Array<Deal>>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { user }: { user: User | null } = UserAuth();
-  console.log("Authenticated User:", user);
-  console.log("UserId:", user.uid);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedDeals = await fetchSavedDeals(user.uid);
-        console.log("Fetched deals:", fetchedDeals);
-        setSavedDeals(fetchedDeals);
+        if (user) {
+          const fetchedDeals = await fetchSavedDeals(user.uid);
+          console.log("Fetched deals:", fetchedDeals);
+          setSavedDeals(fetchedDeals);
+        }
       } catch (error) {
         console.error("Error fetching saved deals:", error);
       } finally {
@@ -24,7 +31,7 @@ function useSavedDeals() {
     };
 
     fetchData();
-  }, [user.uid]);
+  }, [user?.uid]);
 
   return { savedDeals, loading };
 }

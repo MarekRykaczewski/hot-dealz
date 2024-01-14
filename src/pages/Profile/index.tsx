@@ -9,8 +9,8 @@ import getUserCreationDate from "../../api/firebase/users/getUserCreationDate";
 import getUserIdFromUsername from "../../api/firebase/users/getUserIdFromUsername";
 import FooterNav from "../../components/Footer";
 import { ProfileInformation } from "../../components/ProfileInformation";
-import { UserDeals } from "../../components/UserDeals";
-import { UserStatistics } from "../../components/UserStatistics";
+import UserDeals from "../../components/UserDeals";
+import UserStatistics from "../../components/UserStatistics";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import usePagination from "../../hooks/usePagination";
 import { useUserDeals } from "../../hooks/useUserDeals";
@@ -26,6 +26,7 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!userId) return;
     const fetchCreationDate = async () => {
       try {
         const userCreationDate = await getUserCreationDate(userId);

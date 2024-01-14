@@ -1,7 +1,21 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, FieldValues, useFormContext } from "react-hook-form";
 
-function FormField({ label, name, type, placeholder, required }) {
-  const { control } = useFormContext();
+interface FormFieldProps {
+  label: string;
+  name: string;
+  type: string;
+  placeholder: string;
+  required: boolean;
+}
+
+function FormField({
+  label,
+  name,
+  type,
+  placeholder,
+  required,
+}: FormFieldProps) {
+  const { control } = useFormContext<FieldValues>();
 
   return (
     <div className="mb-4">

@@ -9,7 +9,7 @@ import {
 
 import { db } from "../../../config/firebase";
 
-export const getHottestDeal = async (userId) => {
+export const getHottestDeal = async (userId: string) => {
   try {
     // Query for the hottest deal
     const hottestDealQuery = query(

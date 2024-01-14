@@ -1,7 +1,7 @@
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 
-const getUserCreationDate = async (userId) => {
+const getUserCreationDate = async (userId: string) => {
   try {
     const userDoc = await getDoc(doc(db, "users", userId));
 

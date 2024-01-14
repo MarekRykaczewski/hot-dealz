@@ -9,7 +9,7 @@ interface DealCardProps {
   archived: boolean;
   imageURLs: string[];
   shippingCost: number;
-  freeShipping: Boolean;
+  freeShipping?: boolean;
   title: string;
   date: string;
   time: string;
@@ -20,8 +20,8 @@ interface DealCardProps {
   dealLink: string;
   voucherCode?: string;
   commentsCount?: number;
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
 }
 
 function DealCard({
@@ -44,18 +44,19 @@ function DealCard({
   endDate,
 }: DealCardProps) {
   const currentDate = new Date();
-  const [dealEndDate, setDealEndDate] = useState();
+  const [dealEndDate, setDealEndDate] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
     if (endDate) {
       setDealEndDate(new Date(endDate));
     }
-  }, []);
+  }, [endDate]);
 
   return (
     <div
       className={`w-full shadow-md ${
-        archived || (dealEndDate < currentDate && "filter grayscale")
+        archived ||
+        (dealEndDate && dealEndDate < currentDate && "filter grayscale")
       } bg-white p-4 rounded-xl flex flex-col sm:flex-row sm:justify-between`}
     >
       <div className="h-64 sm:w-64 bg-red-200 overflow-hidden rounded-xl">

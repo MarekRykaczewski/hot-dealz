@@ -1,4 +1,16 @@
-export const UserStatistics = ({ statisticsData }) => (
+import React, { ReactNode } from "react";
+
+interface StatisticItem {
+  icon: ReactNode;
+  label: string;
+  value: string;
+}
+
+interface UserStatisticsProps {
+  statisticsData: StatisticItem[];
+}
+
+const UserStatistics: React.FC<UserStatisticsProps> = ({ statisticsData }) => (
   <div className="bg-white flex flex-col items-center justify-center p-4 shadow-md rounded-xl">
     <h3 className="text-2xl h-fit mb-2 bg-white rounded-lg text-center font-semibold">
       Statistics
@@ -17,3 +29,5 @@ export const UserStatistics = ({ statisticsData }) => (
     </div>
   </div>
 );
+
+export default UserStatistics;

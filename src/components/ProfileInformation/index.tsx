@@ -1,4 +1,10 @@
-export const ProfileInformation = ({
+interface ProfileInformationProps {
+  username: string;
+  profilePictureUrl: string;
+  creationDate?: Date;
+}
+
+export const ProfileInformation: React.FC<ProfileInformationProps> = ({
   username,
   profilePictureUrl,
   creationDate,

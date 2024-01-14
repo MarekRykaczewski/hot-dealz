@@ -1,15 +1,15 @@
 import {
   collection,
+  getCountFromServer,
   query,
   where,
-  getCountFromServer,
 } from "firebase/firestore";
 import { db } from "../../../config/firebase";
-import getUserCommentsCount from "./getUserCommentsCount";
 import getAverageTotalScore from "../deals/getAverageTotalScore";
 import getHottestDeal from "../deals/getHottestDeal";
+import getUserCommentsCount from "./getUserCommentsCount";
 
-export const calculateUserStatistics = async (userId) => {
+export const calculateUserStatistics = async (userId: string) => {
   try {
     // Use the 'collection' query to count documents without fetching them
     const dealsQuery = query(

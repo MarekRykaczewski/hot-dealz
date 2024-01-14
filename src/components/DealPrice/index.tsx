@@ -5,7 +5,7 @@ interface DealPriceProps {
   price: number;
   nextBestPrice: number;
   shippingCost: number;
-  freeShipping: Boolean;
+  freeShipping?: Boolean;
   textSize?: string; // Optional prop for text size
 }
 

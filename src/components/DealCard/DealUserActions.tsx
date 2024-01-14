@@ -8,7 +8,16 @@ import { fetchProfileImageUrl } from "../../api/firebase/storage";
 import { auth } from "../../config/firebase";
 import { UserAuth } from "../../context/AuthContext";
 
-const DealUserActions = ({
+interface DealUserActionsProps {
+  userId: string;
+  owner: string;
+  postId: string;
+  commentsCount?: number;
+  voucherCode?: string;
+  dealLink: string;
+}
+
+const DealUserActions: React.FC<DealUserActionsProps> = ({
   userId,
   owner,
   postId,
@@ -20,7 +29,7 @@ const DealUserActions = ({
   const currentUserId = auth.currentUser?.uid;
 
   const [hasSaved, setHasSaved] = useState(false);
-  const [profileUrl, setProfileUrl] = useState("");
+  const [profileUrl, setProfileUrl] = useState<string>("");
 
   useEffect(() => {
     const fetchProfileImage = async () => {
@@ -43,7 +52,11 @@ const DealUserActions = ({
         className="flex justify-center items-center"
         to={`profile/${owner}`}
       >
-        <img className="w-8 h-8 rounded-full mr-2" src={profileUrl} />
+        <img
+          className="w-8 h-8 rounded-full mr-2"
+          src={profileUrl}
+          alt={`${owner}'s profile`}
+        />
         <div className="text-sm">
           <p className="text-gray-900 leading-none">{owner}</p>
         </div>
@@ -62,7 +75,7 @@ const DealUserActions = ({
           to={`/deal/${postId}`}
           className="flex border hover:bg-gray-100 transition items-center gap-2 justify-center rounded-full w-20 h-8"
         >
-          <BiCommentDetail /> {commentsCount}
+          <BiCommentDetail /> {commentsCount ?? 0}
         </Link>
         {!voucherCode && (
           <button className="flex border text-white bg-orange-500 hover:bg-orange-400 transition items-center justify-center rounded-full w-32 h-8">
@@ -70,6 +83,7 @@ const DealUserActions = ({
               className="flex gap-2 items-center"
               href={dealLink}
               target="_blank"
+              rel="noopener noreferrer"
             >
               Go to deal
               <FiExternalLink />

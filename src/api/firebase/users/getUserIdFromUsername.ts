@@ -1,8 +1,8 @@
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 import { db } from "../../../config/firebase";
 
-const getUserIdFromUsername = async (username) => {
+const getUserIdFromUsername = async (username: string) => {
   try {
     const usersCollection = collection(db, "users");
     const userQuery = query(usersCollection, where("username", "==", username));

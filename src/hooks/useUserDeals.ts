@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Deal } from "../types";
 import { fetchDealsByUserId } from "../api/firebase/deals/fetchDealsByUserId";
+import { Deal } from "../types";
 
-export function useUserDeals(userId) {
+export function useUserDeals(userId: string) {
   const [userDeals, setUserDeals] = useState<Deal[]>([]);
   const [loading, setLoading] = useState(true);
 

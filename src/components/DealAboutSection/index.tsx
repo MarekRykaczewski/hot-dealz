@@ -1,7 +1,23 @@
+import React, { RefObject } from "react";
 import { BiCommentDetail } from "react-icons/bi";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
-const DealAboutSection = ({
+interface DealAboutSectionProps {
+  commentInput: RefObject<HTMLTextAreaElement>;
+  deal: { description: string } | null | undefined;
+  user: { uid: string } | null;
+  hasSaved: boolean;
+  setHasSaved: React.Dispatch<React.SetStateAction<boolean>>;
+  dealId: string | undefined;
+  toggleSaved: (
+    hasSaved: boolean,
+    setHasSaved: React.Dispatch<React.SetStateAction<boolean>>,
+    userId: string,
+    dealId: string
+  ) => void;
+}
+
+const DealAboutSection: React.FC<DealAboutSectionProps> = ({
   commentInput,
   deal,
   user,

@@ -7,6 +7,7 @@ import usernameExists from "../../api/firebase/users/usernameExists";
 import { db } from "../../config/firebase";
 
 interface AuthGoogleProps {
+  username?: string;
   onClose: () => void;
 }
 
@@ -26,7 +27,7 @@ const AuthGoogle: React.FC<AuthGoogleProps> = ({ onClose, username }) => {
       if (isNewUser) {
         const newUsername = username || user.displayName;
 
-        const isUsernameTaken = await usernameExists(newUsername);
+        const isUsernameTaken = await usernameExists(newUsername!);
 
         if (isUsernameTaken) {
           toast.warning(

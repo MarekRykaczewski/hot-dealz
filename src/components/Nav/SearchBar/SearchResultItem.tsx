@@ -10,13 +10,13 @@ interface SearchResultItemProps {
       dislikesCount: number;
       title: string;
       price: number;
+      nextBestPrice?: number;
     };
   };
 }
 
 const SearchResultItem: React.FC<SearchResultItemProps> = ({ result }) => {
-  console.log(result);
-
+  if (!result.data.nextBestPrice) return;
   const percentOff = Math.round(
     ((result.data.nextBestPrice - result.data.price) /
       result.data.nextBestPrice) *

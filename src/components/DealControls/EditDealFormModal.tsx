@@ -14,9 +14,9 @@ interface EditDealFormModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialTitle?: string;
-  initialPrice?: number;
-  initialNextBestPrice?: number;
-  initialShippingCost?: number;
+  initialPrice?: string;
+  initialNextBestPrice?: string;
+  initialShippingCost?: string;
   initialDealLink?: string;
   initialVoucherCode?: string;
   onSave: (data: FormData) => void;

@@ -18,6 +18,7 @@ interface DealFullDetailsProps {
   owner: string;
   voucherCode?: string;
   profileUrl: string;
+  freeShipping: boolean;
 }
 
 const DealFullDetails: React.FC<DealFullDetailsProps> = ({

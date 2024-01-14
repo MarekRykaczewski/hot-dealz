@@ -19,6 +19,9 @@ export type Deal = {
   archived: boolean;
   category: string;
   voucherCode?: string;
+  freeShipping?: boolean;
+  startDate?: string;
+  endDate?: string;
 };
 
 export type Comment = {
@@ -40,6 +43,8 @@ export type FormDetails = {
   shippingCost: number | string;
   voucherCode: string;
   category: string;
+  startDate: string;
+  endDate: string;
 };
 
 export type Category = {
