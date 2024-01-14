@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import ImageSlider from "../DealImageSlider";
 import DealDetails from "./DealDetails";
 import DealUserActions from "./DealUserActions";
@@ -43,7 +44,13 @@ function DealCard({
   endDate,
 }: DealCardProps) {
   const currentDate = new Date();
-  const dealEndDate = new Date(endDate);
+  const [dealEndDate, setDealEndDate] = useState();
+
+  useEffect(() => {
+    if (endDate) {
+      setDealEndDate(new Date(endDate));
+    }
+  }, []);
 
   return (
     <div

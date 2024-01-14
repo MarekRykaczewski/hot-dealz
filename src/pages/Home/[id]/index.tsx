@@ -23,18 +23,30 @@ function DealDetails() {
   const deal = useDealDetails(dealId || "");
 
   const currentDate = new Date();
-  const dealEndDate = new Date(deal?.endDate);
-  const dealStartDate = new Date(deal?.startDate);
 
   const [hasSaved, setHasSaved] = useState(false);
   const commentInput = useRef<HTMLTextAreaElement | null>(null);
   const [profileUrl, setProfileUrl] = useState<string>("");
   const [isArchived, setIsArchived] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [dealEndDate, setDealEndDate] = useState();
+  const [dealStartDate, setDealStartDate] = useState();
 
   const { user } = UserAuth();
   const currentUserId = user?.uid;
   const isOwner = currentUserId === deal?.userId;
+
+  useEffect(() => {
+    if (deal && deal.endDate) {
+      setDealEndDate(new Date(deal.endDate));
+    }
+  }, [deal]);
+
+  useEffect(() => {
+    if (deal && deal.startDate) {
+      setDealStartDate(new Date(deal.startDate));
+    }
+  }, [deal]);
 
   const handleSaveChanges = async (editedDealDetails: Partial<Deal>) => {
     if (dealId) {
