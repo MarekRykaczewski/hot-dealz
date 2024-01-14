@@ -55,3 +55,9 @@ export type Category = {
 export type Slide = {
   url: string;
 };
+
+export type StatisticItem = {
+  icon: JSX.Element;
+  label: string;
+  value: string;
+};

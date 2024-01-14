@@ -1,6 +1,6 @@
 interface ProfileInformationProps {
-  username: string;
-  profilePictureUrl: string;
+  username?: string;
+  profilePictureUrl?: string;
   creationDate?: Date;
 }
 

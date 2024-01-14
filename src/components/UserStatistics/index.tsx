@@ -1,13 +1,8 @@
-import React, { ReactNode } from "react";
-
-interface StatisticItem {
-  icon: ReactNode;
-  label: string;
-  value: string;
-}
+import React from "react";
+import { StatisticItem } from "../../types";
 
 interface UserStatisticsProps {
-  statisticsData: StatisticItem[];
+  statisticsData?: StatisticItem[];
 }
 
 const UserStatistics: React.FC<UserStatisticsProps> = ({ statisticsData }) => (
@@ -16,16 +11,17 @@ const UserStatistics: React.FC<UserStatisticsProps> = ({ statisticsData }) => (
       Statistics
     </h3>
     <div className="flex flex-col gap-4">
-      {statisticsData.map(({ icon, label, value }) => (
-        <div
-          key={label}
-          className="flex flex-row gap-2 items-center justify-start"
-        >
-          {icon}
-          <p className="text-lg font-bold">{value}</p>
-          <p className="text-gray-600 text-sm">{label}</p>
-        </div>
-      ))}
+      {statisticsData &&
+        statisticsData.map(({ icon, label, value }) => (
+          <div
+            key={label}
+            className="flex flex-row gap-2 items-center justify-start"
+          >
+            {icon}
+            <p className="text-lg font-bold">{value}</p>
+            <p className="text-gray-600 text-sm">{label}</p>
+          </div>
+        ))}
     </div>
   </div>
 );
