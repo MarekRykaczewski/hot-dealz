@@ -33,3 +33,7 @@ firebase.json
 
 # Env
 .env
+
+# folders
+public
+scripts
